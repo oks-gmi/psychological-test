@@ -2,10 +2,138 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>心理テスト</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>心理テスト一覧</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      font-weight: 700;
+      background: #fff0f5;
+      color: #4a3f45;
+    }
+
+    .page {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 900px) 150px;
+      justify-content: center;
+      gap: 24px;
+      min-height: 100vh;
+    }
+
+    .ad-space {
+      background: #dff6ff;
+      min-height: 100vh;
+    }
+
+    .main-content {
+      padding: 60px 30px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0 0 45px;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 800;
+    }
+
+    .test-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .test-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 130px;
+      padding: 25px;
+      border-radius: 20px;
+      background: #ffffff;
+      color: #4a3f45;
+      text-decoration: none;
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .test-button:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    @media (max-width: 700px) {
+      .page {
+        display: block;
+      }
+
+      .ad-space {
+        display: none;
+      }
+
+      .main-content {
+        padding: 40px 20px;
+      }
+
+      h1 {
+        margin-bottom: 30px;
+        font-size: 2.2rem;
+      }
+
+      .test-list {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .test-button {
+        min-height: 100px;
+        font-size: 1.2rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>心理テストへようこそ！</h1>
-  <p>あなたの性格を楽しく診断してみよう。</p>
+
+  <div class="page">
+
+    <aside class="ad-space"></aside>
+
+    <main class="main-content">
+
+      <h1>心理テスト一覧</h1>
+
+      <div class="test-list">
+
+        <a href="#" class="test-button">
+          性格診断
+        </a>
+
+        <a href="#" class="test-button">
+          恋愛診断
+        </a>
+
+        <a href="#" class="test-button">
+          相性診断
+        </a>
+
+        <a href="#" class="test-button">
+          隠れ性格診断
+        </a>
+
+      </div>
+
+    </main>
+
+    <aside class="ad-space"></aside>
+
+  </div>
+
 </body>
 </html>
