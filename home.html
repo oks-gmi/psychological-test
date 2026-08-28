@@ -16,29 +16,37 @@
       color: #4a3f45;
     }
 
-    .main-category {
+    .category-group {
       width: fit-content;
-      min-width: 210px;
-      margin: 0 auto 24px;
-      padding: 13px 24px;
+      max-width: 100%;
+      margin: 0 auto 35px;
+      padding: 12px;
+      background: #f3faff;
+      border-radius: 14px;
+    }
+
+    .main-category {
+      width: 590px;
+      max-width: 100%;
+      margin: 0 auto 14px;
+      padding: 14px 20px;
 
       text-align: center;
-      font-size: 23px;
+      font-size: 26px;
       font-weight: 800;
 
-      color: #463b41;
-      background: rgba(255, 255, 255, 0.9);
+      color: #ffffff;
+      background: #4682b4;
 
-      border-radius: 14px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
     .sub-category-grid {
       display: grid;
       grid-template-columns: repeat(2, 280px);
       justify-content: center;
-      gap: 18px 30px;
-      margin-bottom: 55px;
+      gap: 14px 30px;
     }
 
     .sub-category-card {
@@ -72,21 +80,22 @@
       box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
     }
 
-    .mobile .sub-category-grid {
-      grid-template-columns: 280px;
-    }
+    @media (max-width: 900px) {
+      .category-group {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 30px;
+      }
 
-    @media (max-width: 600px) {
       .main-category {
-        min-width: 200px;
-        font-size: 21px;
-        margin-bottom: 20px;
+        width: 100%;
+        font-size: 23px;
+        margin-bottom: 12px;
       }
 
       .sub-category-grid {
         grid-template-columns: 280px;
         gap: 14px;
-        margin-bottom: 45px;
       }
 
       .sub-category-card {
@@ -95,12 +104,19 @@
         font-size: 24px;
       }
     }
+
+    @media (max-width: 340px) {
+      .sub-category-card {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 
 <body>
 
-  <section>
+  <section class="category-group">
+
     <div class="main-category">
       心理テスト
     </div>
@@ -120,9 +136,11 @@
       </a>
 
     </div>
+
   </section>
 
-  <section>
+  <section class="category-group">
+
     <div class="main-category">
       クイズ
     </div>
@@ -133,8 +151,8 @@
         一般常識
       </a>
 
-      <a href="kanji-reading.html" class="sub-category-card">
-        漢字読み問題
+      <a href="kanji.html" class="sub-category-card">
+        難読漢字
       </a>
 
       <a href="riddles.html" class="sub-category-card">
@@ -142,6 +160,7 @@
       </a>
 
     </div>
+
   </section>
 
   <script>
