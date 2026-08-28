@@ -43,7 +43,7 @@
       display: block;
     }
 
-    /* 左メニュー以外 */
+    /* 右側全体 */
     .content {
       margin-left: 210px;
       display: grid;
@@ -102,9 +102,7 @@
       }
 
       .ad-space {
-        display: block;
-        width: 100%;
-        min-height: 70px;
+        display: none;
       }
 
       .main {
@@ -136,22 +134,14 @@
     <!-- 左広告 -->
     <aside class="ad-space" id="left-ad"></aside>
 
-    <!-- 中央 -->
+    <!-- 中央メイン -->
     <main class="main">
-
-      <!-- スマホ用広告 -->
-      <div class="ad-space" id="mobile-ad-top"></div>
-
       <iframe
         src="home.html"
         class="main-frame"
         id="main-frame"
         title="メインコンテンツ">
       </iframe>
-
-      <!-- スマホ用広告 -->
-      <div class="ad-space" id="mobile-ad-bottom"></div>
-
     </main>
 
     <!-- 右広告 -->
@@ -167,8 +157,6 @@
 
       document.getElementById("left-ad").replaceChildren();
       document.getElementById("right-ad").replaceChildren();
-      document.getElementById("mobile-ad-top").replaceChildren();
-      document.getElementById("mobile-ad-bottom").replaceChildren();
     });
   </script>
 
