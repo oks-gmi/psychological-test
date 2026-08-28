@@ -111,6 +111,15 @@
         width: 100%;
       }
     }
+
+    /* フッター */
+    .footer-frame {
+      width: 100%;
+      height: 80px;
+      border: 0;
+      display: block;
+      margin-top: 20px;
+    }
   </style>
 </head>
 
@@ -136,7 +145,7 @@
         恋愛診断
       </a>
 
-      <a href="#" class="sub-category-card">
+      <a href="r18-love.html" class="sub-category-card">
         大人の恋愛診断
       </a>
 
@@ -168,11 +177,36 @@
 
   </section>
 
+  <!-- 共通フッター -->
+  <iframe
+    src="footer.html"
+    class="footer-frame"
+    title="共通フッター">
+  </iframe>
+
   <script>
     window.addEventListener("message", event => {
-      if (event.data?.type !== "screenMode") return;
 
-      document.body.classList.toggle("mobile", event.data.mobile);
+      if (event.data?.type === "screenMode") {
+        document.body.classList.toggle("mobile", event.data.mobile);
+        return;
+      }
+
+      if (event.data?.type === "changePage") {
+        parent.postMessage({
+          type: "changePage",
+          url: event.data.url
+        }, "*");
+        return;
+      }
+
+      if (event.data?.type === "scrollTop") {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
+
     });
   </script>
 
