@@ -23,17 +23,22 @@
       background: #ffffff;
     }
 
+    /* 全体 */
     .page {
-      display: grid;
-      grid-template-columns: 190px minmax(0, 1fr);
       min-height: 100vh;
     }
 
+    /* 左メニュー */
     .menu-column {
-      height: 100vh;
-      position: sticky;
+      position: fixed;
+      left: 0;
       top: 0;
+
+      width: 210px;
+      height: 100vh;
+
       overflow: hidden;
+      z-index: 10;
     }
 
     .menu-frame {
@@ -43,18 +48,24 @@
       border: none;
     }
 
+    /* 左メニュー以外 */
     .content {
+      margin-left: 210px;
+
       display: grid;
       grid-template-columns: 260px minmax(500px, 900px) 260px;
       justify-content: center;
-      min-width: 0;
+
+      min-height: 100vh;
     }
 
+    /* 広告 */
     .ad-space {
       min-height: 100vh;
       background: #bfefff;
     }
 
+    /* 中央メイン */
     .main {
       min-height: 100vh;
       padding: 45px 45px 80px;
@@ -78,21 +89,21 @@
         );
     }
 
+    /* メインページ */
     .main iframe {
+      display: block;
       width: 100%;
       min-height: calc(100vh - 125px);
       border: none;
-      display: block;
     }
 
+    /* スマホ */
     @media (max-width: 900px) {
-      .page {
-        display: block;
-      }
 
       .menu-column {
-        height: auto;
         position: static;
+        width: 100%;
+        height: auto;
       }
 
       .menu-frame {
@@ -100,6 +111,7 @@
       }
 
       .content {
+        margin-left: 0;
         display: block;
       }
 
@@ -123,6 +135,7 @@
 
 <div class="page">
 
+  <!-- 左メニュー -->
   <aside class="menu-column">
     <iframe
       src="LeftMenu.html"
@@ -131,10 +144,13 @@
     </iframe>
   </aside>
 
+  <!-- 左メニュー以外 -->
   <div class="content">
 
+    <!-- 左広告 -->
     <aside class="ad-space"></aside>
 
+    <!-- 中央メイン -->
     <main class="main">
       <iframe
         id="main-frame"
@@ -143,6 +159,7 @@
       </iframe>
     </main>
 
+    <!-- 右広告 -->
     <aside class="ad-space"></aside>
 
   </div>
@@ -150,9 +167,9 @@
 </div>
 
 <script>
-  window.addEventListener("message", e => {
-    if (e.data?.type === "changePage") {
-      document.getElementById("main-frame").src = e.data.url;
+  window.addEventListener("message", event => {
+    if (event.data?.type === "changePage") {
+      document.getElementById("main-frame").src = event.data.url;
     }
   });
 </script>
