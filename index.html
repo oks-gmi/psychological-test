@@ -23,7 +23,6 @@
       background: #fff;
     }
 
-    /* 左メニュー */
     .menu-column {
       position: fixed;
       top: 0;
@@ -43,7 +42,6 @@
       display: block;
     }
 
-    /* 右側全体 */
     .content {
       margin-left: 210px;
       display: grid;
@@ -52,17 +50,14 @@
       min-height: 100vh;
     }
 
-    /* 広告 */
     .ad-space {
       min-height: 100vh;
       background: #bfefff;
     }
 
-    /* 中央メイン */
     .main {
       min-height: 100vh;
       padding: 45px 45px 80px;
-
       background:
         radial-gradient(
           circle at 20% 10%,
@@ -89,9 +84,7 @@
       display: block;
     }
 
-    /* スマホ */
     @media (max-width: 900px) {
-
       .menu-column {
         display: none;
       }
@@ -119,7 +112,6 @@
 
 <body>
 
-  <!-- 左メニュー -->
   <aside class="menu-column">
     <iframe
       src="left-menu.html"
@@ -128,13 +120,10 @@
     </iframe>
   </aside>
 
-  <!-- メニュー以外 -->
   <div class="content">
 
-    <!-- 左広告 -->
     <aside class="ad-space" id="left-ad"></aside>
 
-    <!-- 中央メイン -->
     <main class="main">
       <iframe
         src="home.html"
@@ -144,16 +133,28 @@
       </iframe>
     </main>
 
-    <!-- 右広告 -->
     <aside class="ad-space" id="right-ad"></aside>
 
   </div>
 
   <script>
+    const mainFrame = document.getElementById("main-frame");
+
+    function sendScreenMode() {
+      mainFrame.contentWindow.postMessage({
+        type: "screenMode",
+        mobile: window.innerWidth <= 900
+      }, "*");
+    }
+
+    mainFrame.addEventListener("load", sendScreenMode);
+
+    window.addEventListener("resize", sendScreenMode);
+
     window.addEventListener("message", event => {
       if (event.data?.type !== "changePage") return;
 
-      document.getElementById("main-frame").src = event.data.url;
+      mainFrame.src = event.data.url;
 
       document.getElementById("left-ad").replaceChildren();
       document.getElementById("right-ad").replaceChildren();
