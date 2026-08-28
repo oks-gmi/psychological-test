@@ -82,6 +82,15 @@
       line-height: 1.7;
     }
 
+    /* フッター */
+    .footer-frame {
+      width: 100%;
+      height: 80px;
+      border: 0;
+      display: block;
+      margin-top: 20px;
+    }
+
     @media (max-width: 600px) {
       .info-container {
         margin: 15px;
@@ -137,6 +146,39 @@
       item.appendChild(content);
 
       updateList.appendChild(item);
+
+    });
+  </script>
+
+  <!-- 共通フッター -->
+  <iframe
+    src="footer.html"
+    class="footer-frame"
+    title="共通フッター">
+  </iframe>
+
+  <script>
+    window.addEventListener("message", event => {
+
+      if (event.data?.type === "screenMode") {
+        document.body.classList.toggle("mobile", event.data.mobile);
+        return;
+      }
+
+      if (event.data?.type === "changePage") {
+        parent.postMessage({
+          type: "changePage",
+          url: event.data.url
+        }, "*");
+        return;
+      }
+
+      if (event.data?.type === "scrollTop") {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
 
     });
   </script>
