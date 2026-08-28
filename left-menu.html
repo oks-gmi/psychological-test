@@ -18,6 +18,7 @@
     }
 
     body {
+      margin: 0;
       font-family: sans-serif;
       color: #4a3f45;
     }
@@ -29,12 +30,12 @@
       padding: 25px 14px;
 
       background: #fff8fc;
-      border-right: 3px solid #f0dfe7;
-      box-shadow: 5px 0 14px rgba(90, 60, 75, 0.12);
+      border-right: 4px solid #ead5df;
+      box-shadow: 5px 0 16px rgba(90, 60, 75, 0.16);
     }
 
     .main-category {
-      margin: 0 0 10px;
+      margin-bottom: 10px;
       padding: 12px 8px;
 
       text-align: center;
@@ -42,7 +43,7 @@
       font-weight: 800;
 
       color: #40383d;
-      background: rgba(255, 255, 255, 0.88);
+      background: #fff;
       border-radius: 10px;
     }
 
@@ -59,32 +60,18 @@
       text-decoration: none;
 
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.55);
+      background: rgba(255, 255, 255, 0.65);
 
-      transition: background 0.2s ease, transform 0.2s ease;
+      transition: 0.2s;
     }
 
     .sub-category:hover {
-      background: #ffffff;
+      background: #fff;
       transform: translateX(2px);
     }
 
     .category-group + .category-group {
       margin-top: 30px;
-    }
-
-    .left-menu::-webkit-scrollbar {
-      width: 7px;
-    }
-
-    .left-menu::-webkit-scrollbar-thumb {
-      background: #d8d8d8;
-      border-radius: 10px;
-    }
-
-    .left-menu {
-      scrollbar-width: thin;
-      scrollbar-color: #d8d8d8 transparent;
     }
 
     @media (max-width: 900px) {
@@ -93,19 +80,16 @@
         overflow: visible;
         padding: 14px 10px;
 
-        border-right: none;
-        border-bottom: 3px solid #f0dfe7;
-        box-shadow: 0 3px 10px rgba(90, 60, 75, 0.10);
+        border-right: 0;
+        border-bottom: 4px solid #ead5df;
+        box-shadow: 0 3px 12px rgba(90, 60, 75, 0.12);
       }
 
       .main-category {
         font-size: 18px;
-        padding: 10px 6px;
       }
 
       .sub-category {
-        margin: 4px 5px;
-        padding: 8px 4px;
         font-size: 14px;
       }
 
@@ -140,11 +124,12 @@
 
 <script>
   document.querySelectorAll(".sub-category").forEach(link => {
-    link.addEventListener("click", e => {
-      e.preventDefault();
+    link.addEventListener("click", event => {
+      event.preventDefault();
+
       parent.postMessage({
         type: "changePage",
-        url: link.href
+        url: link.getAttribute("href")
       }, "*");
     });
   });
