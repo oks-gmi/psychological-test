@@ -86,36 +86,29 @@
       box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
     }
 
-    @media (max-width: 900px) {
-      .category-group {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 30px;
-      }
+    body.mobile .category-group {
+      max-width: 100%;
+      padding: 10px;
+    }
 
-      .main-category {
-        width: 100%;
-        font-size: 23px;
-      }
+    body.mobile .main-category {
+      width: 100%;
+      font-size: 23px;
+    }
 
-      .sub-category-grid {
-        grid-template-columns: 280px;
-        gap: 14px;
-      }
+    body.mobile .sub-category-grid {
+      grid-template-columns: 280px;
+      gap: 14px;
+    }
 
-      .sub-category-card {
-        width: 280px;
-        min-height: 78px;
-        font-size: 24px;
-      }
+    body.mobile .sub-category-card {
+      width: 280px;
+      min-height: 78px;
+      font-size: 24px;
     }
 
     @media (max-width: 320px) {
-      .sub-category-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .sub-category-card {
+      body.mobile .sub-category-card {
         width: 100%;
       }
     }
@@ -171,6 +164,14 @@
     </div>
 
   </section>
+
+  <script>
+    window.addEventListener("message", event => {
+      if (event.data?.type !== "screenMode") return;
+
+      document.body.classList.toggle("mobile", event.data.mobile);
+    });
+  </script>
 
 </body>
 </html>
