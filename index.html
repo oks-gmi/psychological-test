@@ -26,25 +26,31 @@
     /* 左メニュー */
     .menu-column {
       position: fixed;
-      left: 0;
       top: 0;
+      left: 0;
+
       width: 210px;
       height: 100vh;
+
       z-index: 10;
+      overflow: hidden;
     }
 
     .menu-frame {
       width: 100%;
       height: 100%;
       border: 0;
+      display: block;
     }
 
-    /* 右側全体 */
+    /* 左メニュー以外 */
     .content {
       margin-left: 210px;
+
       display: grid;
       grid-template-columns: 260px minmax(500px, 900px) 260px;
       justify-content: center;
+
       min-height: 100vh;
     }
 
@@ -54,10 +60,11 @@
       background: #bfefff;
     }
 
-    /* メイン */
+    /* 中央メイン */
     .main {
       min-height: 100vh;
       padding: 45px 45px 80px;
+
       background:
         radial-gradient(
           circle at 20% 10%,
@@ -84,6 +91,7 @@
       display: block;
     }
 
+    /* スマホ */
     @media (max-width: 900px) {
       .menu-column {
         position: static;
@@ -117,20 +125,22 @@
 
 <body>
 
-  <!-- 固定メニュー -->
+  <!-- 左メニュー -->
   <aside class="menu-column">
     <iframe
-      src="leftmenu.html"
+      src="left-menu.html"
       class="menu-frame"
       title="カテゴリメニュー">
     </iframe>
   </aside>
 
-  <!-- メニュー以外 -->
+  <!-- 左メニュー以外 -->
   <div class="content">
 
+    <!-- 左広告 -->
     <aside class="ad-space" id="left-ad"></aside>
 
+    <!-- 中央メイン -->
     <main class="main">
       <iframe
         src="home.html"
@@ -140,6 +150,7 @@
       </iframe>
     </main>
 
+    <!-- 右広告 -->
     <aside class="ad-space" id="right-ad"></aside>
 
   </div>
@@ -152,8 +163,6 @@
 
       document.getElementById("left-ad").replaceChildren();
       document.getElementById("right-ad").replaceChildren();
-
-      location.hash = event.data.url;
     });
   </script>
 
