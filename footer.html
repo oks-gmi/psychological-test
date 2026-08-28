@@ -22,6 +22,7 @@
     }
 
     .footer {
+      width: 100%;
       padding: 20px 10px;
       text-align: center;
       font-size: 14px;
@@ -32,6 +33,7 @@
       color: #5b5157;
       text-decoration: none;
       margin: 0 6px;
+      cursor: pointer;
     }
 
     .footer a:hover {
@@ -42,8 +44,15 @@
       color: #b5aeb2;
     }
 
-    .back-to-top {
-      cursor: pointer;
+    @media (max-width: 600px) {
+      .footer {
+        padding: 18px 5px;
+        font-size: 13px;
+      }
+
+      .footer a {
+        margin: 0 4px;
+      }
     }
   </style>
 </head>
@@ -52,27 +61,38 @@
 
   <footer class="footer">
 
-    <a href="home.html">ホーム</a>
+    <a href="home.html" data-page="home.html">ホーム</a>
     <span class="separator">｜</span>
 
-    <a href="info.html">更新情報</a>
+    <a href="info.html" data-page="info.html">更新情報</a>
     <span class="separator">｜</span>
 
-    <a href="privacy.html">プライバシーポリシー</a>
+    <a href="privacy.html" data-page="privacy.html">プライバシーポリシー</a>
     <span class="separator">｜</span>
 
-    <a href="terms.html">利用規約</a>
+    <a href="terms.html" data-page="terms.html">利用規約</a>
     <span class="separator">｜</span>
 
-    <a href="disclaimer.html">免責事項</a>
+    <a href="disclaimer.html" data-page="disclaimer.html">免責事項</a>
     <span class="separator">｜</span>
 
-    <a href="#" class="back-to-top">ページ上部へ</a>
+    <a href="#" id="back-to-top">ページ上部へ</a>
 
   </footer>
 
   <script>
-    document.querySelector(".back-to-top").addEventListener("click", event => {
+    document.querySelectorAll(".footer a[data-page]").forEach(link => {
+      link.addEventListener("click", event => {
+        event.preventDefault();
+
+        parent.postMessage({
+          type: "changePage",
+          url: link.dataset.page
+        }, "*");
+      });
+    });
+
+    document.getElementById("back-to-top").addEventListener("click", event => {
       event.preventDefault();
 
       parent.postMessage({
