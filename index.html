@@ -23,21 +23,17 @@
       background: #ffffff;
     }
 
-    /* 全体の4列レイアウト */
     .page {
       display: grid;
-      grid-template-columns: 190px 260px minmax(500px, 900px) 260px;
-      justify-content: center;
+      grid-template-columns: 190px minmax(0, 1fr);
       min-height: 100vh;
     }
 
-    /* 左メニュー */
     .menu-column {
       height: 100vh;
       position: sticky;
       top: 0;
       overflow: hidden;
-      background: transparent;
     }
 
     .menu-frame {
@@ -47,13 +43,18 @@
       border: none;
     }
 
-    /* 左右の広告スペース */
+    .content {
+      display: grid;
+      grid-template-columns: 260px minmax(500px, 900px) 260px;
+      justify-content: center;
+      min-width: 0;
+    }
+
     .ad-space {
       min-height: 100vh;
       background: #bfefff;
     }
 
-    /* 中央メインコンテンツ */
     .main {
       min-height: 100vh;
       padding: 45px 45px 80px;
@@ -77,62 +78,13 @@
         );
     }
 
-    /* 中央の大カテゴリー */
-    .main-category {
-      width: fit-content;
-      min-width: 230px;
-      margin: 0 auto 28px;
-      padding: 15px 28px;
-
-      text-align: center;
-      font-size: 24px;
-      font-weight: 800;
-
-      color: #463b41;
-      background: rgba(255, 255, 255, 0.9);
-
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+    .main iframe {
+      width: 100%;
+      min-height: calc(100vh - 125px);
+      border: none;
+      display: block;
     }
 
-    /* 小カテゴリー3列 */
-    .sub-category-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-bottom: 65px;
-    }
-
-    .sub-category-card {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      min-height: 95px;
-      padding: 15px;
-
-      text-decoration: none;
-      color: #4a3f45;
-
-      font-size: 17px;
-      font-weight: 800;
-      text-align: center;
-
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 16px;
-      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.07);
-
-      transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-    }
-
-    .sub-category-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
-    }
-
-    /* スマホ */
     @media (max-width: 900px) {
       .page {
         display: block;
@@ -147,6 +99,10 @@
         height: 320px;
       }
 
+      .content {
+        display: block;
+      }
+
       .ad-space {
         display: none;
       }
@@ -156,21 +112,8 @@
         padding: 30px 15px 60px;
       }
 
-      .main-category {
-        min-width: 200px;
-        font-size: 21px;
-        margin-bottom: 20px;
-      }
-
-      .sub-category-grid {
-        grid-template-columns: 1fr;
-        gap: 14px;
-        margin-bottom: 45px;
-      }
-
-      .sub-category-card {
-        min-height: 80px;
-        font-size: 17px;
+      .main iframe {
+        min-height: 700px;
       }
     }
   </style>
@@ -178,76 +121,41 @@
 
 <body>
 
-  <div class="page">
+<div class="page">
 
-    <!-- 左：共通メニュー -->
-    <aside class="menu-column">
-      <iframe
-        src="left-menu.html"
-        class="menu-frame"
-        title="カテゴリメニュー">
-      </iframe>
-    </aside>
+  <aside class="menu-column">
+    <iframe
+      src="LeftMenu.html"
+      class="menu-frame"
+      title="カテゴリメニュー">
+    </iframe>
+  </aside>
 
-    <!-- 左：広告スペース -->
+  <div class="content">
+
     <aside class="ad-space"></aside>
 
-    <!-- 中央：メインコンテンツ -->
     <main class="main">
-
-      <!-- 大カテゴリー：心理テスト -->
-      <section>
-        <div class="main-category">
-          心理テスト
-        </div>
-
-        <div class="sub-category-grid">
-
-          <a href="personality.html" class="sub-category-card">
-            性格診断
-          </a>
-
-          <a href="love.html" class="sub-category-card">
-            恋愛診断
-          </a>
-
-          <a href="psychopath.html" class="sub-category-card">
-            サイコパス診断
-          </a>
-
-        </div>
-      </section>
-
-
-      <!-- 大カテゴリー：クイズ -->
-      <section>
-        <div class="main-category">
-          クイズ
-        </div>
-
-        <div class="sub-category-grid">
-
-          <a href="general-knowledge.html" class="sub-category-card">
-            一般常識
-          </a>
-
-          <a href="kanji-reading.html" class="sub-category-card">
-            漢字読み問題
-          </a>
-
-          <a href="riddles.html" class="sub-category-card">
-            なぞなぞ
-          </a>
-
-        </div>
-      </section>
-
+      <iframe
+        id="main-frame"
+        src="home.html"
+        title="メインコンテンツ">
+      </iframe>
     </main>
 
-    <!-- 右：広告スペース -->
     <aside class="ad-space"></aside>
 
   </div>
+
+</div>
+
+<script>
+  window.addEventListener("message", e => {
+    if (e.data?.type === "changePage") {
+      document.getElementById("main-frame").src = e.data.url;
+    }
+  });
+</script>
 
 </body>
 </html>
