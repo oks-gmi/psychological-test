@@ -28,11 +28,11 @@
       position: fixed;
       top: 0;
       left: 0;
-
       width: 210px;
       height: 100vh;
-
       z-index: 10;
+      border-right: 4px solid #d9c0cc;
+      box-shadow: 5px 0 14px rgba(80, 55, 70, 0.18);
       overflow: hidden;
     }
 
@@ -46,11 +46,9 @@
     /* 左メニュー以外 */
     .content {
       margin-left: 210px;
-
       display: grid;
       grid-template-columns: 260px minmax(500px, 900px) 260px;
       justify-content: center;
-
       min-height: 100vh;
     }
 
@@ -93,14 +91,9 @@
 
     /* スマホ */
     @media (max-width: 900px) {
-      .menu-column {
-        position: static;
-        width: 100%;
-        height: auto;
-      }
 
-      .menu-frame {
-        height: 320px;
+      .menu-column {
+        display: none;
       }
 
       .content {
@@ -109,11 +102,14 @@
       }
 
       .ad-space {
-        display: none;
+        display: block;
+        width: 100%;
+        min-height: 70px;
       }
 
       .main {
-        padding: 30px 15px 60px;
+        min-height: auto;
+        padding: 20px 15px 40px;
       }
 
       .main-frame {
@@ -134,20 +130,28 @@
     </iframe>
   </aside>
 
-  <!-- 左メニュー以外 -->
+  <!-- メニュー以外 -->
   <div class="content">
 
     <!-- 左広告 -->
     <aside class="ad-space" id="left-ad"></aside>
 
-    <!-- 中央メイン -->
+    <!-- 中央 -->
     <main class="main">
+
+      <!-- スマホ用広告 -->
+      <div class="ad-space" id="mobile-ad-top"></div>
+
       <iframe
         src="home.html"
         class="main-frame"
         id="main-frame"
         title="メインコンテンツ">
       </iframe>
+
+      <!-- スマホ用広告 -->
+      <div class="ad-space" id="mobile-ad-bottom"></div>
+
     </main>
 
     <!-- 右広告 -->
@@ -163,6 +167,8 @@
 
       document.getElementById("left-ad").replaceChildren();
       document.getElementById("right-ad").replaceChildren();
+      document.getElementById("mobile-ad-top").replaceChildren();
+      document.getElementById("mobile-ad-bottom").replaceChildren();
     });
   </script>
 
