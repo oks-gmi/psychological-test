@@ -152,6 +152,8 @@
     const mainFrame = document.getElementById("main-frame");
 
     function sendScreenMode() {
+      if (!mainFrame.contentWindow) return;
+
       mainFrame.contentWindow.postMessage({
         type: "screenMode",
         mobile: window.innerWidth <= 900
@@ -163,12 +165,16 @@
     window.addEventListener("resize", sendScreenMode);
 
     window.addEventListener("message", event => {
-      if (event.data?.type !== "changePage") return;
 
-      mainFrame.src = event.data.url;
+      if (event.data?.type === "changePage") {
+        mainFrame.src = event.data.url;
 
-      document.getElementById("left-ad").replaceChildren();
-      document.getElementById("right-ad").replaceChildren();
+        document.getElementById("left-ad").replaceChildren();
+        document.getElementById("right-ad").replaceChildren();
+
+        return;
+      }
+
     });
   </script>
 
