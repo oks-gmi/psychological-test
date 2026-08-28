@@ -31,6 +31,24 @@
       background: #fff8fc;
     }
 
+    .top-menu {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 25px;
+      padding: 0 5px;
+    }
+
+    .top-menu a {
+      color: #4a3f45;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .top-menu a:hover {
+      text-decoration: underline;
+    }
+
     .main-category {
       margin-bottom: 10px;
       padding: 12px 8px;
@@ -97,6 +115,11 @@
 
   <nav class="left-menu">
 
+    <div class="top-menu">
+      <a href="home.html">ホーム</a>
+      <a href="info.html">更新情報</a>
+    </div>
+
     <div class="category-group">
 
       <div class="main-category">
@@ -140,7 +163,7 @@
   </nav>
 
   <script>
-    document.querySelectorAll(".sub-category").forEach(link => {
+    document.querySelectorAll(".top-menu a, .sub-category").forEach(link => {
       link.addEventListener("click", event => {
         event.preventDefault();
 
