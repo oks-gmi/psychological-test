@@ -1,1 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Left Menu</title>
 
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    body {
+      font-family: sans-serif;
+      color: #4a3f45;
+    }
+
+    /* 左側メニュー全体 */
+    .left-menu {
+      width: 100%;
+      height: 100vh;
+      overflow-y: auto;
+
+      padding: 25px 14px;
+
+      background: linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #fff8fc 45%,
+        #f7fbff 75%,
+        #ffffff 100%
+      );
+
+      border-right: 1px solid #e8e8e8;
+      box-shadow: 3px 0 12px rgba(0, 0, 0, 0.06);
+    }
+
+    /* 大カテゴリー */
+    .main-category {
+      margin: 0 0 10px;
+      padding: 12px 8px;
+
+      text-align: center;
+      font-size: 20px;
+      font-weight: 800;
+
+      color: #40383d;
+      background: rgba(255, 255, 255, 0.88);
+
+      border-radius: 10px;
+    }
+
+    /* 小カテゴリー */
+    .sub-category {
+      display: block;
+
+      margin: 5px 7px;
+      padding: 9px 6px;
+
+      text-align: center;
+      font-size: 15px;
+      font-weight: 700;
+
+      color: #5b5157;
+      text-decoration: none;
+
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.55);
+
+      transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    /* 小カテゴリーにマウスを乗せたとき */
+    .sub-category:hover {
+      background: rgba(255, 255, 255, 0.95);
+      transform: translateX(2px);
+    }
+
+    /* 大カテゴリー同士の間隔 */
+    .category-group + .category-group {
+      margin-top: 30px;
+    }
+
+    /* 独立スクロール時のスクロールバー */
+    .left-menu::-webkit-scrollbar {
+      width: 7px;
+    }
+
+    .left-menu::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .left-menu::-webkit-scrollbar-thumb {
+      background: #d8d8d8;
+      border-radius: 10px;
+    }
+
+    /* Firefox */
+    .left-menu {
+      scrollbar-width: thin;
+      scrollbar-color: #d8d8d8 transparent;
+    }
+
+    /* スマホ */
+    @media (max-width: 900px) {
+      .left-menu {
+        height: auto;
+        overflow: visible;
+
+        padding: 14px 10px;
+
+        border-right: none;
+        border-bottom: 1px solid #e8e8e8;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .main-category {
+        font-size: 18px;
+        padding: 10px 6px;
+      }
+
+      .sub-category {
+        margin: 4px 5px;
+        padding: 8px 4px;
+        font-size: 14px;
+      }
+
+      .category-group + .category-group {
+        margin-top: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="left-menu">
+
+    <!-- 心理テスト -->
+    <div class="category-group">
+
+      <div class="main-category">
+        心理テスト
+      </div>
+
+      <a href="personality.html" class="sub-category">
+        性格診断
+      </a>
+
+      <a href="love.html" class="sub-category">
+        恋愛診断
+      </a>
+
+      <a href="psychopath.html" class="sub-category">
+        サイコパス診断
+      </a>
+
+    </div>
+
+
+    <!-- クイズ -->
+    <div class="category-group">
+
+      <div class="main-category">
+        クイズ
+      </div>
+
+      <a href="general-knowledge.html" class="sub-category">
+        一般常識
+      </a>
+
+      <a href="kanji-reading.html" class="sub-category">
+        漢字読み問題
+      </a>
+
+      <a href="riddles.html" class="sub-category">
+        なぞなぞ
+      </a>
+
+    </div>
+
+  </nav>
+
+</body>
+</html>
