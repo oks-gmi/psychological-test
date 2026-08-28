@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      color: #5b5157;
+      background: transparent;
+    }
+
+    .footer {
+      padding: 20px 10px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    .footer a {
+      color: #5b5157;
+      text-decoration: none;
+      margin: 0 6px;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .separator {
+      color: #b5aeb2;
+    }
+
+    .back-to-top {
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <footer class="footer">
+
+    <a href="home.html">ホーム</a>
+    <span class="separator">｜</span>
+
+    <a href="info.html">更新情報</a>
+    <span class="separator">｜</span>
+
+    <a href="privacy.html">プライバシーポリシー</a>
+    <span class="separator">｜</span>
+
+    <a href="terms.html">利用規約</a>
+    <span class="separator">｜</span>
+
+    <a href="disclaimer.html">免責事項</a>
+    <span class="separator">｜</span>
+
+    <a href="#" class="back-to-top">ページ上部へ</a>
+
+  </footer>
+
+  <script>
+    document.querySelector(".back-to-top").addEventListener("click", event => {
+      event.preventDefault();
+
+      parent.postMessage({
+        type: "scrollTop"
+      }, "*");
+    });
+  </script>
+
+</body>
+</html>
