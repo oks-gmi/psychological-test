@@ -20,12 +20,7 @@
     body {
       font-family: sans-serif;
       color: #4a3f45;
-      background: #ffffff;
-    }
-
-    /* 全体 */
-    .page {
-      min-height: 100vh;
+      background: #fff;
     }
 
     /* 左メニュー */
@@ -33,29 +28,23 @@
       position: fixed;
       left: 0;
       top: 0;
-
       width: 210px;
       height: 100vh;
-
-      overflow: hidden;
       z-index: 10;
     }
 
     .menu-frame {
-      display: block;
       width: 100%;
-      height: 100vh;
-      border: none;
+      height: 100%;
+      border: 0;
     }
 
-    /* 左メニュー以外 */
+    /* 右側全体 */
     .content {
       margin-left: 210px;
-
       display: grid;
       grid-template-columns: 260px minmax(500px, 900px) 260px;
       justify-content: center;
-
       min-height: 100vh;
     }
 
@@ -65,11 +54,10 @@
       background: #bfefff;
     }
 
-    /* 中央メイン */
+    /* メイン */
     .main {
       min-height: 100vh;
       padding: 45px 45px 80px;
-
       background:
         radial-gradient(
           circle at 20% 10%,
@@ -89,17 +77,14 @@
         );
     }
 
-    /* メインページ */
-    .main iframe {
-      display: block;
+    .main-frame {
       width: 100%;
       min-height: calc(100vh - 125px);
-      border: none;
+      border: 0;
+      display: block;
     }
 
-    /* スマホ */
     @media (max-width: 900px) {
-
       .menu-column {
         position: static;
         width: 100%;
@@ -120,11 +105,10 @@
       }
 
       .main {
-        min-height: auto;
         padding: 30px 15px 60px;
       }
 
-      .main iframe {
+      .main-frame {
         min-height: 700px;
       }
     }
@@ -133,46 +117,45 @@
 
 <body>
 
-<div class="page">
-
-  <!-- 左メニュー -->
+  <!-- 固定メニュー -->
   <aside class="menu-column">
     <iframe
-      src="LeftMenu.html"
+      src="leftmenu.html"
       class="menu-frame"
       title="カテゴリメニュー">
     </iframe>
   </aside>
 
-  <!-- 左メニュー以外 -->
+  <!-- メニュー以外 -->
   <div class="content">
 
-    <!-- 左広告 -->
-    <aside class="ad-space"></aside>
+    <aside class="ad-space" id="left-ad"></aside>
 
-    <!-- 中央メイン -->
     <main class="main">
       <iframe
-        id="main-frame"
         src="home.html"
+        class="main-frame"
+        id="main-frame"
         title="メインコンテンツ">
       </iframe>
     </main>
 
-    <!-- 右広告 -->
-    <aside class="ad-space"></aside>
+    <aside class="ad-space" id="right-ad"></aside>
 
   </div>
 
-</div>
+  <script>
+    window.addEventListener("message", event => {
+      if (event.data?.type !== "changePage") return;
 
-<script>
-  window.addEventListener("message", event => {
-    if (event.data?.type === "changePage") {
       document.getElementById("main-frame").src = event.data.url;
-    }
-  });
-</script>
+
+      document.getElementById("left-ad").replaceChildren();
+      document.getElementById("right-ad").replaceChildren();
+
+      location.hash = event.data.url;
+    });
+  </script>
 
 </body>
 </html>
