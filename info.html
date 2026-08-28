@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>更新情報</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      color: #4a3f45;
+      background: #fff8fc;
+    }
+
+    .info-container {
+      width: 100%;
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 25px;
+
+      background: #ffffff;
+      border: 1px solid #000000;
+    }
+
+    .info-title {
+      margin: 0 0 25px;
+
+      text-align: center;
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .update-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .update-item {
+      position: relative;
+      padding: 0 0 22px 22px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid #d8d8d8;
+    }
+
+    .update-item:last-child {
+      margin-bottom: 0;
+      border-bottom: none;
+    }
+
+    .update-item::before {
+      content: "・";
+      position: absolute;
+      left: 0;
+      top: 0;
+
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .update-date {
+      margin-bottom: 6px;
+
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .update-content {
+      padding-left: 1em;
+
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 600px) {
+      .info-container {
+        margin: 15px;
+        padding: 18px;
+      }
+
+      .info-title {
+        font-size: 24px;
+      }
+
+      .update-date {
+        font-size: 16px;
+      }
+
+      .update-content {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="info-container">
+
+    <h1 class="info-title">
+      更新情報
+    </h1>
+
+    <ul class="update-list">
+
+      <li class="update-item">
+
+        <div class="update-date">
+          2026年8月29日
+        </div>
+
+        <div class="update-content">
+          新しい心理テストを追加しました。
+        </div>
+
+      </li>
+
+      <li class="update-item">
+
+        <div class="update-date">
+          2026年8月28日
+        </div>
+
+        <div class="update-content">
+          左メニューを変更しました。
+        </div>
+
+      </li>
+
+      <li class="update-item">
+
+        <div class="update-date">
+          2026年8月27日
+        </div>
+
+        <div class="update-content">
+          サイトを公開しました。
+        </div>
+
+      </li>
+
+    </ul>
+
+  </main>
+
+</body>
+</html>
