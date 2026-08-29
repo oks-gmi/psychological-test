@@ -252,29 +252,34 @@
     const pageScrollContent =
       document.getElementById("page-scroll-content");
 
-    let mainPageHeight = window.innerHeight;
+    /*
+     * 中央ページの実際の最大スクロール量
+     */
+    let mainScrollMax = 0;
+
 
     /*
      * main-scroll.js から送られてきた
-     * 中央ページ全体の高さを受け取る
+     * 実際の最大スクロール量を受け取る
      */
     window.addEventListener("message", event => {
 
-      if (event.data?.type === "mainPageHeight") {
+      if (event.data?.type === "mainScrollInfo") {
 
-        const height = Number(event.data.height);
+        const maxScroll = Number(event.data.maxScroll);
 
-        if (!Number.isFinite(height)) {
+        if (!Number.isFinite(maxScroll)) {
           return;
         }
 
-        mainPageHeight = Math.max(
-          height,
-          window.innerHeight
-        );
+        mainScrollMax = Math.max(0, maxScroll);
 
+        /*
+         * 右端スクロールバーのスクロール範囲を
+         * 中央ページの実際の最大スクロール量に合わせる
+         */
         pageScrollContent.style.height =
-          mainPageHeight + "px";
+          (mainScrollMax + window.innerHeight) + "px";
 
         return;
       }
@@ -309,6 +314,7 @@
 
     });
 
+
     /*
      * 右端スクロールバーと
      * 中央ページのスクロール位置を同期
@@ -319,21 +325,22 @@
         pageScroll.scrollHeight -
         pageScroll.clientHeight;
 
-      const mainScrollMax =
-        Math.max(
-          0,
-          mainPageHeight -
-          window.innerHeight
-        );
-
-      if (pageScrollMax <= 0) {
+      if (pageScrollMax <= 0 || mainScrollMax <= 0) {
         return;
       }
 
+      /*
+       * 右端スクロールバーの位置を
+       * 0〜1の割合に変換
+       */
       const ratio =
         pageScroll.scrollTop /
         pageScrollMax;
 
+      /*
+       * 中央ページの実際の最大スクロール量に
+       * 同じ割合を適用
+       */
       const mainScrollTop =
         ratio * mainScrollMax;
 
@@ -349,6 +356,7 @@
       }
 
     });
+
 
     /*
      * マウスホイール
@@ -408,16 +416,23 @@
       passive: false
     });
 
+
     /*
      * 中央ページ読み込み
      */
     mainFrame.addEventListener("load", () => {
 
+      mainScrollMax = 0;
+
       pageScroll.scrollTop = 0;
+
+      pageScrollContent.style.height =
+        window.innerHeight + "px";
 
       sendScreenMode();
 
     });
+
 
     /*
      * ウィンドウサイズ変更
@@ -427,6 +442,7 @@
       sendScreenMode();
 
     });
+
 
     /*
      * 中央ページへ画面モードを通知
