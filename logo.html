@@ -37,9 +37,9 @@
 
       padding: 0 10px;
 
-      background: #ffffff;
+      background: transparent;
 
-      border: 1px solid #ffffff;
+      border: 0;
 
       box-shadow:
         0 3px 10px rgba(0, 0, 0, 0.18);
@@ -54,13 +54,21 @@
 
       color: #000000;
 
-      font-size: 50px;
+      font-size: 48px;
       font-weight: 900;
 
       white-space: nowrap;
 
       text-align: center;
 
+      /*
+       * 文字の白い2px縁取り
+       */
+      -webkit-text-stroke: 2px #ffffff;
+
+      /*
+       * 黒い薄い影
+       */
       text-shadow:
         2px 2px 3px rgba(0, 0, 0, 0.45);
     }
@@ -75,7 +83,7 @@
         font-size: clamp(
           28px,
           11vw,
-          50px
+          48px
         );
       }
     }
