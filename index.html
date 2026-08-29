@@ -174,7 +174,26 @@
 
         padding: 0;
 
-        background: none;
+        /*
+         * スマホでも薄ピンクの背景を表示
+         */
+        background:
+          radial-gradient(
+            circle at 20% 10%,
+            rgba(255, 214, 232, 0.55),
+            transparent 35%
+          ),
+          radial-gradient(
+            circle at 80% 25%,
+            rgba(255, 231, 242, 0.45),
+            transparent 35%
+          ),
+          linear-gradient(
+            135deg,
+            #fff0f6 0%,
+            #fff6fa 45%,
+            #fffdfd 100%
+          );
 
         overflow: visible;
       }
