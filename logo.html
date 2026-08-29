@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&display=swap" rel="stylesheet">
@@ -68,9 +67,20 @@
 
 <body>
 
-  <a href="home.html" class="site-logo">
+  <a href="home.html" class="site-logo" id="site-logo">
     心理テスト＆クイズ｜GMI
   </a>
+
+  <script>
+    document.getElementById("site-logo").addEventListener("click", event => {
+      event.preventDefault();
+
+      parent.postMessage({
+        type: "changePage",
+        url: "home.html"
+      }, "*");
+    });
+  </script>
 
 </body>
 </html>
