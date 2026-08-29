@@ -14,15 +14,14 @@
     body {
       margin: 0;
       padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
+      min-height: 100%;
     }
 
     body {
       font-family: sans-serif;
       color: #4a3f45;
       background: #fff;
+      overflow: hidden;
     }
 
     /* 左メニュー */
@@ -47,7 +46,7 @@
       display: block;
     }
 
-    /* メニュー以外の全体 */
+    /* メニュー以外 */
     .content {
       position: fixed;
       top: 0;
@@ -64,7 +63,6 @@
 
     /* 広告 */
     .ad-space {
-      height: 100vh;
       min-height: 100vh;
       background: #bfefff;
       overflow: hidden;
@@ -72,8 +70,10 @@
 
     /* 中央メイン */
     .main {
-      height: 100vh;
-      min-height: 0;
+      position: relative;
+
+      min-height: 100vh;
+      padding: 45px 45px 80px;
 
       background:
         radial-gradient(
@@ -93,18 +93,52 @@
           #fffdfd 100%
         );
 
-      overflow-y: scroll;
-      overflow-x: hidden;
+      overflow: hidden;
+    }
+
+    /*
+     * 中央メインを表示する領域
+     * スクロールバーはここには表示しない
+     */
+    .main-frame-wrapper {
+      width: 100%;
+      height: 100%;
+
+      overflow: hidden;
     }
 
     .main-frame {
       width: 100%;
-      min-height: 100vh;
-      height: auto;
+      height: 100%;
 
       border: 0;
       display: block;
-      overflow: hidden;
+    }
+
+    /*
+     * 画面右端のスクロールバー用領域
+     *
+     * 実際の中央メインのスクロール量と連動する
+     */
+    .page-scroll {
+      position: fixed;
+      top: 0;
+      right: 0;
+
+      width: 18px;
+      height: 100vh;
+
+      overflow-y: scroll;
+      overflow-x: hidden;
+
+      z-index: 20;
+
+      background: transparent;
+    }
+
+    .page-scroll-content {
+      width: 1px;
+      height: 100vh;
     }
 
     /* スマホ */
@@ -114,6 +148,10 @@
       body {
         height: auto;
         overflow: auto;
+      }
+
+      body {
+        overflow-y: auto;
       }
 
       .menu-column {
@@ -135,17 +173,30 @@
 
       .main {
         width: 100%;
+        min-height: auto;
         height: auto;
-        min-height: 100vh;
+
+        padding: 0;
+
+        background: none;
 
         overflow: visible;
-        background: none;
+      }
+
+      .main-frame-wrapper {
+        width: 100%;
+        height: auto;
+        overflow: visible;
       }
 
       .main-frame {
         width: 100%;
         min-height: 700px;
         height: auto;
+      }
+
+      .page-scroll {
+        display: none;
       }
     }
   </style>
@@ -172,14 +223,18 @@
     <aside class="ad-space" id="left-ad"></aside>
 
     <!-- 中央メイン -->
-    <main class="main" id="main-scroll">
+    <main class="main" id="main-area">
 
-      <iframe
-        src="home.html"
-        class="main-frame"
-        id="main-frame"
-        title="メインコンテンツ">
-      </iframe>
+      <div class="main-frame-wrapper">
+
+        <iframe
+          src="home.html"
+          class="main-frame"
+          id="main-frame"
+          title="メインコンテンツ">
+        </iframe>
+
+      </div>
 
     </main>
 
@@ -188,19 +243,31 @@
 
   </div>
 
+  <!-- 画面右端のスクロールバー -->
+  <div class="page-scroll" id="page-scroll">
+    <div class="page-scroll-content" id="page-scroll-content"></div>
+  </div>
+
   <script>
     const mainFrame = document.getElementById("main-frame");
-    const mainScroll = document.getElementById("main-scroll");
+    const mainArea = document.getElementById("main-area");
+
     const menuColumn = document.getElementById("menu-column");
     const menuFrame = document.getElementById("menu-frame");
 
+    const pageScroll = document.getElementById("page-scroll");
+    const pageScrollContent =
+      document.getElementById("page-scroll-content");
+
+    let mainPageHeight = window.innerHeight;
+
     /*
-     * 中央メインのiframeの高さを、
-     * 中身に合わせて自動調整する
+     * 中央ページの高さを取得
      */
-    function resizeMainFrame() {
+    function updateMainPageHeight() {
 
       try {
+
         const doc = mainFrame.contentDocument;
 
         if (!doc) return;
@@ -213,42 +280,154 @@
           ? doc.documentElement.scrollHeight
           : 0;
 
-        const height = Math.max(
+        mainPageHeight = Math.max(
           bodyHeight,
           htmlHeight,
           window.innerHeight
         );
 
-        mainFrame.style.height = height + "px";
+        /*
+         * 右端スクロールバーの長さを
+         * 中央ページの高さに合わせる
+         */
+        pageScrollContent.style.height =
+          mainPageHeight + "px";
 
       } catch (error) {
-        mainFrame.style.height = "100vh";
+
+        mainPageHeight = window.innerHeight;
+
+        pageScrollContent.style.height =
+          mainPageHeight + "px";
       }
     }
 
     /*
-     * メインページ読み込み時
+     * 中央メインのスクロール位置を変更
+     */
+    function setMainScroll(scrollTop) {
+
+      const maxScroll =
+        Math.max(
+          0,
+          mainPageHeight - window.innerHeight
+        );
+
+      const value = Math.max(
+        0,
+        Math.min(scrollTop, maxScroll)
+      );
+
+      /*
+       * iframe内部をスクロール
+       */
+      try {
+
+        mainFrame.contentWindow.scrollTo({
+          top: value,
+          left: 0,
+          behavior: "auto"
+        });
+
+      } catch (error) {
+        // iframe側のスクロールが利用できない場合
+      }
+    }
+
+    /*
+     * 右端スクロールバーを動かしたとき
+     */
+    pageScroll.addEventListener("scroll", () => {
+
+      setMainScroll(pageScroll.scrollTop);
+
+    });
+
+    /*
+     * マウスホイール
+     *
+     * 左メニュー上
+     * → 左メニューをスクロール
+     *
+     * それ以外
+     * → 中央メインをスクロール
+     */
+    window.addEventListener("wheel", event => {
+
+      if (window.innerWidth <= 900) {
+        return;
+      }
+
+      const menuRect =
+        menuColumn.getBoundingClientRect();
+
+      const mouseOnMenu =
+        event.clientX >= menuRect.left &&
+        event.clientX <= menuRect.right &&
+        event.clientY >= menuRect.top &&
+        event.clientY <= menuRect.bottom;
+
+      /*
+       * 左メニュー上
+       */
+      if (mouseOnMenu) {
+
+        try {
+
+          menuFrame.contentWindow.scrollBy({
+            top: event.deltaY,
+            left: 0,
+            behavior: "auto"
+          });
+
+        } catch (error) {
+          // 左メニュー側で処理
+        }
+
+        event.preventDefault();
+
+        return;
+      }
+
+      /*
+       * 左メニュー以外
+       * → 中央メイン
+       */
+      pageScroll.scrollTop += event.deltaY;
+
+      event.preventDefault();
+
+    }, {
+      passive: false
+    });
+
+    /*
+     * 中央ページ読み込み
      */
     mainFrame.addEventListener("load", () => {
 
-      resizeMainFrame();
+      updateMainPageHeight();
 
       sendScreenMode();
 
-      setTimeout(resizeMainFrame, 100);
-      setTimeout(resizeMainFrame, 500);
+      setTimeout(updateMainPageHeight, 100);
+      setTimeout(updateMainPageHeight, 500);
+      setTimeout(updateMainPageHeight, 1000);
+
     });
 
     /*
-     * 画面サイズ変更
+     * ウィンドウサイズ変更
      */
     window.addEventListener("resize", () => {
-      resizeMainFrame();
+
+      updateMainPageHeight();
       sendScreenMode();
+
     });
 
     /*
-     * 画面モードを中央ページへ通知
+     * 中央ページへ画面モードを通知
      */
     function sendScreenMode() {
 
@@ -258,57 +437,8 @@
         type: "screenMode",
         mobile: window.innerWidth <= 900
       }, "*");
+
     }
-
-    /*
-     * マウスホイールの振り分け
-     *
-     * 左メニュー上
-     * → 左メニュー
-     *
-     * それ以外
-     * → 中央メイン
-     */
-    window.addEventListener("wheel", event => {
-
-      if (window.innerWidth <= 900) {
-        return;
-      }
-
-      const menuRect = menuColumn.getBoundingClientRect();
-
-      const mouseOnMenu =
-        event.clientX >= menuRect.left &&
-        event.clientX <= menuRect.right &&
-        event.clientY >= menuRect.top &&
-        event.clientY <= menuRect.bottom;
-
-      if (mouseOnMenu) {
-
-        try {
-          menuFrame.contentWindow.scrollBy({
-            top: event.deltaY,
-            left: 0,
-            behavior: "auto"
-          });
-        } catch (error) {
-          // 左メニュー側のスクロール処理が利用できない場合は何もしない
-        }
-
-        event.preventDefault();
-        return;
-      }
-
-      /*
-       * 左メニュー以外なら中央メインをスクロール
-       */
-      mainScroll.scrollTop += event.deltaY;
-
-      event.preventDefault();
-
-    }, {
-      passive: false
-    });
 
     /*
      * ページ切り替え
@@ -319,10 +449,15 @@
 
         mainFrame.src = event.data.url;
 
-        document.getElementById("left-ad").replaceChildren();
-        document.getElementById("right-ad").replaceChildren();
+        document
+          .getElementById("left-ad")
+          .replaceChildren();
 
-        mainScroll.scrollTop = 0;
+        document
+          .getElementById("right-ad")
+          .replaceChildren();
+
+        pageScroll.scrollTop = 0;
 
         return;
       }
