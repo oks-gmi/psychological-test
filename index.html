@@ -245,8 +245,6 @@
 
   <script>
     const mainFrame = document.getElementById("main-frame");
-    const mainArea = document.getElementById("main-area");
-
     const menuColumn = document.getElementById("menu-column");
     const menuFrame = document.getElementById("menu-frame");
 
@@ -257,77 +255,98 @@
     let mainPageHeight = window.innerHeight;
 
     /*
-     * 中央ページの高さを取得
+     * main-scroll.js から送られてきた
+     * 中央ページ全体の高さを受け取る
      */
-    function updateMainPageHeight() {
+    window.addEventListener("message", event => {
 
-      try {
+      if (event.data?.type === "mainPageHeight") {
 
-        const doc = mainFrame.contentDocument;
+        const height = Number(event.data.height);
 
-        if (!doc) return;
-
-        const bodyHeight = doc.body
-          ? doc.body.scrollHeight
-          : 0;
-
-        const htmlHeight = doc.documentElement
-          ? doc.documentElement.scrollHeight
-          : 0;
+        if (!Number.isFinite(height)) {
+          return;
+        }
 
         mainPageHeight = Math.max(
-          bodyHeight,
-          htmlHeight,
+          height,
           window.innerHeight
         );
 
         pageScrollContent.style.height =
           mainPageHeight + "px";
 
-      } catch (error) {
-
-        mainPageHeight = window.innerHeight;
-
-        pageScrollContent.style.height =
-          mainPageHeight + "px";
+        return;
       }
-    }
+
+      /*
+       * 画面モード
+       */
+      if (event.data?.type === "screenMode") {
+
+        return;
+      }
+
+      /*
+       * ページ切り替え
+       */
+      if (event.data?.type === "changePage") {
+
+        mainFrame.src = event.data.url;
+
+        document
+          .getElementById("left-ad")
+          .replaceChildren();
+
+        document
+          .getElementById("right-ad")
+          .replaceChildren();
+
+        pageScroll.scrollTop = 0;
+
+        return;
+      }
+
+    });
 
     /*
-     * 中央メインのスクロール
-     */
-    function setMainScroll(scrollTop) {
-
-      const maxScroll =
-        Math.max(
-          0,
-          mainPageHeight - window.innerHeight
-        );
-
-      const value = Math.max(
-        0,
-        Math.min(scrollTop, maxScroll)
-      );
-
-      try {
-
-        mainFrame.contentWindow.scrollTo({
-          top: value,
-          left: 0,
-          behavior: "auto"
-        });
-
-      } catch (error) {
-        // iframe側のスクロールが利用できない場合
-      }
-    }
-
-    /*
-     * 画面右端のスクロールバーを動かしたとき
+     * 右端スクロールバーと
+     * 中央ページのスクロール位置を同期
      */
     pageScroll.addEventListener("scroll", () => {
 
-      setMainScroll(pageScroll.scrollTop);
+      const pageScrollMax =
+        pageScroll.scrollHeight -
+        pageScroll.clientHeight;
+
+      const mainScrollMax =
+        Math.max(
+          0,
+          mainPageHeight -
+          window.innerHeight
+        );
+
+      if (pageScrollMax <= 0) {
+        return;
+      }
+
+      const ratio =
+        pageScroll.scrollTop /
+        pageScrollMax;
+
+      const mainScrollTop =
+        ratio * mainScrollMax;
+
+      try {
+
+        mainFrame.contentWindow.postMessage({
+          type: "mainScroll",
+          scrollTop: mainScrollTop
+        }, "*");
+
+      } catch (error) {
+        // iframe側で処理できない場合
+      }
 
     });
 
@@ -394,13 +413,9 @@
      */
     mainFrame.addEventListener("load", () => {
 
-      updateMainPageHeight();
+      pageScroll.scrollTop = 0;
 
       sendScreenMode();
-
-      setTimeout(updateMainPageHeight, 100);
-      setTimeout(updateMainPageHeight, 500);
-      setTimeout(updateMainPageHeight, 1000);
 
     });
 
@@ -409,7 +424,6 @@
      */
     window.addEventListener("resize", () => {
 
-      updateMainPageHeight();
       sendScreenMode();
 
     });
@@ -419,7 +433,9 @@
      */
     function sendScreenMode() {
 
-      if (!mainFrame.contentWindow) return;
+      if (!mainFrame.contentWindow) {
+        return;
+      }
 
       mainFrame.contentWindow.postMessage({
         type: "screenMode",
@@ -427,30 +443,6 @@
       }, "*");
 
     }
-
-    /*
-     * ページ切り替え
-     */
-    window.addEventListener("message", event => {
-
-      if (event.data?.type === "changePage") {
-
-        mainFrame.src = event.data.url;
-
-        document
-          .getElementById("left-ad")
-          .replaceChildren();
-
-        document
-          .getElementById("right-ad")
-          .replaceChildren();
-
-        pageScroll.scrollTop = 0;
-
-        return;
-      }
-
-    });
   </script>
 
 </body>
