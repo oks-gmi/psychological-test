@@ -22,6 +22,19 @@
       background: #fff8fc;
     }
 
+    /* 共通ロゴ */
+    .logo-frame {
+      width: 600px;
+      max-width: 100%;
+      height: 80px;
+
+      display: block;
+      margin: 0 auto 25px;
+
+      border: 0;
+      overflow: hidden;
+    }
+
     .terms-container {
       width: 100%;
       max-width: 900px;
@@ -96,6 +109,13 @@
     }
 
     @media (max-width: 600px) {
+
+      .logo-frame {
+        width: 100%;
+        height: 65px;
+        margin-bottom: 20px;
+      }
+
       .terms-container {
         margin: 15px;
         padding: 18px;
@@ -122,6 +142,13 @@
 </head>
 
 <body>
+
+  <!-- 共通ロゴ -->
+  <iframe
+    src="logo.html"
+    class="logo-frame"
+    title="サイトロゴ">
+  </iframe>
 
   <main class="terms-container">
 
@@ -252,8 +279,14 @@
   <script>
     window.addEventListener("message", event => {
 
-      if (event.data?.type === "screenMode") {
-        document.body.classList.toggle("mobile", event.data.mobile);
+      if (event.data?.type === "mainWheel") {
+
+        window.scrollBy({
+          top: event.data.deltaY,
+          left: 0,
+          behavior: "auto"
+        });
+
         return;
       }
 
@@ -274,6 +307,8 @@
 
     });
   </script>
+
+  <script src="main-scroll.js"></script>
 
 </body>
 </html>
