@@ -251,6 +251,22 @@
     });
 
     /*
+     * スマホ・PC判定を中央メインへ通知
+     */
+    function sendScreenMode() {
+
+      if (!mainFrame.contentWindow) {
+        return;
+      }
+
+      mainFrame.contentWindow.postMessage({
+        type: "screenMode",
+        mobile: window.innerWidth <= 900
+      }, "*");
+
+    }
+
+    /*
      * マウスホイール
      *
      * 左メニュー上
@@ -301,6 +317,24 @@
 
     }, {
       passive: false
+    });
+
+    /*
+     * 中央メイン読み込み完了
+     */
+    mainFrame.addEventListener("load", () => {
+
+      sendScreenMode();
+
+    });
+
+    /*
+     * 画面サイズ変更
+     */
+    window.addEventListener("resize", () => {
+
+      sendScreenMode();
+
     });
 
   </script>
