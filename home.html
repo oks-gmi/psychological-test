@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>心理テスト</title>
+  <title>心理テスト＆クイズ｜GMI</title>
 
   <style>
     * {
@@ -19,6 +19,23 @@
     body {
       font-family: sans-serif;
       color: #4a3f45;
+    }
+
+    .site-logo {
+      display: block;
+      width: 100%;
+      margin: 0 auto 35px;
+
+      text-align: center;
+      text-decoration: none;
+
+      font-family: "Arial Rounded MT Bold", "Hiragino Maru Gothic ProN", "Yu Gothic", sans-serif;
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: #4a3f45;
+
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.12);
     }
 
     .category-group {
@@ -86,6 +103,11 @@
       box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
     }
 
+    body.mobile .site-logo {
+      font-size: 6vw;
+      white-space: nowrap;
+    }
+
     body.mobile .category-group {
       max-width: 100%;
     }
@@ -107,6 +129,10 @@
     }
 
     @media (max-width: 320px) {
+      body.mobile .site-logo {
+        font-size: 5.5vw;
+      }
+
       body.mobile .sub-category-card {
         width: 100%;
       }
@@ -124,6 +150,10 @@
 </head>
 
 <body>
+
+  <a href="home.html" class="site-logo">
+    心理テスト＆クイズ｜GMI
+  </a>
 
   <section class="category-group">
 
