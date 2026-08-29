@@ -18,18 +18,20 @@
     body {
       margin: 0;
       padding: 0;
+      width: 100%;
+      height: auto;
+      overflow: hidden;
     }
 
     body {
       font-family: sans-serif;
-      color: #4a3f45;
       background: transparent;
     }
 
     .site-logo {
       display: block;
-      width: 100%;
-      max-width: 590px;
+      width: 570px;
+      max-width: 100%;
       margin: 0 auto;
 
       text-align: center;
@@ -48,8 +50,9 @@
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.12);
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 600px) {
       .site-logo {
+        width: 100%;
         font-size: clamp(24px, 7vw, 42px);
         white-space: nowrap;
       }
