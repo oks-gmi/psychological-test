@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>心理テスト＆クイズ｜GMI</title>
 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700;800;900&display=swap" rel="stylesheet">
+
   <style>
     * {
       box-sizing: border-box;
@@ -24,14 +29,16 @@
     .site-logo {
       display: block;
       width: 100%;
+      max-width: 590px;
       margin: 0 auto 35px;
 
       text-align: center;
       text-decoration: none;
 
-      font-family: "Arial Rounded MT Bold", "Hiragino Maru Gothic ProN", "Yu Gothic", sans-serif;
-      font-size: 34px;
-      font-weight: 800;
+      font-family: "M PLUS Rounded 1c", sans-serif;
+      font-size: 42px;
+      font-weight: 900;
+      line-height: 1.3;
       letter-spacing: 1px;
       color: #4a3f45;
 
@@ -104,7 +111,7 @@
     }
 
     body.mobile .site-logo {
-      font-size: 6vw;
+      font-size: clamp(24px, 7vw, 42px);
       white-space: nowrap;
     }
 
