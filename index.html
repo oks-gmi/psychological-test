@@ -130,7 +130,11 @@
 
     .page-scroll-content {
       width: 1px;
-      height: 100vh;
+
+      /*
+       * 初期状態でもスクロールバーを表示できるようにする
+       */
+      height: calc(100vh + 1px);
     }
 
     /* スマホ */
@@ -237,20 +241,30 @@
 
   <!-- 画面右端のスクロールバー -->
   <div class="page-scroll" id="page-scroll">
+
     <div
       class="page-scroll-content"
       id="page-scroll-content">
     </div>
+
   </div>
 
   <script>
-    const mainFrame = document.getElementById("main-frame");
-    const menuColumn = document.getElementById("menu-column");
-    const menuFrame = document.getElementById("menu-frame");
+    const mainFrame =
+      document.getElementById("main-frame");
 
-    const pageScroll = document.getElementById("page-scroll");
+    const menuColumn =
+      document.getElementById("menu-column");
+
+    const menuFrame =
+      document.getElementById("menu-frame");
+
+    const pageScroll =
+      document.getElementById("page-scroll");
+
     const pageScrollContent =
       document.getElementById("page-scroll-content");
+
 
     /*
      * 中央ページの実際の最大スクロール量
@@ -259,45 +273,55 @@
 
 
     /*
-     * main-scroll.js から送られてきた
-     * 実際の最大スクロール量を受け取る
+     * main-scroll.js から
+     * 中央ページの最大スクロール量を受け取る
      */
     window.addEventListener("message", event => {
 
+      /*
+       * 中央ページのスクロール情報
+       */
       if (event.data?.type === "mainScrollInfo") {
 
-        const maxScroll = Number(event.data.maxScroll);
+        const maxScroll =
+          Number(event.data.maxScroll);
 
         if (!Number.isFinite(maxScroll)) {
           return;
         }
 
-        mainScrollMax = Math.max(0, maxScroll);
+        mainScrollMax =
+          Math.max(0, maxScroll);
 
         /*
-         * 右端スクロールバーのスクロール範囲を
-         * 中央ページの実際の最大スクロール量に合わせる
+         * 中央ページの最大スクロール量に合わせて
+         * 右端スクロールバーの範囲を作る
          */
         pageScrollContent.style.height =
-          (mainScrollMax + window.innerHeight) + "px";
+          Math.max(
+            window.innerHeight + mainScrollMax,
+            window.innerHeight + 1
+          ) + "px";
 
         return;
       }
+
 
       /*
        * 画面モード
        */
       if (event.data?.type === "screenMode") {
-
         return;
       }
+
 
       /*
        * ページ切り替え
        */
       if (event.data?.type === "changePage") {
 
-        mainFrame.src = event.data.url;
+        mainFrame.src =
+          event.data.url;
 
         document
           .getElementById("left-ad")
@@ -307,7 +331,23 @@
           .getElementById("right-ad")
           .replaceChildren();
 
+        /*
+         * 新しいページの最大スクロール量を
+         * いったんリセット
+         */
+        mainScrollMax = 0;
+
+        /*
+         * 右端を先頭へ戻す
+         */
         pageScroll.scrollTop = 0;
+
+        /*
+         * 次のページの情報が届くまで
+         * 最低限のスクロール範囲を確保
+         */
+        pageScrollContent.style.height =
+          (window.innerHeight + 1) + "px";
 
         return;
       }
@@ -317,7 +357,7 @@
 
     /*
      * 右端スクロールバーと
-     * 中央ページのスクロール位置を同期
+     * 中央ページを同期
      */
     pageScroll.addEventListener("scroll", () => {
 
@@ -325,35 +365,36 @@
         pageScroll.scrollHeight -
         pageScroll.clientHeight;
 
-      if (pageScrollMax <= 0 || mainScrollMax <= 0) {
+      /*
+       * 右端のスクロール可能量がない場合
+       */
+      if (pageScrollMax <= 0) {
         return;
       }
 
       /*
        * 右端スクロールバーの位置を
-       * 0〜1の割合に変換
+       * 0〜1の割合にする
        */
       const ratio =
         pageScroll.scrollTop /
         pageScrollMax;
 
       /*
-       * 中央ページの実際の最大スクロール量に
+       * 中央ページの最大スクロール量に
        * 同じ割合を適用
        */
       const mainScrollTop =
         ratio * mainScrollMax;
 
-      try {
-
-        mainFrame.contentWindow.postMessage({
-          type: "mainScroll",
-          scrollTop: mainScrollTop
-        }, "*");
-
-      } catch (error) {
-        // iframe側で処理できない場合
+      if (!mainFrame.contentWindow) {
+        return;
       }
+
+      mainFrame.contentWindow.postMessage({
+        type: "mainScroll",
+        scrollTop: mainScrollTop
+      }, "*");
 
     });
 
@@ -369,18 +410,24 @@
      */
     window.addEventListener("wheel", event => {
 
+      /*
+       * スマホでは通常のスクロール
+       */
       if (window.innerWidth <= 900) {
         return;
       }
 
+
       const menuRect =
         menuColumn.getBoundingClientRect();
+
 
       const mouseOnMenu =
         event.clientX >= menuRect.left &&
         event.clientX <= menuRect.right &&
         event.clientY >= menuRect.top &&
         event.clientY <= menuRect.bottom;
+
 
       /*
        * 左メニュー上
@@ -404,9 +451,11 @@
         return;
       }
 
+
       /*
        * 左メニュー以外
-       * → 中央メイン
+       *
+       * → 画面右端のスクロールバーを動かす
        */
       pageScroll.scrollTop += event.deltaY;
 
@@ -422,12 +471,24 @@
      */
     mainFrame.addEventListener("load", () => {
 
+      /*
+       * 新しいページなので
+       * 最大スクロール量をリセット
+       */
       mainScrollMax = 0;
 
+      /*
+       * 右端を先頭へ
+       */
       pageScroll.scrollTop = 0;
 
+      /*
+       * main-scroll.jsから
+       * 新しいページの情報が届くまで
+       * 最低限のスクロール範囲を確保
+       */
       pageScrollContent.style.height =
-        window.innerHeight + "px";
+        (window.innerHeight + 1) + "px";
 
       sendScreenMode();
 
@@ -438,6 +499,16 @@
      * ウィンドウサイズ変更
      */
     window.addEventListener("resize", () => {
+
+      /*
+       * 現在取得済みの最大スクロール量を
+       * 新しい画面サイズに合わせて維持
+       */
+      pageScrollContent.style.height =
+        Math.max(
+          window.innerHeight + mainScrollMax,
+          window.innerHeight + 1
+        ) + "px";
 
       sendScreenMode();
 
