@@ -14,7 +14,9 @@
     body {
       margin: 0;
       padding: 0;
-      min-height: 100%;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
     }
 
     body {
@@ -31,8 +33,10 @@
       width: 210px;
       height: 100vh;
       z-index: 10;
+
       border-right: 4px solid #d9c0cc;
       box-shadow: 5px 0 14px rgba(80, 55, 70, 0.18);
+
       overflow: hidden;
     }
 
@@ -43,25 +47,33 @@
       display: block;
     }
 
-    /* 右側全体 */
+    /* メニュー以外の全体 */
     .content {
-      margin-left: 210px;
+      position: fixed;
+      top: 0;
+      left: 210px;
+      right: 0;
+      height: 100vh;
+
       display: grid;
       grid-template-columns: 260px minmax(620px, 900px) 260px;
       justify-content: center;
-      min-height: 100vh;
+
+      overflow: hidden;
     }
 
     /* 広告 */
     .ad-space {
+      height: 100vh;
       min-height: 100vh;
       background: #bfefff;
+      overflow: hidden;
     }
 
     /* 中央メイン */
     .main {
-      min-height: 100vh;
-      padding: 45px 45px 80px;
+      height: 100vh;
+      min-height: 0;
 
       background:
         radial-gradient(
@@ -80,24 +92,41 @@
           #fff6fa 45%,
           #fffdfd 100%
         );
+
+      overflow-y: scroll;
+      overflow-x: hidden;
     }
 
     .main-frame {
       width: 100%;
-      min-height: calc(100vh - 125px);
+      min-height: 100vh;
+      height: auto;
+
       border: 0;
       display: block;
+      overflow: hidden;
     }
 
     /* スマホ */
     @media (max-width: 900px) {
+
+      html,
+      body {
+        height: auto;
+        overflow: auto;
+      }
+
       .menu-column {
         display: none;
       }
 
       .content {
-        margin-left: 0;
+        position: static;
+        width: 100%;
+        height: auto;
+
         display: block;
+        overflow: visible;
       }
 
       .ad-space {
@@ -106,14 +135,17 @@
 
       .main {
         width: 100%;
-        min-height: auto;
-        padding: 0;
+        height: auto;
+        min-height: 100vh;
+
+        overflow: visible;
         background: none;
       }
 
       .main-frame {
         width: 100%;
         min-height: 700px;
+        height: auto;
       }
     }
   </style>
@@ -122,12 +154,15 @@
 <body>
 
   <!-- 左メニュー -->
-  <aside class="menu-column">
+  <aside class="menu-column" id="menu-column">
+
     <iframe
       src="left-menu.html"
       class="menu-frame"
+      id="menu-frame"
       title="カテゴリメニュー">
     </iframe>
+
   </aside>
 
   <!-- メニュー以外 -->
@@ -137,13 +172,15 @@
     <aside class="ad-space" id="left-ad"></aside>
 
     <!-- 中央メイン -->
-    <main class="main">
+    <main class="main" id="main-scroll">
+
       <iframe
         src="home.html"
         class="main-frame"
         id="main-frame"
         title="メインコンテンツ">
       </iframe>
+
     </main>
 
     <!-- 右広告 -->
@@ -153,8 +190,68 @@
 
   <script>
     const mainFrame = document.getElementById("main-frame");
+    const mainScroll = document.getElementById("main-scroll");
+    const menuColumn = document.getElementById("menu-column");
+    const menuFrame = document.getElementById("menu-frame");
 
+    /*
+     * 中央メインのiframeの高さを、
+     * 中身に合わせて自動調整する
+     */
+    function resizeMainFrame() {
+
+      try {
+        const doc = mainFrame.contentDocument;
+
+        if (!doc) return;
+
+        const bodyHeight = doc.body
+          ? doc.body.scrollHeight
+          : 0;
+
+        const htmlHeight = doc.documentElement
+          ? doc.documentElement.scrollHeight
+          : 0;
+
+        const height = Math.max(
+          bodyHeight,
+          htmlHeight,
+          window.innerHeight
+        );
+
+        mainFrame.style.height = height + "px";
+
+      } catch (error) {
+        mainFrame.style.height = "100vh";
+      }
+    }
+
+    /*
+     * メインページ読み込み時
+     */
+    mainFrame.addEventListener("load", () => {
+
+      resizeMainFrame();
+
+      sendScreenMode();
+
+      setTimeout(resizeMainFrame, 100);
+      setTimeout(resizeMainFrame, 500);
+    });
+
+    /*
+     * 画面サイズ変更
+     */
+    window.addEventListener("resize", () => {
+      resizeMainFrame();
+      sendScreenMode();
+    });
+
+    /*
+     * 画面モードを中央ページへ通知
+     */
     function sendScreenMode() {
+
       if (!mainFrame.contentWindow) return;
 
       mainFrame.contentWindow.postMessage({
@@ -163,17 +260,69 @@
       }, "*");
     }
 
-    mainFrame.addEventListener("load", sendScreenMode);
+    /*
+     * マウスホイールの振り分け
+     *
+     * 左メニュー上
+     * → 左メニュー
+     *
+     * それ以外
+     * → 中央メイン
+     */
+    window.addEventListener("wheel", event => {
 
-    window.addEventListener("resize", sendScreenMode);
+      if (window.innerWidth <= 900) {
+        return;
+      }
 
+      const menuRect = menuColumn.getBoundingClientRect();
+
+      const mouseOnMenu =
+        event.clientX >= menuRect.left &&
+        event.clientX <= menuRect.right &&
+        event.clientY >= menuRect.top &&
+        event.clientY <= menuRect.bottom;
+
+      if (mouseOnMenu) {
+
+        try {
+          menuFrame.contentWindow.scrollBy({
+            top: event.deltaY,
+            left: 0,
+            behavior: "auto"
+          });
+        } catch (error) {
+          // 左メニュー側のスクロール処理が利用できない場合は何もしない
+        }
+
+        event.preventDefault();
+        return;
+      }
+
+      /*
+       * 左メニュー以外なら中央メインをスクロール
+       */
+      mainScroll.scrollTop += event.deltaY;
+
+      event.preventDefault();
+
+    }, {
+      passive: false
+    });
+
+    /*
+     * ページ切り替え
+     */
     window.addEventListener("message", event => {
 
       if (event.data?.type === "changePage") {
+
         mainFrame.src = event.data.url;
 
         document.getElementById("left-ad").replaceChildren();
         document.getElementById("right-ad").replaceChildren();
+
+        mainScroll.scrollTop = 0;
 
         return;
       }
