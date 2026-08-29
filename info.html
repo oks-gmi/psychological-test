@@ -24,7 +24,7 @@
 
     /* 共通ロゴ */
     .logo-frame {
-      width: 570px;
+      width: 600px;
       max-width: 100%;
       height: 80px;
 
@@ -192,8 +192,14 @@
   <script>
     window.addEventListener("message", event => {
 
-      if (event.data?.type === "screenMode") {
-        document.body.classList.toggle("mobile", event.data.mobile);
+      if (event.data?.type === "mainWheel") {
+
+        window.scrollBy({
+          top: event.data.deltaY,
+          left: 0,
+          behavior: "auto"
+        });
+
         return;
       }
 
@@ -214,6 +220,8 @@
 
     });
   </script>
+
+  <script src="main-scroll.js"></script>
 
 </body>
 </html>
