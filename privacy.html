@@ -19,7 +19,20 @@
     body {
       font-family: sans-serif;
       color: #4a3f45;
-      background: #fff8fc;
+      background: transparent;
+    }
+
+    /* 共通ロゴ */
+    .logo-frame {
+      width: 570px;
+      max-width: 100%;
+      height: 80px;
+
+      display: block;
+      margin: 0 auto 25px;
+
+      border: 0;
+      overflow: hidden;
     }
 
     .privacy-container {
@@ -92,6 +105,12 @@
     }
 
     @media (max-width: 600px) {
+      .logo-frame {
+        width: 100%;
+        height: 65px;
+        margin-bottom: 20px;
+      }
+
       .privacy-container {
         margin: 15px;
         padding: 18px;
@@ -114,10 +133,23 @@
         font-size: 13px;
       }
     }
+
+    @media (max-width: 320px) {
+      .logo-frame {
+        height: 55px;
+      }
+    }
   </style>
 </head>
 
 <body>
+
+  <!-- 共通ロゴ -->
+  <iframe
+    src="logo.html"
+    class="logo-frame"
+    title="サイトロゴ">
+  </iframe>
 
   <main class="privacy-container">
 
@@ -274,6 +306,8 @@
 
     });
   </script>
+
+  <script src="main-scroll.js"></script>
 
 </body>
 </html>
