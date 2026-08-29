@@ -46,7 +46,7 @@
       display: block;
     }
 
-    /* メニュー以外 */
+    /* 右側全体 */
     .content {
       position: fixed;
       top: 0;
@@ -96,14 +96,10 @@
       overflow: hidden;
     }
 
-    /*
-     * 中央メインを表示する領域
-     * スクロールバーはここには表示しない
-     */
+    /* 中央メインのiframe */
     .main-frame-wrapper {
       width: 100%;
       height: 100%;
-
       overflow: hidden;
     }
 
@@ -115,11 +111,7 @@
       display: block;
     }
 
-    /*
-     * 画面右端のスクロールバー用領域
-     *
-     * 実際の中央メインのスクロール量と連動する
-     */
+    /* 画面右端のスクロールバー */
     .page-scroll {
       position: fixed;
       top: 0;
@@ -245,7 +237,10 @@
 
   <!-- 画面右端のスクロールバー -->
   <div class="page-scroll" id="page-scroll">
-    <div class="page-scroll-content" id="page-scroll-content"></div>
+    <div
+      class="page-scroll-content"
+      id="page-scroll-content">
+    </div>
   </div>
 
   <script>
@@ -286,10 +281,6 @@
           window.innerHeight
         );
 
-        /*
-         * 右端スクロールバーの長さを
-         * 中央ページの高さに合わせる
-         */
         pageScrollContent.style.height =
           mainPageHeight + "px";
 
@@ -303,7 +294,7 @@
     }
 
     /*
-     * 中央メインのスクロール位置を変更
+     * 中央メインのスクロール
      */
     function setMainScroll(scrollTop) {
 
@@ -318,9 +309,6 @@
         Math.min(scrollTop, maxScroll)
       );
 
-      /*
-       * iframe内部をスクロール
-       */
       try {
 
         mainFrame.contentWindow.scrollTo({
@@ -335,7 +323,7 @@
     }
 
     /*
-     * 右端スクロールバーを動かしたとき
+     * 画面右端のスクロールバーを動かしたとき
      */
     pageScroll.addEventListener("scroll", () => {
 
