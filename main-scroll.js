@@ -2,15 +2,7 @@
   "use strict";
 
   /*
-   * 中央メイン共通スクロール処理
-   *
-   * 対象：
-   * ロゴ
-   * メインコンテンツ
-   * フッター
-   *
-   * 上記を含めたページ全体の高さを
-   * index.html に通知する。
+   * 中央ページ側のスクロールバーを非表示
    */
 
   const style = document.createElement("style");
@@ -34,41 +26,61 @@
 
 
   /*
-   * ページ全体の高さを取得
+   * 実際にスクロールできる最大量を取得
+   *
+   * scrollHeight
+   * ＝ ページ全体の高さ
+   *
+   * clientHeight
+   * ＝ 現在表示されている高さ
+   *
+   * その差が実際の最大スクロール量になる。
    */
-  function getPageHeight() {
 
-    const body = document.body;
+  function getMaxScroll() {
+
     const html = document.documentElement;
+    const body = document.body;
+
+    const scrollHeight = Math.max(
+      html ? html.scrollHeight : 0,
+      body ? body.scrollHeight : 0
+    );
+
+    const clientHeight = Math.max(
+      html ? html.clientHeight : 0,
+      body ? body.clientHeight : 0
+    );
 
     return Math.max(
-      body ? body.scrollHeight : 0,
-      body ? body.offsetHeight : 0,
-      body ? body.clientHeight : 0,
-      html ? html.scrollHeight : 0,
-      html ? html.offsetHeight : 0,
-      html ? html.clientHeight : 0
+      0,
+      scrollHeight - clientHeight
     );
   }
 
 
   /*
-   * index.html にページの高さを通知
+   * index.htmlへ
+   * 実際の最大スクロール量を通知
    */
-  function sendPageHeight() {
 
-    const height = getPageHeight();
+  function sendScrollInfo() {
+
+    const maxScroll = getMaxScroll();
 
     window.parent.postMessage({
-      type: "mainPageHeight",
-      height: height
+      type: "mainScrollInfo",
+      maxScroll: maxScroll
     }, "*");
+
   }
 
 
   /*
-   * index.htmlからスクロール位置を受け取る
+   * index.htmlから
+   * スクロール位置を受け取る
    */
+
   window.addEventListener("message", function (event) {
 
     if (event.data?.type !== "mainScroll") {
@@ -81,8 +93,15 @@
       return;
     }
 
+    const maxScroll = getMaxScroll();
+
+    const safeScrollTop = Math.min(
+      Math.max(0, scrollTop),
+      maxScroll
+    );
+
     window.scrollTo({
-      top: scrollTop,
+      top: safeScrollTop,
       left: 0,
       behavior: "auto"
     });
@@ -91,41 +110,41 @@
 
 
   /*
-   * ページ読み込み直後
+   * ページ読み込み時
    */
+
   window.addEventListener("load", function () {
 
-    sendPageHeight();
+    sendScrollInfo();
 
-    setTimeout(sendPageHeight, 100);
-    setTimeout(sendPageHeight, 300);
-    setTimeout(sendPageHeight, 500);
-    setTimeout(sendPageHeight, 1000);
+    setTimeout(sendScrollInfo, 100);
+    setTimeout(sendScrollInfo, 300);
+    setTimeout(sendScrollInfo, 500);
+    setTimeout(sendScrollInfo, 1000);
 
   });
 
 
   /*
-   * 画面サイズ変更
+   * 画面サイズ変更時
    */
+
   window.addEventListener("resize", function () {
 
-    sendPageHeight();
+    sendScrollInfo();
 
   });
 
 
   /*
-   * ページ内容の高さが変化した場合
-   *
-   * 動的に追加されるコンテンツや
-   * フォント読み込みなどにも対応する。
+   * ページの高さが変化した場合
    */
+
   if (window.ResizeObserver) {
 
     const observer = new ResizeObserver(function () {
 
-      sendPageHeight();
+      sendScrollInfo();
 
     });
 
