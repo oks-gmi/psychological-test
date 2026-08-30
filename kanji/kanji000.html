@@ -75,12 +75,32 @@
       line-height: 1.8;
     }
 
+    /* 中カテゴリー */
+    .middle-category {
+      width: 100%;
+      margin: 0 0 15px;
+
+      font-size: 22px;
+      font-weight: 800;
+      text-align: left;
+    }
+
+    /* 中カテゴリーごとのまとまり */
+    .sub-category-group {
+      width: 100%;
+      margin-bottom: 25px;
+    }
+
+    .sub-category-group:last-child {
+      margin-bottom: 0;
+    }
+
     /* 小カテゴリー */
     .sub-category-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      justify-content: center;
       gap: 15px;
+      justify-content: start;
     }
 
     .sub-category-card {
@@ -114,16 +134,6 @@
       box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
     }
 
-    /* 中カテゴリーごとのまとまり */
-    .sub-category-group {
-      width: 100%;
-      margin-bottom: 15px;
-    }
-
-    .sub-category-group:last-child {
-      margin-bottom: 0;
-    }
-
     /* スマホ */
     body.mobile .category-group {
       max-width: 100%;
@@ -137,6 +147,10 @@
     body.mobile .category-description {
       width: 100%;
       font-size: 15px;
+    }
+
+    body.mobile .middle-category {
+      font-size: 21px;
     }
 
     body.mobile .sub-category-grid {
@@ -200,60 +214,154 @@
 
     <!-- 大カテゴリー説明 -->
     <div class="category-description">
-      一般的に読み方が難しいとされている漢字の読み方を、<br>
-      各5問のクイズ形式で出題しています。<br>
+      一般的に読み方が難しいとされている漢字の読み方を、各5問のクイズ形式で出題しています。<br>
       何問解けるか挑戦してみてください。
     </div>
 
-    <!-- 中カテゴリー：初級 -->
+    <!-- 中カテゴリー：一般漢字 -->
     <div class="sub-category-group">
+
+      <div class="middle-category">
+        【一般漢字】
+      </div>
 
       <div class="sub-category-grid">
 
         <a href="#" class="sub-category-card">
-          初級1
+          一般漢字1
+        </a>
+
+        <a href="#" class="sub-category-card">
+          一般漢字2
+        </a>
+
+        <a href="#" class="sub-category-card">
+          一般漢字3
         </a>
 
       </div>
 
     </div>
 
-    <!-- 中カテゴリー：中級 -->
+    <!-- 中カテゴリー：生き物 -->
     <div class="sub-category-group">
+
+      <div class="middle-category">
+        【生き物】
+      </div>
 
       <div class="sub-category-grid">
 
         <a href="#" class="sub-category-card">
-          中級1
+          生き物1
         </a>
 
         <a href="#" class="sub-category-card">
-          中級2
+          生き物2
+        </a>
+
+        <a href="#" class="sub-category-card">
+          生き物3
         </a>
 
       </div>
 
     </div>
 
-    <!-- 中カテゴリー：上級 -->
+    <!-- 中カテゴリー：植物 -->
     <div class="sub-category-group">
+
+      <div class="middle-category">
+        【植物】
+      </div>
 
       <div class="sub-category-grid">
 
         <a href="#" class="sub-category-card">
-          上級1
+          植物1
         </a>
 
         <a href="#" class="sub-category-card">
-          上級2
+          植物2
         </a>
 
         <a href="#" class="sub-category-card">
-          上級3
+          植物3
+        </a>
+
+      </div>
+
+    </div>
+
+    <!-- 中カテゴリー：魚 -->
+    <div class="sub-category-group">
+
+      <div class="middle-category">
+        【魚】
+      </div>
+
+      <div class="sub-category-grid">
+
+        <a href="#" class="sub-category-card">
+          魚1
         </a>
 
         <a href="#" class="sub-category-card">
-          上級4
+          魚2
+        </a>
+
+        <a href="#" class="sub-category-card">
+          魚3
+        </a>
+
+      </div>
+
+    </div>
+
+    <!-- 中カテゴリー：食べ物 -->
+    <div class="sub-category-group">
+
+      <div class="middle-category">
+        【食べ物】
+      </div>
+
+      <div class="sub-category-grid">
+
+        <a href="#" class="sub-category-card">
+          食べ物1
+        </a>
+
+        <a href="#" class="sub-category-card">
+          食べ物2
+        </a>
+
+        <a href="#" class="sub-category-card">
+          食べ物3
+        </a>
+
+      </div>
+
+    </div>
+
+    <!-- 中カテゴリー：地名 -->
+    <div class="sub-category-group">
+
+      <div class="middle-category">
+        【地名】
+      </div>
+
+      <div class="sub-category-grid">
+
+        <a href="#" class="sub-category-card">
+          地名1
+        </a>
+
+        <a href="#" class="sub-category-card">
+          地名2
+        </a>
+
+        <a href="#" class="sub-category-card">
+          地名3
         </a>
 
       </div>
