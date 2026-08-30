@@ -134,9 +134,26 @@
       display: block;
     }
 
-    /* 最後の問題 */
-    .quiz-item:last-child {
-      margin-bottom: 0;
+    /* 前のページに戻る */
+    .back-button {
+      display: block;
+      width: fit-content;
+
+      margin: 30px auto 0;
+      padding: 10px 24px;
+
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 700;
+
+      color: #ffffff;
+      background: #d9785f;
+
+      border-radius: 8px;
+    }
+
+    .back-button:hover {
+      opacity: 0.85;
     }
 
     /* 共通フッター */
@@ -187,6 +204,10 @@
       .answer {
         font-size: 19px;
       }
+
+      .back-button {
+        font-size: 15px;
+      }
     }
 
     @media (max-width: 320px) {
@@ -211,7 +232,7 @@
 
     <!-- ページタイトル -->
     <div class="page-title">
-      魚1
+      【難読漢字・魚】
     </div>
 
     <!-- 第1問 -->
@@ -219,7 +240,7 @@
       <div class="quiz-number">第1問</div>
 
       <div class="quiz-question">
-        「鰆」の読み方は？
+        「鯉」の読み方は？
       </div>
 
       <button class="answer-button" onclick="showAnswer(this)">
@@ -227,13 +248,47 @@
       </button>
 
       <div class="answer">
-        答え：さわら
+        答え：こい
       </div>
     </section>
 
     <!-- 第2問 -->
     <section class="quiz-item">
       <div class="quiz-number">第2問</div>
+
+      <div class="quiz-question">
+        「鮎」の読み方は？
+      </div>
+
+      <button class="answer-button" onclick="showAnswer(this)">
+        答えを見る
+      </button>
+
+      <div class="answer">
+        答え：あゆ
+      </div>
+    </section>
+
+    <!-- 第3問 -->
+    <section class="quiz-item">
+      <div class="quiz-number">第3問</div>
+
+      <div class="quiz-question">
+        「鯛」の読み方は？
+      </div>
+
+      <button class="answer-button" onclick="showAnswer(this)">
+        答えを見る
+      </button>
+
+      <div class="answer">
+        答え：たい
+      </div>
+    </section>
+
+    <!-- 第4問 -->
+    <section class="quiz-item">
+      <div class="quiz-number">第4問</div>
 
       <div class="quiz-question">
         「鰯」の読み方は？
@@ -248,46 +303,12 @@
       </div>
     </section>
 
-    <!-- 第3問 -->
-    <section class="quiz-item">
-      <div class="quiz-number">第3問</div>
-
-      <div class="quiz-question">
-        「鱧」の読み方は？
-      </div>
-
-      <button class="answer-button" onclick="showAnswer(this)">
-        答えを見る
-      </button>
-
-      <div class="answer">
-        答え：はも
-      </div>
-    </section>
-
-    <!-- 第4問 -->
-    <section class="quiz-item">
-      <div class="quiz-number">第4問</div>
-
-      <div class="quiz-question">
-        「鯰」の読み方は？
-      </div>
-
-      <button class="answer-button" onclick="showAnswer(this)">
-        答えを見る
-      </button>
-
-      <div class="answer">
-        答え：なまず
-      </div>
-    </section>
-
     <!-- 第5問 -->
     <section class="quiz-item">
       <div class="quiz-number">第5問</div>
 
       <div class="quiz-question">
-        「鰌」の読み方は？
+        「鰹」の読み方は？
       </div>
 
       <button class="answer-button" onclick="showAnswer(this)">
@@ -295,9 +316,14 @@
       </button>
 
       <div class="answer">
-        答え：どじょう
+        答え：かつお
       </div>
     </section>
+
+    <!-- 前のページに戻る -->
+    <a href="kanji000.html" class="back-button">
+      前のページに戻る
+    </a>
 
   </main>
 
