@@ -23,36 +23,26 @@
 
       background:
         radial-gradient(
-          circle at 8% 10%,
-          rgba(255, 177, 204, 0.52),
-          transparent 24%
-        ),
-        radial-gradient(
-          circle at 92% 10%,
-          rgba(255, 204, 166, 0.46),
-          transparent 25%
-        ),
-        radial-gradient(
-          circle at 55% 48%,
-          rgba(255, 235, 218, 0.48),
-          transparent 32%
-        ),
-        radial-gradient(
-          circle at 12% 88%,
-          rgba(255, 199, 218, 0.42),
+          circle at 10% 15%,
+          rgba(255, 190, 208, 0.42),
           transparent 27%
         ),
         radial-gradient(
-          circle at 88% 90%,
-          rgba(255, 216, 187, 0.38),
-          transparent 28%
+          circle at 90% 18%,
+          rgba(255, 215, 180, 0.38),
+          transparent 29%
+        ),
+        radial-gradient(
+          circle at 45% 90%,
+          rgba(255, 226, 211, 0.34),
+          transparent 32%
         ),
         linear-gradient(
           135deg,
-          #fff0f5 0%,
-          #fff5f1 35%,
-          #fff9f2 67%,
-          #fffdfc 100%
+          #fff8f6 0%,
+          #fff3f6 38%,
+          #fff8f1 70%,
+          #fffdfb 100%
         );
 
       overflow: hidden;
@@ -63,43 +53,39 @@
       content: "";
       position: fixed;
       inset: 0;
-
       pointer-events: none;
       z-index: 0;
 
       background-image:
         radial-gradient(
           circle,
-          rgba(193, 130, 155, 0.19) 1.1px,
-          transparent 1.1px
+          rgba(210, 145, 165, 0.13) 1.2px,
+          transparent 1.2px
         );
 
-      background-size: 22px 22px;
-      opacity: 0.72;
+      background-size: 24px 24px;
+      opacity: 0.42;
     }
 
-    /* 上部の大きな曲線 */
+    /* 背景の光と曲線 */
     body::after {
       content: "";
       position: fixed;
-
-      width: 850px;
-      height: 470px;
-
+      width: 620px;
+      height: 620px;
       top: -230px;
-      left: 32%;
-
-      border: 2px solid rgba(227, 143, 171, 0.18);
-      border-radius: 50%;
-
-      transform: rotate(-12deg);
-
-      box-shadow:
-        0 0 0 30px rgba(255, 187, 208, 0.07),
-        0 0 0 65px rgba(255, 207, 176, 0.05);
+      right: -180px;
 
       pointer-events: none;
       z-index: 0;
+
+      border: 2px solid rgba(255, 178, 194, 0.12);
+      border-radius: 48% 52% 60% 40%;
+      transform: rotate(25deg);
+
+      box-shadow:
+        0 0 80px rgba(255, 194, 208, 0.16),
+        0 0 150px rgba(255, 218, 190, 0.12);
     }
 
     /* 左メニュー */
@@ -137,45 +123,74 @@
       justify-content: center;
 
       overflow: hidden;
-
-      background:
-        linear-gradient(
-          135deg,
-          #fff4f5,
-          #fff9f5 50%,
-          #fffdfb
-        );
     }
 
     /* 広告 */
     .ad-space {
+      position: relative;
       min-height: 100vh;
+      overflow: hidden;
 
       background:
         radial-gradient(
-          circle at 30% 20%,
-          rgba(190, 218, 242, 0.50),
-          transparent 30%
+          circle at 20% 15%,
+          rgba(190, 220, 245, 0.45),
+          transparent 32%
         ),
         radial-gradient(
-          circle at 75% 75%,
-          rgba(205, 197, 232, 0.42),
+          circle at 80% 80%,
+          rgba(210, 200, 238, 0.38),
           transparent 35%
         ),
         linear-gradient(
           180deg,
-          #e6f0f8 0%,
-          #e8e8f3 48%,
-          #dfedf7 100%
+          #e1edf6 0%,
+          #e9e5f4 48%,
+          #dceaf4 100%
         );
 
-      border-left: 1px solid rgba(125, 155, 185, 0.28);
-      border-right: 1px solid rgba(125, 155, 185, 0.28);
+      border-left: 1px solid rgba(135, 155, 185, 0.28);
+      border-right: 1px solid rgba(135, 155, 185, 0.28);
 
       box-shadow:
-        inset 0 0 50px rgba(90, 125, 165, 0.11);
+        inset 0 0 45px rgba(100, 130, 165, 0.10);
+    }
 
-      overflow: hidden;
+    /* 広告帯の装飾 */
+    .ad-space::before {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      top: -90px;
+      right: -120px;
+
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      border-radius: 50%;
+
+      box-shadow:
+        0 0 45px rgba(255, 255, 255, 0.16);
+
+      pointer-events: none;
+    }
+
+    .ad-space::after {
+      content: "";
+      position: absolute;
+      width: 340px;
+      height: 180px;
+      left: -170px;
+      bottom: 8%;
+
+      border: 2px solid rgba(255, 255, 255, 0.18);
+      border-radius: 50%;
+
+      transform: rotate(-20deg);
+
+      box-shadow:
+        0 0 50px rgba(150, 180, 215, 0.12);
+
+      pointer-events: none;
     }
 
     /* 中央メイン */
@@ -185,85 +200,48 @@
       min-height: 100vh;
       padding: 45px 45px 80px;
 
-      background:
-        radial-gradient(
-          circle at 8% 10%,
-          rgba(255, 178, 205, 0.52),
-          transparent 27%
-        ),
-        radial-gradient(
-          circle at 92% 13%,
-          rgba(255, 207, 168, 0.48),
-          transparent 29%
-        ),
-        radial-gradient(
-          circle at 50% 45%,
-          rgba(255, 236, 218, 0.42),
-          transparent 34%
-        ),
-        radial-gradient(
-          circle at 18% 88%,
-          rgba(255, 202, 220, 0.40),
-          transparent 29%
-        ),
-        radial-gradient(
-          circle at 88% 86%,
-          rgba(255, 215, 188, 0.36),
-          transparent 28%
-        ),
-        linear-gradient(
-          135deg,
-          #fff0f5 0%,
-          #fff5f2 34%,
-          #fff9f2 68%,
-          #fffdfc 100%
-        );
+      background: transparent;
 
       overflow: hidden;
     }
 
-    /* 左側の複数円 */
+    /* 中央メインの背景装飾 */
     .main::before {
       content: "";
       position: absolute;
-
-      width: 500px;
-      height: 500px;
-
-      left: -330px;
+      width: 260px;
+      height: 260px;
       top: 8%;
+      left: -120px;
 
-      border: 2px solid rgba(226, 143, 171, 0.18);
       border-radius: 50%;
 
-      box-shadow:
-        0 0 0 35px rgba(235, 169, 193, 0.09),
-        0 0 0 75px rgba(255, 203, 177, 0.07),
-        0 0 0 120px rgba(255, 218, 193, 0.05);
+      background:
+        radial-gradient(
+          circle,
+          rgba(255, 198, 215, 0.22),
+          transparent 68%
+        );
 
+      filter: blur(8px);
       pointer-events: none;
     }
 
-    /* 右下の重なった曲線 */
     .main::after {
       content: "";
       position: absolute;
+      width: 520px;
+      height: 300px;
+      right: -220px;
+      bottom: 4%;
 
-      width: 760px;
-      height: 340px;
+      border: 2px solid rgba(255, 177, 196, 0.10);
+      border-radius: 55% 45% 50% 50%;
 
-      right: -370px;
-      bottom: 5%;
-
-      border: 2px solid rgba(222, 142, 169, 0.19);
-      border-radius: 50%;
-
-      transform: rotate(-21deg);
+      transform: rotate(-18deg);
 
       box-shadow:
-        0 28px 0 -10px rgba(229, 159, 181, 0.13),
-        0 58px 0 -20px rgba(239, 180, 157, 0.11),
-        0 88px 0 -30px rgba(246, 196, 174, 0.08);
+        0 0 65px rgba(255, 193, 207, 0.12);
 
       pointer-events: none;
     }
@@ -323,39 +301,7 @@
 
         padding: 0;
 
-        background:
-          radial-gradient(
-            circle at 8% 10%,
-            rgba(255, 178, 205, 0.52),
-            transparent 27%
-          ),
-          radial-gradient(
-            circle at 92% 13%,
-            rgba(255, 207, 168, 0.48),
-            transparent 29%
-          ),
-          radial-gradient(
-            circle at 50% 45%,
-            rgba(255, 236, 218, 0.42),
-            transparent 34%
-          ),
-          radial-gradient(
-            circle at 18% 88%,
-            rgba(255, 202, 220, 0.40),
-            transparent 29%
-          ),
-          radial-gradient(
-            circle at 88% 86%,
-            rgba(255, 215, 188, 0.36),
-            transparent 28%
-          ),
-          linear-gradient(
-            135deg,
-            #fff0f5 0%,
-            #fff5f2 34%,
-            #fff9f2 68%,
-            #fffdfc 100%
-          );
+        background: transparent;
 
         overflow: visible;
       }
