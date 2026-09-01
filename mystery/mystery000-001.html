@@ -97,6 +97,7 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+      margin-top: 10px;
     }
 
     .door-item {
@@ -116,43 +117,6 @@
 
       font-size: 18px;
       font-weight: 800;
-    }
-
-    /* 回答 */
-    .answer-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .answer-option {
-      display: flex;
-      align-items: center;
-
-      width: 100%;
-      padding: 12px 14px;
-
-      font-size: 18px;
-      line-height: 1.6;
-
-      background: #fff6f2;
-      border: 1px solid #ead8d2;
-      border-radius: 8px;
-
-      cursor: pointer;
-    }
-
-    .answer-option:hover {
-      background: #fff0eb;
-    }
-
-    .answer-option input {
-      width: 18px;
-      height: 18px;
-      margin: 0 10px 0 0;
-
-      flex-shrink: 0;
-      cursor: pointer;
     }
 
     /* 答えを表示ボタン */
@@ -327,10 +291,6 @@
         font-size: 17px;
       }
 
-      .answer-option {
-        font-size: 17px;
-      }
-
       .result-container {
         width: 100%;
         padding: 18px;
@@ -398,7 +358,11 @@
         あなたはある部屋に閉じ込められています。<br>
         部屋には4つの扉があります。<br><br>
 
-        扉にはそれぞれ、次の文章が書かれています。
+        扉にはそれぞれ、次の文章が書かれています。<br>
+        ただし、4つの文章のうち、<br>
+        <strong>正しい文章は1つだけ</strong>です。<br><br>
+
+        さて、出口は何色の扉でしょう？
       </div>
 
       <div class="door-list">
@@ -433,50 +397,6 @@
 
       </div>
 
-      <div class="question-text">
-        <br>
-        ただし、4つの文章のうち、<br>
-        <strong>正しい文章は1つだけ</strong>です。<br><br>
-
-        さて、出口は何色の扉でしょう？
-      </div>
-
-      <div class="answer-list">
-
-        <label class="answer-option">
-          <input
-            type="radio"
-            name="mystery-answer"
-            value="A">
-          A. 赤い扉
-        </label>
-
-        <label class="answer-option">
-          <input
-            type="radio"
-            name="mystery-answer"
-            value="B">
-          B. 青い扉
-        </label>
-
-        <label class="answer-option">
-          <input
-            type="radio"
-            name="mystery-answer"
-            value="C">
-          C. 緑の扉
-        </label>
-
-        <label class="answer-option">
-          <input
-            type="radio"
-            name="mystery-answer"
-            value="D">
-          D. 黄色い扉
-        </label>
-
-      </div>
-
     </section>
 
     <!-- 答えを表示 -->
@@ -496,7 +416,7 @@
       </div>
 
       <div class="result-answer">
-        D. 黄色い扉
+        黄色い扉
       </div>
 
       <div class="result-description-intro">
@@ -604,15 +524,6 @@
 
   <script>
     function showResult() {
-
-      const selected = document.querySelector(
-        'input[name="mystery-answer"]:checked'
-      );
-
-      if (!selected) {
-        alert("回答を1つ選択してください。");
-        return;
-      }
 
       document
         .getElementById("result-container")
