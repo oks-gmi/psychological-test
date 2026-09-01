@@ -22,7 +22,6 @@
       background: transparent;
     }
 
-    /* 共通ロゴ */
     .logo-frame {
       width: 100%;
       max-width: 600px;
@@ -35,7 +34,6 @@
       overflow: hidden;
     }
 
-    /* クイズ全体 */
     .quiz-container {
       width: 100%;
       max-width: 626px;
@@ -46,7 +44,6 @@
       border-radius: 14px;
     }
 
-    /* ページタイトル */
     .page-title {
       width: 590px;
       max-width: 100%;
@@ -64,7 +61,6 @@
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
-    /* 問題 */
     .quiz-item {
       width: 590px;
       max-width: 100%;
@@ -92,7 +88,6 @@
       text-align: center;
     }
 
-    /* 結果を見るボタン */
     .answer-button {
       display: block;
       margin: 0 auto;
@@ -115,65 +110,52 @@
       opacity: 0.85;
     }
 
-    /* 結果 */
     .answer {
       display: none;
 
       margin-top: 16px;
       padding: 14px;
 
+      text-align: left;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.8;
+
       background: #fff6f2;
       border-top: 1px solid #ead8d2;
-
-      font-size: 16px;
-      line-height: 1.8;
-      text-align: left;
     }
 
     .answer.show {
       display: block;
     }
 
-    /* 結果タイトル */
-    .result-title {
-      margin-bottom: 10px;
+    .answer-title {
+      margin-bottom: 8px;
 
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 800;
     }
 
-    .general-title {
-      color: #4682b4;
+    .answer-list {
+      margin: 0 0 20px;
+      padding-left: 25px;
+
+      font-size: 17px;
+      line-height: 1.8;
     }
 
-    .psychopath-title {
-      margin-top: 20px;
-      color: #d9785f;
-    }
-
-    /* 結果の例 */
-    .answer ul {
-      margin: 0;
-      padding-left: 24px;
-    }
-
-    .answer li {
-      margin-bottom: 8px;
-    }
-
-    /* 注意書き */
     .note {
-      margin-top: 20px;
-      padding-top: 14px;
+      margin-top: 10px;
+      padding: 16px;
 
+      background: #fffaf8;
       border-top: 1px solid #ead8d2;
 
-      font-size: 13px;
-      line-height: 1.7;
-      color: #666666;
+      font-size: 14px;
+      line-height: 1.8;
+      text-align: left;
     }
 
-    /* 前のページに戻る */
     .back-button {
       display: block;
       width: fit-content;
@@ -195,7 +177,6 @@
       opacity: 0.85;
     }
 
-    /* 共通フッター */
     .footer-frame {
       width: 100%;
       height: 80px;
@@ -205,7 +186,6 @@
       overflow: hidden;
     }
 
-    /* スマホ */
     @media (max-width: 600px) {
       .logo-frame {
         width: 100%;
@@ -241,11 +221,19 @@
       }
 
       .answer {
-        font-size: 15px;
+        font-size: 17px;
       }
 
-      .result-title {
-        font-size: 18px;
+      .answer-title {
+        font-size: 17px;
+      }
+
+      .answer-list {
+        font-size: 16px;
+      }
+
+      .note {
+        font-size: 13px;
       }
 
       .back-button {
@@ -263,7 +251,6 @@
 
 <body>
 
-  <!-- 共通ロゴ -->
   <iframe
     src="../logo.html"
     class="logo-frame"
@@ -273,16 +260,14 @@
 
   <main class="quiz-container">
 
-    <!-- ページタイトル -->
     <div class="page-title">
       【サイコパス診断2】
     </div>
 
-    <!-- 第1問 -->
     <section class="quiz-item">
 
       <div class="quiz-number">
-        第1問
+        問題
       </div>
 
       <div class="quiz-question">
@@ -294,31 +279,31 @@
       </div>
 
       <button class="answer-button" onclick="showAnswer(this)">
-        結果を見る
+        結果を表示
       </button>
 
       <div class="answer">
 
-        <div class="result-title general-title">
+        <div class="answer-title">
           一般的な答えの例
         </div>
 
-        <ul>
+        <ol class="answer-list">
           <li>身分証の写真が少し面白かったから</li>
           <li>持ち主の名前が知り合いと同じだったから</li>
-        </ul>
+        </ol>
 
-        <div class="result-title psychopath-title">
+        <div class="answer-title">
           サイコパス的な答えの例
         </div>
 
-        <ul>
+        <ol class="answer-list">
           <li>持ち主の住所が分かり、後で利用できると思ったから</li>
           <li>身分証を悪用できると思ったから</li>
-        </ul>
+        </ol>
 
         <div class="note">
-          ※この診断は医学的・心理学的な診断ではありません。
+          ※この診断は医学的・心理学的な診断ではありません。<br>
           あくまで自由な発想を楽しむための心理テストです。
         </div>
 
@@ -326,14 +311,12 @@
 
     </section>
 
-    <!-- 前のページに戻る -->
     <a href="psychopath000.html" class="back-button">
-      ← サイコパス診断一覧へ戻る
+      前のページに戻る
     </a>
 
   </main>
 
-  <!-- 共通フッター -->
   <iframe
     src="../footer.html"
     class="footer-frame"
@@ -345,13 +328,8 @@
     function showAnswer(button) {
       const answer = button.nextElementSibling;
 
-      answer.classList.toggle("show");
-
-      if (answer.classList.contains("show")) {
-        button.textContent = "結果を隠す";
-      } else {
-        button.textContent = "結果を見る";
-      }
+      answer.classList.add("show");
+      button.style.display = "none";
     }
 
     window.addEventListener("message", event => {
