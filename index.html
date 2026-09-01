@@ -23,32 +23,90 @@
 
       background:
         radial-gradient(
-          circle at 10% 15%,
-          rgba(255, 190, 208, 0.42),
-          transparent 27%
+          circle at 8% 12%,
+          rgba(255, 166, 193, 0.58) 0,
+          rgba(255, 166, 193, 0.25) 12%,
+          transparent 25%
         ),
         radial-gradient(
-          circle at 90% 18%,
-          rgba(255, 215, 180, 0.38),
+          circle at 25% 28%,
+          rgba(255, 205, 132, 0.42) 0,
+          rgba(255, 205, 132, 0.18) 13%,
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 48% 8%,
+          rgba(255, 191, 151, 0.40) 0,
+          rgba(255, 191, 151, 0.16) 14%,
           transparent 29%
         ),
         radial-gradient(
-          circle at 45% 90%,
-          rgba(255, 226, 211, 0.34),
-          transparent 32%
+          circle at 72% 18%,
+          rgba(255, 221, 145, 0.42) 0,
+          rgba(255, 221, 145, 0.17) 13%,
+          transparent 27%
+        ),
+        radial-gradient(
+          circle at 91% 10%,
+          rgba(255, 173, 204, 0.48) 0,
+          rgba(255, 173, 204, 0.18) 14%,
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 14% 58%,
+          rgba(255, 193, 154, 0.38) 0,
+          rgba(255, 193, 154, 0.15) 15%,
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 40% 52%,
+          rgba(255, 222, 164, 0.35) 0,
+          rgba(255, 222, 164, 0.13) 14%,
+          transparent 29%
+        ),
+        radial-gradient(
+          circle at 66% 62%,
+          rgba(255, 177, 201, 0.38) 0,
+          rgba(255, 177, 201, 0.14) 15%,
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 88% 48%,
+          rgba(255, 203, 145, 0.42) 0,
+          rgba(255, 203, 145, 0.15) 14%,
+          transparent 29%
+        ),
+        radial-gradient(
+          circle at 20% 92%,
+          rgba(255, 174, 197, 0.42) 0,
+          rgba(255, 174, 197, 0.16) 14%,
+          transparent 29%
+        ),
+        radial-gradient(
+          circle at 50% 88%,
+          rgba(255, 211, 153, 0.40) 0,
+          rgba(255, 211, 153, 0.15) 15%,
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 82% 91%,
+          rgba(255, 188, 164, 0.38) 0,
+          rgba(255, 188, 164, 0.14) 14%,
+          transparent 29%
         ),
         linear-gradient(
           135deg,
-          #fff8f6 0%,
-          #fff3f6 38%,
-          #fff8f1 70%,
-          #fffdfb 100%
+          #fff7f4 0%,
+          #fff1f5 28%,
+          #fff8ee 55%,
+          #fff3f4 78%,
+          #fffaf5 100%
         );
 
       overflow: hidden;
     }
 
-    /* 背景のドット模様 */
+    /* 背景の水玉模様 */
     body::before {
       content: "";
       position: fixed;
@@ -59,33 +117,40 @@
       background-image:
         radial-gradient(
           circle,
-          rgba(210, 145, 165, 0.13) 1.2px,
-          transparent 1.2px
+          rgba(214, 125, 151, 0.18) 1.5px,
+          transparent 1.6px
+        ),
+        radial-gradient(
+          circle,
+          rgba(230, 157, 92, 0.13) 1.2px,
+          transparent 1.3px
         );
 
-      background-size: 24px 24px;
-      opacity: 0.42;
+      background-size:
+        34px 34px,
+        52px 52px;
+
+      background-position:
+        0 0,
+        17px 24px;
     }
 
-    /* 背景の光と曲線 */
+    /* 背景の曲線 */
     body::after {
       content: "";
       position: fixed;
-      width: 620px;
-      height: 620px;
-      top: -230px;
-      right: -180px;
-
+      inset: -10%;
       pointer-events: none;
       z-index: 0;
 
-      border: 2px solid rgba(255, 178, 194, 0.12);
-      border-radius: 48% 52% 60% 40%;
-      transform: rotate(25deg);
+      border: 3px solid rgba(230, 135, 157, 0.18);
+      border-radius: 48% 52% 45% 55%;
+
+      transform: rotate(-9deg) scale(1.08);
 
       box-shadow:
-        0 0 80px rgba(255, 194, 208, 0.16),
-        0 0 150px rgba(255, 218, 190, 0.12);
+        0 0 0 38px rgba(255, 190, 160, 0.08),
+        0 0 0 82px rgba(255, 212, 146, 0.06);
     }
 
     /* 左メニュー */
@@ -123,74 +188,39 @@
       justify-content: center;
 
       overflow: hidden;
+
+      background: transparent;
     }
 
     /* 広告 */
     .ad-space {
-      position: relative;
       min-height: 100vh;
-      overflow: hidden;
 
       background:
         radial-gradient(
-          circle at 20% 15%,
-          rgba(190, 220, 245, 0.45),
-          transparent 32%
+          circle at 20% 20%,
+          rgba(190, 220, 245, 0.34),
+          transparent 28%
         ),
         radial-gradient(
-          circle at 80% 80%,
-          rgba(210, 200, 238, 0.38),
-          transparent 35%
+          circle at 80% 70%,
+          rgba(213, 202, 240, 0.30),
+          transparent 30%
         ),
         linear-gradient(
           180deg,
-          #e1edf6 0%,
-          #e9e5f4 48%,
-          #dceaf4 100%
+          #e3edf7 0%,
+          #edf0f8 45%,
+          #e2eaf5 100%
         );
 
-      border-left: 1px solid rgba(135, 155, 185, 0.28);
-      border-right: 1px solid rgba(135, 155, 185, 0.28);
+      border-left: 1px solid rgba(145, 165, 190, 0.28);
+      border-right: 1px solid rgba(145, 165, 190, 0.28);
 
       box-shadow:
-        inset 0 0 45px rgba(100, 130, 165, 0.10);
-    }
+        inset 0 0 35px rgba(100, 125, 160, 0.10);
 
-    /* 広告帯の装飾 */
-    .ad-space::before {
-      content: "";
-      position: absolute;
-      width: 260px;
-      height: 260px;
-      top: -90px;
-      right: -120px;
-
-      border: 2px solid rgba(255, 255, 255, 0.25);
-      border-radius: 50%;
-
-      box-shadow:
-        0 0 45px rgba(255, 255, 255, 0.16);
-
-      pointer-events: none;
-    }
-
-    .ad-space::after {
-      content: "";
-      position: absolute;
-      width: 340px;
-      height: 180px;
-      left: -170px;
-      bottom: 8%;
-
-      border: 2px solid rgba(255, 255, 255, 0.18);
-      border-radius: 50%;
-
-      transform: rotate(-20deg);
-
-      box-shadow:
-        0 0 50px rgba(150, 180, 215, 0.12);
-
-      pointer-events: none;
+      overflow: hidden;
     }
 
     /* 中央メイン */
@@ -205,43 +235,49 @@
       overflow: hidden;
     }
 
-    /* 中央メインの背景装飾 */
+    /* 中央メインの装飾 */
     .main::before {
       content: "";
       position: absolute;
-      width: 260px;
-      height: 260px;
+
+      width: 420px;
+      height: 420px;
+
       top: 8%;
-      left: -120px;
+      left: -210px;
 
       border-radius: 50%;
 
       background:
         radial-gradient(
           circle,
-          rgba(255, 198, 215, 0.22),
-          transparent 68%
+          rgba(255, 166, 194, 0.25),
+          rgba(255, 205, 157, 0.14) 45%,
+          transparent 72%
         );
 
-      filter: blur(8px);
+      filter: blur(5px);
       pointer-events: none;
     }
 
     .main::after {
       content: "";
       position: absolute;
-      width: 520px;
-      height: 300px;
-      right: -220px;
-      bottom: 4%;
 
-      border: 2px solid rgba(255, 177, 196, 0.10);
+      width: 600px;
+      height: 330px;
+
+      right: -250px;
+      bottom: 5%;
+
+      border: 3px solid rgba(230, 139, 163, 0.16);
       border-radius: 55% 45% 50% 50%;
 
       transform: rotate(-18deg);
 
       box-shadow:
-        0 0 65px rgba(255, 193, 207, 0.12);
+        0 0 0 28px rgba(255, 194, 151, 0.07),
+        0 0 70px rgba(255, 177, 198, 0.12);
 
       pointer-events: none;
     }
@@ -288,6 +324,8 @@
 
         display: block;
         overflow: visible;
+
+        background: transparent;
       }
 
       .ad-space {
@@ -439,17 +477,18 @@
       }
 
       /*
-       * 左メニュー以外は
-       * 中央メインへホイールを送る
+       * 左メニュー以外では
+       * 中央メインのiframeを直接スクロール
        */
       if (!mainFrame.contentWindow) {
         return;
       }
 
-      mainFrame.contentWindow.postMessage({
-        type: "mainWheel",
-        deltaY: event.deltaY
-      }, "*");
+      mainFrame.contentWindow.scrollBy({
+        top: event.deltaY,
+        left: 0,
+        behavior: "auto"
+      });
 
       event.preventDefault();
 
