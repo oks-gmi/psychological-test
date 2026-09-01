@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>性格診断｜性格診断1</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      color: #4a3f45;
+      background: transparent;
+    }
+
+    /* 共通ロゴ */
+    .logo-frame {
+      width: 100%;
+      max-width: 600px;
+      height: 80px;
+
+      display: block;
+      margin: 20px auto 20px;
+
+      border: 0;
+      overflow: hidden;
+    }
+
+    /* 診断全体 */
+    .quiz-container {
+      width: 100%;
+      max-width: 626px;
+      margin: 0 auto 35px;
+      padding: 18px;
+
+      background: #fff0eb;
+      border-radius: 14px;
+    }
+
+    /* ページタイトル */
+    .page-title {
+      width: 590px;
+      max-width: 100%;
+      margin: 0 auto 25px;
+      padding: 14px 20px;
+
+      text-align: center;
+      font-size: 26px;
+      font-weight: 800;
+
+      color: #ffffff;
+      background: #d9785f;
+
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 質問 */
+    .question-item {
+      width: 590px;
+      max-width: 100%;
+      margin: 0 auto 25px;
+      padding: 20px;
+
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.07);
+    }
+
+    .question-number {
+      margin-bottom: 12px;
+
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .question-text {
+      margin-bottom: 20px;
+
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    /* 回答 */
+    .answer-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .answer-option {
+      display: flex;
+      align-items: center;
+
+      width: 100%;
+      padding: 12px 14px;
+
+      font-size: 18px;
+      line-height: 1.6;
+
+      background: #fff6f2;
+      border: 1px solid #ead8d2;
+      border-radius: 8px;
+
+      cursor: pointer;
+    }
+
+    .answer-option:hover {
+      background: #fff0eb;
+    }
+
+    .answer-option input {
+      width: 18px;
+      height: 18px;
+      margin: 0 10px 0 0;
+
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    /* 結果を表示ボタン */
+    .result-button {
+      display: block;
+      margin: 5px auto 0;
+
+      padding: 10px 28px;
+
+      font-size: 16px;
+      font-weight: 700;
+
+      color: #ffffff;
+      background: #d9785f;
+
+      border: 0;
+      border-radius: 8px;
+
+      cursor: pointer;
+    }
+
+    .result-button:hover {
+      opacity: 0.85;
+    }
+
+    /* 診断結果 */
+    .result-container {
+      display: none;
+
+      width: 590px;
+      max-width: 100%;
+      margin: 25px auto 0;
+      padding: 20px;
+
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.07);
+    }
+
+    .result-container.show {
+      display: block;
+    }
+
+    .result-title {
+      margin-bottom: 20px;
+
+      font-size: 22px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .result-item {
+      display: flex;
+      align-items: flex-start;
+
+      width: 100%;
+      margin-bottom: 18px;
+      padding: 15px;
+
+      background: #fff6f2;
+      border: 1px solid #ead8d2;
+      border-radius: 8px;
+    }
+
+    .result-item:last-child {
+      margin-bottom: 0;
+    }
+
+    /* チェックマーク用の固定幅 */
+    .result-mark {
+      display: block;
+      width: 28px;
+      min-width: 28px;
+
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.6;
+    }
+
+    .result-content {
+      flex: 1;
+    }
+
+    .result-name {
+      margin-bottom: 8px;
+
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .result-description {
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    /* 前のページに戻る */
+    .back-button {
+      display: block;
+      width: fit-content;
+
+      margin: 30px auto 0;
+      padding: 10px 24px;
+
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 700;
+
+      color: #ffffff;
+      background: #d9785f;
+
+      border-radius: 8px;
+    }
+
+    .back-button:hover {
+      opacity: 0.85;
+    }
+
+    /* 共通フッター */
+    .footer-frame {
+      width: 100%;
+      height: 80px;
+      border: 0;
+      display: block;
+      margin-top: 20px;
+      overflow: hidden;
+    }
+
+    /* スマホ */
+    @media (max-width: 600px) {
+      .logo-frame {
+        width: 100%;
+        height: 65px;
+        margin: 20px auto 20px;
+      }
+
+      .quiz-container {
+        margin: 0 15px 30px;
+        padding: 15px;
+      }
+
+      .page-title {
+        width: 100%;
+        font-size: 23px;
+      }
+
+      .question-item {
+        width: 100%;
+        padding: 18px;
+      }
+
+      .question-number {
+        font-size: 19px;
+      }
+
+      .question-text {
+        font-size: 20px;
+      }
+
+      .answer-option {
+        font-size: 17px;
+      }
+
+      .result-container {
+        width: 100%;
+        padding: 18px;
+      }
+
+      .result-title {
+        font-size: 21px;
+      }
+
+      .result-name {
+        font-size: 18px;
+      }
+
+      .result-description {
+        font-size: 15px;
+      }
+
+      .back-button {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .logo-frame {
+        height: 55px;
+      }
+
+      .result-mark {
+        width: 26px;
+        min-width: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 共通ロゴ -->
+  <iframe
+    src="../logo.html"
+    class="logo-frame"
+    title="サイトロゴ"
+    scrolling="no">
+  </iframe>
+
+  <main class="quiz-container">
+
+    <!-- ページタイトル -->
+    <div class="page-title">
+      【性格診断】
+    </div>
+
+    <!-- 質問 -->
+    <section class="question-item">
+
+      <div class="question-number">
+        性格診断
+      </div>
+
+      <div class="question-text">
+        あなたは友達と待ち合わせをしています。<br>
+        ところが、友達が予定の時間になっても来ません。<br>
+        あなたならどうする？
+      </div>
+
+      <div class="answer-list">
+
+        <label class="answer-option">
+          <input
+            type="radio"
+            name="personality-answer"
+            value="A">
+          A. しばらく待ってから連絡する
+        </label>
+
+        <label class="answer-option">
+          <input
+            type="radio"
+            name="personality-answer"
+            value="B">
+          B. すぐに電話して確認する
+        </label>
+
+        <label class="answer-option">
+          <input
+            type="radio"
+            name="personality-answer"
+            value="C">
+          C. 相手にも事情があると思って、そのまま待つ
+        </label>
+
+        <label class="answer-option">
+          <input
+            type="radio"
+            name="personality-answer"
+            value="D">
+          D. 待つのをやめて別のことをする
+        </label>
+
+      </div>
+
+    </section>
+
+    <!-- 結果を表示 -->
+    <button
+      class="result-button"
+      onclick="showResult()">
+      結果を表示
+    </button>
+
+    <!-- 診断結果 -->
+    <section
+      id="result-container"
+      class="result-container">
+
+      <div class="result-title">
+        診断結果
+      </div>
+
+      <!-- A -->
+      <div class="result-item">
+        <span class="result-mark" id="mark-A"></span>
+
+        <div class="result-content">
+          <div class="result-name">
+            A：バランス重視タイプ
+          </div>
+
+          <div class="result-description">
+            相手のことを気にかけながらも、自分の時間も大切にできるタイプです。
+            状況を冷静に見ながら、相手に合わせすぎず、自分にとって無理のない行動を選ぶ傾向があります。
+            人との付き合いでは、適度な距離感を保つことを大切にしているかもしれません。
+            周囲との関係と自分自身の気持ちの両方を考えられる、バランス感覚のある性格です。
+          </div>
+        </div>
+      </div>
+
+      <!-- B -->
+      <div class="result-item">
+        <span class="result-mark" id="mark-B"></span>
+
+        <div class="result-content">
+          <div class="result-name">
+            B：行動派タイプ
+          </div>
+
+          <div class="result-description">
+            気になったことや問題が起きたときに、まず自分から動いて解決しようとするタイプです。
+            迷ったまま時間を過ごすよりも、状況を確認して次の行動につなげることを好む傾向があります。
+            決断が早く、周囲から頼りにされることも多いかもしれません。
+            一方で、行動が早い分、じっくり考える前に動いてしまうこともありそうです。
+          </div>
+        </div>
+      </div>
+
+      <!-- C -->
+      <div class="result-item">
+        <span class="result-mark" id="mark-C"></span>
+
+        <div class="result-content">
+          <div class="result-name">
+            C：思いやりタイプ
+          </div>
+
+          <div class="result-description">
+            相手の立場や事情を考えながら行動する、穏やかで思いやりのあるタイプです。
+            自分の都合だけで判断せず、「相手にも何か事情があるのかもしれない」と考えられるため、
+            人間関係では相手に安心感を与えやすいでしょう。
+            周囲との調和を大切にする一方で、自分の気持ちを後回しにしてしまうこともあるかもしれません。
+          </div>
+        </div>
+      </div>
+
+      <!-- D -->
+      <div class="result-item">
+        <span class="result-mark" id="mark-D"></span>
+
+        <div class="result-content">
+          <div class="result-name">
+            D：マイペースタイプ
+          </div>
+
+          <div class="result-description">
+            周囲の状況に必要以上に振り回されず、自分の時間やペースを大切にするタイプです。
+            相手を待ち続けることよりも、自分にできる別のことへ気持ちを切り替えるなど、
+            気持ちの切り替えが比較的早い傾向があります。
+            自分の考えをしっかり持っていて、他人に合わせすぎないところが魅力です。
+            一方で、周囲からは少し自由に見られることもあるかもしれません。
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 前のページに戻る -->
+    <a
+      href="personality000.html"
+      class="back-button">
+      前のページに戻る
+    </a>
+
+  </main>
+
+  <!-- 共通フッター -->
+  <iframe
+    src="../footer.html"
+    class="footer-frame"
+    title="共通フッター"
+    scrolling="no">
+  </iframe>
+
+  <script>
+    function showResult() {
+
+      const selected = document.querySelector(
+        'input[name="personality-answer"]:checked'
+      );
+
+      if (!selected) {
+        alert("回答を1つ選択してください。");
+        return;
+      }
+
+      const marks = document.querySelectorAll(".result-mark");
+
+      marks.forEach(mark => {
+        mark.textContent = "";
+      });
+
+      const selectedMark = document.getElementById(
+        "mark-" + selected.value
+      );
+
+      selectedMark.textContent = "✓";
+
+      document
+        .getElementById("result-container")
+        .classList.add("show");
+    }
+
+    window.addEventListener("message", event => {
+
+      if (event.data?.type === "changePage") {
+        parent.postMessage({
+          type: "changePage",
+          url: event.data.url
+        }, "*");
+        return;
+      }
+
+      if (event.data?.type === "scrollTop") {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
+
+    });
+  </script>
+
+  <script src="../main-scroll.js"></script>
+
+</body>
+</html>
