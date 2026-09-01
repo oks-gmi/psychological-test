@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>難読漢字｜植物2</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      color: #4a3f45;
+      background: transparent;
+    }
+
+    /* 共通ロゴ */
+    .logo-frame {
+      width: 100%;
+      max-width: 600px;
+      height: 80px;
+
+      display: block;
+      margin: 20px auto 20px;
+
+      border: 0;
+      overflow: hidden;
+    }
+
+    /* クイズ全体 */
+    .quiz-container {
+      width: 100%;
+      max-width: 626px;
+      margin: 0 auto 35px;
+      padding: 18px;
+
+      background: #fff0eb;
+      border-radius: 14px;
+    }
+
+    /* ページタイトル */
+    .page-title {
+      width: 590px;
+      max-width: 100%;
+      margin: 0 auto 25px;
+      padding: 14px 20px;
+
+      text-align: center;
+      font-size: 26px;
+      font-weight: 800;
+
+      color: #ffffff;
+      background: #d9785f;
+
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 問題 */
+    .quiz-item {
+      width: 590px;
+      max-width: 100%;
+      margin: 0 auto 25px;
+      padding: 20px;
+
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.07);
+    }
+
+    .quiz-number {
+      margin-bottom: 12px;
+
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .quiz-question {
+      margin-bottom: 18px;
+
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    /* 答えを見るボタン */
+    .answer-button {
+      display: block;
+      margin: 0 auto;
+
+      padding: 10px 24px;
+
+      font-size: 16px;
+      font-weight: 700;
+
+      color: #ffffff;
+      background: #d9785f;
+
+      border: 0;
+      border-radius: 8px;
+
+      cursor: pointer;
+    }
+
+    .answer-button:hover {
+      opacity: 0.85;
+    }
+
+    /* 答え */
+    .answer {
+      display: none;
+
+      margin-top: 16px;
+      padding: 12px;
+
+      text-align: center;
+      font-size: 20px;
+      font-weight: 800;
+
+      background: #fff6f2;
+      border-top: 1px solid #ead8d2;
+    }
+
+    .answer.show {
+      display: block;
+    }
+
+    /* 前のページに戻る */
+    .back-button {
+      display: block;
+      width: fit-content;
+
+      margin: 30px auto 0;
+      padding: 10px 24px;
+
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 700;
+
+      color: #ffffff;
+      background: #d9785f;
+
+      border-radius: 8px;
+    }
+
+    .back-button:hover {
+      opacity: 0.85;
+    }
+
+    /* 共通フッター */
+    .footer-frame {
+      width: 100%;
+      height: 80px;
+      border: 0;
+      display: block;
+      margin-top: 20px;
+      overflow: hidden;
+    }
+
+    /* スマホ */
+    @media (max-width: 600px) {
+      .logo-frame {
+        width: 100%;
+        height: 65px;
+        margin: 20px auto 20px;
+      }
+
+      .quiz-container {
+        margin: 0 15px 30px;
+        padding: 15px;
+      }
+
+      .page-title {
+        width: 100%;
+        font-size: 23px;
+      }
+
+      .quiz-item {
+        width: 100%;
+        padding: 18px;
+      }
+
+      .quiz-number {
+        font-size: 19px;
+      }
+
+      .quiz-question {
+        font-size: 20px;
+      }
+
+      .answer-button {
+        font-size: 15px;
+      }
+
+      .answer {
+        font-size: 19px;
+      }
+
+      .back-button {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .logo-frame {
+        height: 55px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 共通ロゴ -->
+  <iframe
+    src="../logo.html"
+    class="logo-frame"
+    title="サイトロゴ"
+    scrolling="no">
+  </iframe>
+
+  <main class="quiz-container">
+
+    <!-- ページタイトル -->
+    <div class="page-title">
+      【難読漢字・植物】
+    </div>
+
+    <!-- 第1問 -->
+    <section class="quiz-item">
+      <div class="quiz-number">第1問</div>
+
+      <div class="quiz-question">
+        「紫陽花」の読み方は？
+      </div>
+
+      <button class="answer-button" onclick="showAnswer(this)">
+        答えを見る
+      </button>
+
+      <div class="answer">
+        答え：あじさい
+      </div>
+    </section>
+
+    <!-- 第2問 -->
+    <section class="quiz-item">
+      <div class="quiz-number">第2問</div>
+
+      <div class="quiz-question">
+        「向日葵」の読み方は？
+      </div>
+
+      <button class="answer-button" onclick="showAnswer(this)">
+        答えを見る
+      </button>
+
+      <div class="answer">
+        答え：ひまわり
+      </div>
+    </section>
+
+    <!-- 第3問 -->
+    <section class="quiz-item">
+      <div class="quiz-number">第3問</div>
+
+      <div class="quiz-question">
+        「蒲公英」の読み方は？
+      </div>
+
+      <button class="answer-button" onclick="showAnswer(this)">
+        答えを見る
+      </button>
+
+      <div class="answer">
+        答え：たんぽぽ
+      </div>
+    </section>
+
+    <!-- 第4問 -->
+    <section class="quiz-item">
+      <div class="quiz-number">第4問</div>
+
+      <div class="quiz-question">
+        「彼岸花」の読み方は？
+      </div>
+
+      <button class="answer-button" onclick="showAnswer(this)">
+        答えを見る
+      </button>
+
+      <div class="answer">
+        答え：ひがんばな
+      </div>
+    </section>
+
+    <!-- 第5問 -->
+    <section class="quiz-item">
+      <div class="quiz-number">第5問</div>
+
+      <div class="quiz-question">
+        「金木犀」の読み方は？
+      </div>
+
+      <button class="answer-button" onclick="showAnswer(this)">
+        答えを見る
+      </button>
+
+      <div class="answer">
+        答え：きんもくせい
+      </div>
+    </section>
+
+    <!-- 前のページに戻る -->
+    <a href="kanji000.html" class="back-button">
+      前のページに戻る
+    </a>
+
+  </main>
+
+  <!-- 共通フッター -->
+  <iframe
+    src="../footer.html"
+    class="footer-frame"
+    title="共通フッター"
+    scrolling="no">
+  </iframe>
+
+  <script>
+    function showAnswer(button) {
+      const answer = button.nextElementSibling;
+
+      answer.classList.toggle("show");
+
+      if (answer.classList.contains("show")) {
+        button.textContent = "答えを隠す";
+      } else {
+        button.textContent = "答えを見る";
+      }
+    }
+
+    window.addEventListener("message", event => {
+
+      if (event.data?.type === "changePage") {
+        parent.postMessage({
+          type: "changePage",
+          url: event.data.url
+        }, "*");
+        return;
+      }
+
+      if (event.data?.type === "scrollTop") {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
+
+    });
+  </script>
+
+  <script src="../main-scroll.js"></script>
+
+</body>
+</html>
