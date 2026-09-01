@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>なぞとき｜なぞとき1</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      color: #4a3f45;
+      background: transparent;
+    }
+
+    /* 共通ロゴ */
+    .logo-frame {
+      width: 100%;
+      max-width: 600px;
+      height: 80px;
+
+      display: block;
+      margin: 20px auto 20px;
+
+      border: 0;
+      overflow: hidden;
+    }
+
+    /* 謎解き全体 */
+    .quiz-container {
+      width: 100%;
+      max-width: 626px;
+      margin: 0 auto 35px;
+      padding: 18px;
+
+      background: #fff0eb;
+      border-radius: 14px;
+    }
+
+    /* ページタイトル */
+    .page-title {
+      width: 590px;
+      max-width: 100%;
+      margin: 0 auto 25px;
+      padding: 14px 20px;
+
+      text-align: center;
+      font-size: 26px;
+      font-weight: 800;
+
+      color: #ffffff;
+      background: #d9785f;
+
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 問題 */
+    .question-item {
+      width: 590px;
+      max-width: 100%;
+      margin: 0 auto 25px;
+      padding: 20px;
+
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.07);
+    }
+
+    .question-number {
+      margin-bottom: 12px;
+
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .question-text {
+      margin-bottom: 20px;
+
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    /* 扉の文章 */
+    .door-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .door-item {
+      width: 100%;
+      padding: 14px 16px;
+
+      font-size: 17px;
+      line-height: 1.7;
+
+      background: #fff6f2;
+      border: 1px solid #ead8d2;
+      border-radius: 8px;
+    }
+
+    .door-name {
+      margin-bottom: 5px;
+
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    /* 回答 */
+    .answer-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .answer-option {
+      display: flex;
+      align-items: center;
+
+      width: 100%;
+      padding: 12px 14px;
+
+      font-size: 18px;
+      line-height: 1.6;
+
+      background: #fff6f2;
+      border: 1px solid #ead8d2;
+      border-radius: 8px;
+
+      cursor: pointer;
+    }
+
+    .answer-option:hover {
+      background: #fff0eb;
+    }
+
+    .answer-option input {
+      width: 18px;
+      height: 18px;
+      margin: 0 10px 0 0;
+
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    /* 答えを表示ボタン */
+    .result-button {
+      display: block;
+      margin: 5px auto 0;
+
+      padding: 10px 28px;
+
+      font-size: 16px;
+      font-weight: 700;
+
+      color: #ffffff;
+      background: #d9785f;
+
+      border: 0;
+      border-radius: 8px;
+
+      cursor: pointer;
+    }
+
+    .result-button:hover {
+      opacity: 0.85;
+    }
+
+    /* 答え・理由 */
+    .result-container {
+      display: none;
+
+      width: 590px;
+      max-width: 100%;
+      margin: 25px auto 0;
+      padding: 20px;
+
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.07);
+    }
+
+    .result-container.show {
+      display: block;
+    }
+
+    .result-title {
+      margin-bottom: 12px;
+
+      font-size: 22px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .result-answer {
+      margin-bottom: 25px;
+
+      font-size: 20px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .result-description-intro {
+      margin-bottom: 20px;
+
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .reason-item {
+      width: 100%;
+      margin-bottom: 18px;
+      padding: 15px;
+
+      background: #fff6f2;
+      border: 1px solid #ead8d2;
+      border-radius: 8px;
+    }
+
+    .reason-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .reason-title {
+      margin-bottom: 10px;
+
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .reason-list {
+      margin: 0;
+      padding-left: 22px;
+
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .reason-result {
+      margin-top: 10px;
+
+      font-size: 16px;
+      line-height: 1.8;
+      font-weight: 700;
+    }
+
+    /* 前のページに戻る */
+    .back-button {
+      display: block;
+      width: fit-content;
+
+      margin: 30px auto 0;
+      padding: 10px 24px;
+
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 700;
+
+      color: #ffffff;
+      background: #d9785f;
+
+      border-radius: 8px;
+    }
+
+    .back-button:hover {
+      opacity: 0.85;
+    }
+
+    /* 共通フッター */
+    .footer-frame {
+      width: 100%;
+      height: 80px;
+      border: 0;
+      display: block;
+      margin-top: 20px;
+      overflow: hidden;
+    }
+
+    /* スマホ */
+    @media (max-width: 600px) {
+      .logo-frame {
+        width: 100%;
+        height: 65px;
+        margin: 20px auto 20px;
+      }
+
+      .quiz-container {
+        margin: 0 15px 30px;
+        padding: 15px;
+      }
+
+      .page-title {
+        width: 100%;
+        font-size: 23px;
+      }
+
+      .question-item {
+        width: 100%;
+        padding: 18px;
+      }
+
+      .question-number {
+        font-size: 19px;
+      }
+
+      .question-text {
+        font-size: 19px;
+      }
+
+      .door-item {
+        font-size: 16px;
+      }
+
+      .door-name {
+        font-size: 17px;
+      }
+
+      .answer-option {
+        font-size: 17px;
+      }
+
+      .result-container {
+        width: 100%;
+        padding: 18px;
+      }
+
+      .result-title {
+        font-size: 21px;
+      }
+
+      .result-answer {
+        font-size: 19px;
+      }
+
+      .result-description-intro {
+        font-size: 15px;
+      }
+
+      .reason-title {
+        font-size: 18px;
+      }
+
+      .reason-list,
+      .reason-result {
+        font-size: 15px;
+      }
+
+      .back-button {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .logo-frame {
+        height: 55px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 共通ロゴ -->
+  <iframe
+    src="../logo.html"
+    class="logo-frame"
+    title="サイトロゴ"
+    scrolling="no">
+  </iframe>
+
+  <main class="quiz-container">
+
+    <!-- ページタイトル -->
+    <div class="page-title">
+      【なぞとき1】
+    </div>
+
+    <!-- 問題 -->
+    <section class="question-item">
+
+      <div class="question-number">
+        なぞとき
+      </div>
+
+      <div class="question-text">
+        あなたはある部屋に閉じ込められています。<br>
+        部屋には4つの扉があります。<br><br>
+
+        扉にはそれぞれ、次の文章が書かれています。
+      </div>
+
+      <div class="door-list">
+
+        <div class="door-item">
+          <div class="door-name">
+            赤い扉
+          </div>
+          「出口は青い扉ではない。」
+        </div>
+
+        <div class="door-item">
+          <div class="door-name">
+            青い扉
+          </div>
+          「出口は緑の扉である。」
+        </div>
+
+        <div class="door-item">
+          <div class="door-name">
+            緑の扉
+          </div>
+          「赤い扉の文章は嘘である。」
+        </div>
+
+        <div class="door-item">
+          <div class="door-name">
+            黄色い扉
+          </div>
+          「出口はこの扉ではない。」
+        </div>
+
+      </div>
+
+      <div class="question-text">
+        <br>
+        ただし、4つの文章のうち、<br>
+        <strong>正しい文章は1つだけ</strong>です。<br><br>
+
+        さて、出口は何色の扉でしょう？
+      </div>
+
+      <div class="answer-list">
+
+        <label class="answer-option">
+          <input
+            type="radio"
+            name="mystery-answer"
+            value="A">
+          A. 赤い扉
+        </label>
+
+        <label class="answer-option">
+          <input
+            type="radio"
+            name="mystery-answer"
+            value="B">
+          B. 青い扉
+        </label>
+
+        <label class="answer-option">
+          <input
+            type="radio"
+            name="mystery-answer"
+            value="C">
+          C. 緑の扉
+        </label>
+
+        <label class="answer-option">
+          <input
+            type="radio"
+            name="mystery-answer"
+            value="D">
+          D. 黄色い扉
+        </label>
+
+      </div>
+
+    </section>
+
+    <!-- 答えを表示 -->
+    <button
+      class="result-button"
+      onclick="showResult()">
+      答えを表示
+    </button>
+
+    <!-- 答え・理由 -->
+    <section
+      id="result-container"
+      class="result-container">
+
+      <div class="result-title">
+        答え
+      </div>
+
+      <div class="result-answer">
+        D. 黄色い扉
+      </div>
+
+      <div class="result-description-intro">
+        それぞれの扉が出口だった場合に、4つの文章が「正しいか・間違っているか」を確認してみましょう。
+      </div>
+
+      <!-- 赤い扉 -->
+      <div class="reason-item">
+
+        <div class="reason-title">
+          赤い扉が出口の場合
+        </div>
+
+        <ul class="reason-list">
+          <li>赤い扉：「出口は青い扉ではない。」→ 正しい</li>
+          <li>青い扉：「出口は緑の扉である。」→ 間違い</li>
+          <li>緑の扉：「赤い扉の文章は嘘である。」→ 間違い</li>
+          <li>黄色い扉：「出口はこの扉ではない。」→ 正しい</li>
+        </ul>
+
+        <div class="reason-result">
+          → 正しい文章が2つになるので、条件に合いません。
+        </div>
+
+      </div>
+
+      <!-- 青い扉 -->
+      <div class="reason-item">
+
+        <div class="reason-title">
+          青い扉が出口の場合
+        </div>
+
+        <ul class="reason-list">
+          <li>赤い扉：「出口は青い扉ではない。」→ 間違い</li>
+          <li>青い扉：「出口は緑の扉である。」→ 間違い</li>
+          <li>緑の扉：「赤い扉の文章は嘘である。」→ 正しい</li>
+          <li>黄色い扉：「出口はこの扉ではない。」→ 正しい</li>
+        </ul>
+
+        <div class="reason-result">
+          → 正しい文章が2つになるので、条件に合いません。
+        </div>
+
+      </div>
+
+      <!-- 緑の扉 -->
+      <div class="reason-item">
+
+        <div class="reason-title">
+          緑の扉が出口の場合
+        </div>
+
+        <ul class="reason-list">
+          <li>赤い扉：「出口は青い扉ではない。」→ 正しい</li>
+          <li>青い扉：「出口は緑の扉である。」→ 正しい</li>
+          <li>緑の扉：「赤い扉の文章は嘘である。」→ 間違い</li>
+          <li>黄色い扉：「出口はこの扉ではない。」→ 正しい</li>
+        </ul>
+
+        <div class="reason-result">
+          → 正しい文章が3つになるので、条件に合いません。
+        </div>
+
+      </div>
+
+      <!-- 黄色い扉 -->
+      <div class="reason-item">
+
+        <div class="reason-title">
+          黄色い扉が出口の場合
+        </div>
+
+        <ul class="reason-list">
+          <li>赤い扉：「出口は青い扉ではない。」→ 正しい</li>
+          <li>青い扉：「出口は緑の扉である。」→ 間違い</li>
+          <li>緑の扉：「赤い扉の文章は嘘である。」→ 間違い</li>
+          <li>黄色い扉：「出口はこの扉ではない。」→ 間違い</li>
+        </ul>
+
+        <div class="reason-result">
+          → 正しい文章が1つだけになるので、条件に合います。
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- 前のページに戻る -->
+    <a
+      href="mystery000.html"
+      class="back-button">
+      前のページに戻る
+    </a>
+
+  </main>
+
+  <!-- 共通フッター -->
+  <iframe
+    src="../footer.html"
+    class="footer-frame"
+    title="サイトフッター"
+    scrolling="no">
+  </iframe>
+
+  <script>
+    function showResult() {
+
+      const selected = document.querySelector(
+        'input[name="mystery-answer"]:checked'
+      );
+
+      if (!selected) {
+        alert("回答を1つ選択してください。");
+        return;
+      }
+
+      document
+        .getElementById("result-container")
+        .classList.add("show");
+    }
+
+    window.addEventListener("message", event => {
+
+      if (event.data?.type === "changePage") {
+        parent.postMessage({
+          type: "changePage",
+          url: event.data.url
+        }, "*");
+        return;
+      }
+
+      if (event.data?.type === "scrollTop") {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
+
+    });
+  </script>
+
+  <script src="../main-scroll.js"></script>
+
+</body>
+</html>
