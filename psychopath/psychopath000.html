@@ -78,9 +78,9 @@
     /* 小カテゴリー */
     .sub-category-grid {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 15px;
-      justify-items: center;
+      justify-content: start;
     }
 
     .sub-category-card {
@@ -92,15 +92,26 @@
       min-height: 78px;
       padding: 14px 12px;
 
+      text-decoration: none;
       color: #4a3f45;
 
       font-size: 24px;
       font-weight: 800;
       text-align: center;
+      white-space: nowrap;
 
       background: #ffffff;
       border-radius: 14px;
       box-shadow: 0 5px 14px rgba(0, 0, 0, 0.07);
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .sub-category-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
     }
 
     /* スマホ */
@@ -116,6 +127,12 @@
     body.mobile .category-description {
       width: 100%;
       font-size: 15px;
+    }
+
+    body.mobile .sub-category-grid {
+      grid-template-columns: 1fr;
+      gap: 15px;
+      justify-items: center;
     }
 
     body.mobile .sub-category-card {
@@ -180,9 +197,17 @@
     <!-- 小カテゴリー -->
     <div class="sub-category-grid">
 
-      <div class="sub-category-card">
-        現在準備中
-      </div>
+      <a href="psychopath000-001.html" class="sub-category-card">
+        サイコパス診断1
+      </a>
+
+      <a href="psychopath000-002.html" class="sub-category-card">
+        サイコパス診断2
+      </a>
+
+      <a href="psychopath000-003.html" class="sub-category-card">
+        サイコパス診断3
+      </a>
 
     </div>
 
