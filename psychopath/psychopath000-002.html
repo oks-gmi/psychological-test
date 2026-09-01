@@ -35,7 +35,7 @@
       overflow: hidden;
     }
 
-    /* 診断全体 */
+    /* クイズ全体 */
     .quiz-container {
       width: 100%;
       max-width: 626px;
@@ -50,7 +50,7 @@
     .page-title {
       width: 590px;
       max-width: 100%;
-      margin: 0 auto 18px;
+      margin: 0 auto 25px;
       padding: 14px 20px;
 
       text-align: center;
@@ -68,7 +68,7 @@
     .quiz-item {
       width: 590px;
       max-width: 100%;
-      margin: 0 auto;
+      margin: 0 auto 25px;
       padding: 20px;
 
       background: #ffffff;
@@ -79,142 +79,120 @@
     .quiz-number {
       margin-bottom: 12px;
 
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 800;
-      text-align: center;
     }
 
     .quiz-question {
-      font-size: 18px;
-      line-height: 1.9;
+      margin-bottom: 18px;
+
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.7;
       text-align: center;
     }
 
-    /* 結果ボタン */
+    /* 結果を見るボタン */
     .answer-button {
       display: block;
-      width: 220px;
-      margin: 25px auto 0;
-      padding: 12px 20px;
+      margin: 0 auto;
+
+      padding: 10px 24px;
+
+      font-size: 16px;
+      font-weight: 700;
+
+      color: #ffffff;
+      background: #d9785f;
 
       border: 0;
-      border-radius: 10px;
-
-      background: #d9785f;
-      color: #ffffff;
-
-      font-size: 18px;
-      font-weight: 800;
+      border-radius: 8px;
 
       cursor: pointer;
-
-      transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
     }
 
     .answer-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+      opacity: 0.85;
     }
 
     /* 結果 */
     .answer {
       display: none;
-      margin-top: 25px;
-      padding-top: 20px;
 
-      border-top: 2px solid #f0d6cf;
+      margin-top: 16px;
+      padding: 14px;
+
+      background: #fff6f2;
+      border-top: 1px solid #ead8d2;
+
+      font-size: 16px;
+      line-height: 1.8;
+      text-align: left;
     }
 
     .answer.show {
       display: block;
     }
 
-    .answer-title {
-      margin-bottom: 12px;
+    /* 結果タイトル */
+    .result-title {
+      margin-bottom: 10px;
 
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 800;
-      text-align: center;
     }
 
-    .answer-list {
-      margin: 0 0 25px;
-      padding-left: 25px;
-
-      font-size: 17px;
-      line-height: 1.9;
+    .general-title {
+      color: #4682b4;
     }
 
+    .psychopath-title {
+      margin-top: 20px;
+      color: #d9785f;
+    }
+
+    /* 結果の例 */
+    .answer ul {
+      margin: 0;
+      padding-left: 24px;
+    }
+
+    .answer li {
+      margin-bottom: 8px;
+    }
+
+    /* 注意書き */
     .note {
-      margin-top: 10px;
+      margin-top: 20px;
+      padding-top: 14px;
 
-      font-size: 14px;
-      line-height: 1.8;
-      text-align: center;
+      border-top: 1px solid #ead8d2;
+
+      font-size: 13px;
+      line-height: 1.7;
+      color: #666666;
     }
 
-    /* 戻る */
-    .back-link {
+    /* 前のページに戻る */
+    .back-button {
       display: block;
       width: fit-content;
-      margin: 25px auto 0;
 
-      color: #d9785f;
+      margin: 30px auto 0;
+      padding: 10px 24px;
+
+      text-decoration: none;
       font-size: 16px;
       font-weight: 700;
-      text-decoration: none;
+
+      color: #ffffff;
+      background: #d9785f;
+
+      border-radius: 8px;
     }
 
-    .back-link:hover {
-      text-decoration: underline;
-    }
-
-    /* スマホ */
-    body.mobile .quiz-container {
-      max-width: 100%;
-    }
-
-    body.mobile .page-title {
-      width: 100%;
-      font-size: 23px;
-    }
-
-    body.mobile .quiz-item {
-      width: 100%;
-      padding: 18px;
-    }
-
-    body.mobile .quiz-question {
-      font-size: 17px;
-    }
-
-    body.mobile .answer-button {
-      width: 200px;
-      font-size: 17px;
-    }
-
-    body.mobile .answer-title {
-      font-size: 19px;
-    }
-
-    body.mobile .answer-list {
-      font-size: 16px;
-    }
-
-    @media (max-width: 600px) {
-      .logo-frame {
-        width: 100%;
-        height: 65px;
-        margin: 20px auto 20px;
-      }
-    }
-
-    @media (max-width: 320px) {
-      .logo-frame {
-        height: 55px;
-      }
+    .back-button:hover {
+      opacity: 0.85;
     }
 
     /* 共通フッター */
@@ -225,6 +203,60 @@
       display: block;
       margin-top: 20px;
       overflow: hidden;
+    }
+
+    /* スマホ */
+    @media (max-width: 600px) {
+      .logo-frame {
+        width: 100%;
+        height: 65px;
+        margin: 20px auto 20px;
+      }
+
+      .quiz-container {
+        margin: 0 15px 30px;
+        padding: 15px;
+      }
+
+      .page-title {
+        width: 100%;
+        font-size: 23px;
+      }
+
+      .quiz-item {
+        width: 100%;
+        padding: 18px;
+      }
+
+      .quiz-number {
+        font-size: 19px;
+      }
+
+      .quiz-question {
+        font-size: 20px;
+      }
+
+      .answer-button {
+        font-size: 15px;
+      }
+
+      .answer {
+        font-size: 15px;
+      }
+
+      .result-title {
+        font-size: 18px;
+      }
+
+      .back-button {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .logo-frame {
+        height: 55px;
+      }
     }
   </style>
 </head>
@@ -239,18 +271,18 @@
     scrolling="no">
   </iframe>
 
-  <section class="quiz-container">
+  <main class="quiz-container">
 
     <!-- ページタイトル -->
     <div class="page-title">
       【サイコパス診断2】
     </div>
 
-    <!-- 問題 -->
-    <div class="quiz-item">
+    <!-- 第1問 -->
+    <section class="quiz-item">
 
       <div class="quiz-number">
-        問題
+        第1問
       </div>
 
       <div class="quiz-question">
@@ -265,42 +297,41 @@
         結果を見る
       </button>
 
-      <!-- 結果 -->
       <div class="answer">
 
-        <div class="answer-title">
+        <div class="result-title general-title">
           一般的な答えの例
         </div>
 
-        <ol class="answer-list">
+        <ul>
           <li>身分証の写真が少し面白かったから</li>
           <li>持ち主の名前が知り合いと同じだったから</li>
-        </ol>
+        </ul>
 
-        <div class="answer-title">
+        <div class="result-title psychopath-title">
           サイコパス的な答えの例
         </div>
 
-        <ol class="answer-list">
+        <ul>
           <li>持ち主の住所が分かり、後で利用できると思ったから</li>
           <li>身分証を悪用できると思ったから</li>
-        </ol>
+        </ul>
 
         <div class="note">
-          ※この診断は医学的・心理学的な診断ではありません。<br>
+          ※この診断は医学的・心理学的な診断ではありません。
           あくまで自由な発想を楽しむための心理テストです。
         </div>
 
       </div>
 
-    </div>
+    </section>
 
-    <!-- 戻る -->
-    <a href="psychopath000.html" class="back-link">
+    <!-- 前のページに戻る -->
+    <a href="psychopath000.html" class="back-button">
       ← サイコパス診断一覧へ戻る
     </a>
 
-  </section>
+  </main>
 
   <!-- 共通フッター -->
   <iframe
@@ -324,14 +355,6 @@
     }
 
     window.addEventListener("message", event => {
-
-      if (event.data?.type === "screenMode") {
-        document.body.classList.toggle(
-          "mobile",
-          event.data.mobile
-        );
-        return;
-      }
 
       if (event.data?.type === "changePage") {
         parent.postMessage({
