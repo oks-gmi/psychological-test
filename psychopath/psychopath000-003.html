@@ -6,208 +6,188 @@
   <title>サイコパス診断｜サイコパス診断3</title>
 
   <style>
-    * {
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+      font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+      background: transparent;
+      color: #333;
+    }
+
+    .page-container {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 20px 40px;
       box-sizing: border-box;
     }
 
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: sans-serif;
-      color: #4a3f45;
-      background: transparent;
-    }
-
-    /* 共通ロゴ */
     .logo-frame {
       width: 100%;
-      max-width: 600px;
       height: 80px;
-
+      border: none;
       display: block;
       margin: 20px auto 20px;
-
-      border: 0;
-      overflow: hidden;
     }
 
-    /* 診断全体 */
     .quiz-container {
-      width: 100%;
       max-width: 626px;
-      margin: 0 auto 35px;
-      padding: 18px;
-
-      background: #fff0eb;
-      border-radius: 14px;
-    }
-
-    /* ページタイトル */
-    .page-title {
-      width: 590px;
-      max-width: 100%;
-      margin: 0 auto 18px;
-      padding: 14px 20px;
-
-      text-align: center;
-      font-size: 26px;
-      font-weight: 800;
-
-      color: #ffffff;
-      background: #d9785f;
-
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    /* 問題 */
-    .quiz-item {
-      width: 590px;
-      max-width: 100%;
       margin: 0 auto;
-      padding: 20px;
-
-      background: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.07);
+      background: #fff0eb;
+      padding: 25px 25px 30px;
+      box-sizing: border-box;
     }
 
-    .quiz-number {
-      margin-bottom: 12px;
-
-      font-size: 18px;
-      font-weight: 800;
+    .page-title {
+      margin: 0 0 20px;
+      padding: 10px;
+      background: #d9785f;
+      color: #fff;
       text-align: center;
+      font-size: 24px;
+      font-weight: bold;
     }
 
-    .quiz-question {
-      font-size: 18px;
-      line-height: 1.9;
+    .question-box {
+      background: #fff;
+      padding: 25px 20px;
       text-align: center;
+      line-height: 1.8;
+      font-size: 18px;
+      box-sizing: border-box;
     }
 
-    /* 結果ボタン */
     .answer-button {
       display: block;
       width: 220px;
       margin: 25px auto 0;
       padding: 12px 20px;
-
-      border: 0;
-      border-radius: 10px;
-
+      border: none;
       background: #d9785f;
-      color: #ffffff;
-
-      font-size: 18px;
-      font-weight: 800;
-
+      color: #fff;
+      font-size: 17px;
+      font-weight: bold;
       cursor: pointer;
-
-      transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
     }
 
     .answer-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+      opacity: 0.85;
     }
 
-    /* 結果 */
-    .answer {
+    .result-box {
       display: none;
       margin-top: 25px;
-      padding-top: 20px;
-
-      border-top: 2px solid #f0d6cf;
+      background: #fff;
+      padding: 25px 20px;
+      box-sizing: border-box;
+      line-height: 1.8;
     }
 
-    .answer.show {
-      display: block;
-    }
-
-    .answer-title {
-      margin-bottom: 12px;
-
+    .result-title {
+      margin: 0 0 15px;
       font-size: 20px;
-      font-weight: 800;
-      text-align: center;
+      font-weight: bold;
+      color: #d9785f;
     }
 
-    .answer-list {
-      margin: 0 0 25px;
-      padding-left: 25px;
+    .result-section {
+      margin-bottom: 25px;
+    }
 
+    .result-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .result-section-title {
+      margin: 0 0 10px;
       font-size: 17px;
-      line-height: 1.9;
+      font-weight: bold;
+    }
+
+    .result-section ol {
+      margin: 0;
+      padding-left: 25px;
+    }
+
+    .result-section li {
+      margin-bottom: 8px;
     }
 
     .note {
-      margin-top: 10px;
-
+      margin-top: 25px;
+      padding: 15px;
+      background: #fff;
       font-size: 14px;
-      line-height: 1.8;
-      text-align: center;
+      line-height: 1.7;
     }
 
-    /* 戻る */
-    .back-link {
+    .back-button {
       display: block;
       width: fit-content;
-      margin: 25px auto 0;
-
-      color: #d9785f;
-      font-size: 16px;
-      font-weight: 700;
+      margin: 30px auto 0;
+      padding: 11px 22px;
+      background: #f0a15c;
+      color: #fff;
       text-decoration: none;
+      font-size: 15px;
+      font-weight: bold;
     }
 
-    .back-link:hover {
-      text-decoration: underline;
+    .back-button:hover {
+      opacity: 0.85;
     }
 
-    /* スマホ */
-    body.mobile .quiz-container {
-      max-width: 100%;
-    }
-
-    body.mobile .page-title {
+    .footer-frame {
       width: 100%;
-      font-size: 23px;
-    }
-
-    body.mobile .quiz-item {
-      width: 100%;
-      padding: 18px;
-    }
-
-    body.mobile .quiz-question {
-      font-size: 17px;
-    }
-
-    body.mobile .answer-button {
-      width: 200px;
-      font-size: 17px;
-    }
-
-    body.mobile .answer-title {
-      font-size: 19px;
-    }
-
-    body.mobile .answer-list {
-      font-size: 16px;
+      height: 120px;
+      border: none;
+      display: block;
+      margin-top: 30px;
     }
 
     @media (max-width: 600px) {
+      .page-container {
+        padding: 0 10px 30px;
+      }
+
       .logo-frame {
-        width: 100%;
         height: 65px;
-        margin: 20px auto 20px;
+        margin: 15px auto 15px;
+      }
+
+      .quiz-container {
+        padding: 20px 15px 25px;
+      }
+
+      .page-title {
+        font-size: 22px;
+      }
+
+      .question-box {
+        font-size: 17px;
+        padding: 20px 15px;
+      }
+
+      .answer-button {
+        font-size: 16px;
+      }
+
+      .result-box {
+        padding: 20px 15px;
+      }
+
+      .result-title {
+        font-size: 19px;
+      }
+
+      .result-section-title {
+        font-size: 16px;
+      }
+
+      .note {
+        font-size: 13px;
       }
     }
 
@@ -215,75 +195,62 @@
       .logo-frame {
         height: 55px;
       }
-    }
 
-    /* 共通フッター */
-    .footer-frame {
-      width: 100%;
-      height: 80px;
-      border: 0;
-      display: block;
-      margin-top: 20px;
-      overflow: hidden;
+      .page-title {
+        font-size: 20px;
+      }
+
+      .question-box {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- 共通ロゴ -->
-  <iframe
-    src="../logo.html"
-    class="logo-frame"
-    title="サイトロゴ"
-    scrolling="no">
-  </iframe>
+  <div class="page-container">
 
-  <section class="quiz-container">
+    <iframe
+      src="../logo.html"
+      class="logo-frame"
+      scrolling="no">
+    </iframe>
 
-    <!-- ページタイトル -->
-    <div class="page-title">
-      【サイコパス診断3】
-    </div>
+    <div class="quiz-container">
 
-    <!-- 問題 -->
-    <div class="quiz-item">
+      <h1 class="page-title">【サイコパス診断3】</h1>
 
-      <div class="quiz-number">
-        問題
-      </div>
-
-      <div class="quiz-question">
+      <div class="question-box">
         ある女性のもとに、病院から電話がかかってきました。<br>
         電話を切った女性は、すぐに予定を確認し始めました。<br>
         そして「これで大丈夫」と言いました。<br>
         何があったのでしょう？
       </div>
 
-      <button class="answer-button" onclick="showAnswer(this)">
+      <button class="answer-button" onclick="showAnswer()">
         結果を見る
       </button>
 
-      <!-- 結果 -->
-      <div class="answer">
+      <div class="result-box" id="resultBox">
 
-        <div class="answer-title">
-          一般的な答えの例
+        <h2 class="result-title">一般的な答えの例</h2>
+
+        <div class="result-section">
+          <ol>
+            <li>家族の手術が無事に終わったから</li>
+            <li>退院の日が決まったから</li>
+          </ol>
         </div>
 
-        <ol class="answer-list">
-          <li>家族の手術が無事に終わったから</li>
-          <li>退院の日が決まったから</li>
-        </ol>
+        <h2 class="result-title">サイコパス的な答えの例</h2>
 
-        <div class="answer-title">
-          サイコパス的な答えの例
+        <div class="result-section">
+          <ol>
+            <li>誰かが亡くなり、自分にとって都合のいい状況になったから</li>
+            <li>相手が入院したことで、自分の計画を邪魔されなくなったから</li>
+          </ol>
         </div>
-
-        <ol class="answer-list">
-          <li>誰かが亡くなり、自分にとって都合のいい状況になったから</li>
-          <li>相手が入院したことで、自分の計画を邪魔されなくなったから</li>
-        </ol>
 
         <div class="note">
           ※この診断は医学的・心理学的な診断ではありません。<br>
@@ -292,65 +259,34 @@
 
       </div>
 
+      <a href="psychopath000.html" class="back-button">
+        ← サイコパス診断一覧へ戻る
+      </a>
+
     </div>
 
-    <!-- 戻る -->
-    <a href="psychopath000.html" class="back-link">
-      ← サイコパス診断一覧へ戻る
-    </a>
+    <iframe
+      src="../footer.html"
+      class="footer-frame"
+      scrolling="no">
+    </iframe>
 
-  </section>
-
-  <!-- 共通フッター -->
-  <iframe
-    src="../footer.html"
-    class="footer-frame"
-    title="共通フッター"
-    scrolling="no">
-  </iframe>
+  </div>
 
   <script>
-    function showAnswer(button) {
-      const answer = button.nextElementSibling;
+    function showAnswer() {
+      const resultBox = document.getElementById("resultBox");
+      const button = document.querySelector(".answer-button");
 
-      answer.classList.toggle("show");
-
-      if (answer.classList.contains("show")) {
-        button.textContent = "結果を隠す";
-      } else {
+      if (resultBox.style.display === "block") {
+        resultBox.style.display = "none";
         button.textContent = "結果を見る";
+      } else {
+        resultBox.style.display = "block";
+        button.textContent = "結果を隠す";
       }
     }
-
-    window.addEventListener("message", event => {
-
-      if (event.data?.type === "screenMode") {
-        document.body.classList.toggle(
-          "mobile",
-          event.data.mobile
-        );
-        return;
-      }
-
-      if (event.data?.type === "changePage") {
-        parent.postMessage({
-          type: "changePage",
-          url: event.data.url
-        }, "*");
-        return;
-      }
-
-      if (event.data?.type === "scrollTop") {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
-      }
-
-    });
   </script>
-
-  <script src="../main-scroll.js"></script>
 
 </body>
 </html>
