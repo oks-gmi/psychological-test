@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>サイコパス診断｜サイコパス診断3</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      color: #4a3f45;
+      background: transparent;
+    }
+
+    /* 共通ロゴ */
+    .logo-frame {
+      width: 100%;
+      max-width: 600px;
+      height: 80px;
+
+      display: block;
+      margin: 20px auto 20px;
+
+      border: 0;
+      overflow: hidden;
+    }
+
+    /* 診断全体 */
+    .quiz-container {
+      width: 100%;
+      max-width: 626px;
+      margin: 0 auto 35px;
+      padding: 18px;
+
+      background: #fff0eb;
+      border-radius: 14px;
+    }
+
+    /* ページタイトル */
+    .page-title {
+      width: 590px;
+      max-width: 100%;
+      margin: 0 auto 18px;
+      padding: 14px 20px;
+
+      text-align: center;
+      font-size: 26px;
+      font-weight: 800;
+
+      color: #ffffff;
+      background: #d9785f;
+
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 問題 */
+    .quiz-item {
+      width: 590px;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 20px;
+
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.07);
+    }
+
+    .quiz-number {
+      margin-bottom: 12px;
+
+      font-size: 18px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .quiz-question {
+      font-size: 18px;
+      line-height: 1.9;
+      text-align: center;
+    }
+
+    /* 結果ボタン */
+    .answer-button {
+      display: block;
+      width: 220px;
+      margin: 25px auto 0;
+      padding: 12px 20px;
+
+      border: 0;
+      border-radius: 10px;
+
+      background: #d9785f;
+      color: #ffffff;
+
+      font-size: 18px;
+      font-weight: 800;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .answer-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    /* 結果 */
+    .answer {
+      display: none;
+      margin-top: 25px;
+      padding-top: 20px;
+
+      border-top: 2px solid #f0d6cf;
+    }
+
+    .answer.show {
+      display: block;
+    }
+
+    .answer-title {
+      margin-bottom: 12px;
+
+      font-size: 20px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .answer-list {
+      margin: 0 0 25px;
+      padding-left: 25px;
+
+      font-size: 17px;
+      line-height: 1.9;
+    }
+
+    .note {
+      margin-top: 10px;
+
+      font-size: 14px;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    /* 戻る */
+    .back-link {
+      display: block;
+      width: fit-content;
+      margin: 25px auto 0;
+
+      color: #d9785f;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    /* スマホ */
+    body.mobile .quiz-container {
+      max-width: 100%;
+    }
+
+    body.mobile .page-title {
+      width: 100%;
+      font-size: 23px;
+    }
+
+    body.mobile .quiz-item {
+      width: 100%;
+      padding: 18px;
+    }
+
+    body.mobile .quiz-question {
+      font-size: 17px;
+    }
+
+    body.mobile .answer-button {
+      width: 200px;
+      font-size: 17px;
+    }
+
+    body.mobile .answer-title {
+      font-size: 19px;
+    }
+
+    body.mobile .answer-list {
+      font-size: 16px;
+    }
+
+    @media (max-width: 600px) {
+      .logo-frame {
+        width: 100%;
+        height: 65px;
+        margin: 20px auto 20px;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .logo-frame {
+        height: 55px;
+      }
+    }
+
+    /* 共通フッター */
+    .footer-frame {
+      width: 100%;
+      height: 80px;
+      border: 0;
+      display: block;
+      margin-top: 20px;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 共通ロゴ -->
+  <iframe
+    src="../logo.html"
+    class="logo-frame"
+    title="サイトロゴ"
+    scrolling="no">
+  </iframe>
+
+  <section class="quiz-container">
+
+    <!-- ページタイトル -->
+    <div class="page-title">
+      【サイコパス診断3】
+    </div>
+
+    <!-- 問題 -->
+    <div class="quiz-item">
+
+      <div class="quiz-number">
+        問題
+      </div>
+
+      <div class="quiz-question">
+        ある女性のもとに、病院から電話がかかってきました。<br>
+        電話を切った女性は、すぐに予定を確認し始めました。<br>
+        そして「これで大丈夫」と言いました。<br>
+        何があったのでしょう？
+      </div>
+
+      <button class="answer-button" onclick="showAnswer(this)">
+        結果を見る
+      </button>
+
+      <!-- 結果 -->
+      <div class="answer">
+
+        <div class="answer-title">
+          一般的な答えの例
+        </div>
+
+        <ol class="answer-list">
+          <li>家族の手術が無事に終わったから</li>
+          <li>退院の日が決まったから</li>
+        </ol>
+
+        <div class="answer-title">
+          サイコパス的な答えの例
+        </div>
+
+        <ol class="answer-list">
+          <li>誰かが亡くなり、自分にとって都合のいい状況になったから</li>
+          <li>相手が入院したことで、自分の計画を邪魔されなくなったから</li>
+        </ol>
+
+        <div class="note">
+          ※この診断は医学的・心理学的な診断ではありません。<br>
+          あくまで自由な発想を楽しむための心理テストです。
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 戻る -->
+    <a href="psychopath000.html" class="back-link">
+      ← サイコパス診断一覧へ戻る
+    </a>
+
+  </section>
+
+  <!-- 共通フッター -->
+  <iframe
+    src="../footer.html"
+    class="footer-frame"
+    title="共通フッター"
+    scrolling="no">
+  </iframe>
+
+  <script>
+    function showAnswer(button) {
+      const answer = button.nextElementSibling;
+
+      answer.classList.toggle("show");
+
+      if (answer.classList.contains("show")) {
+        button.textContent = "結果を隠す";
+      } else {
+        button.textContent = "結果を見る";
+      }
+    }
+
+    window.addEventListener("message", event => {
+
+      if (event.data?.type === "screenMode") {
+        document.body.classList.toggle(
+          "mobile",
+          event.data.mobile
+        );
+        return;
+      }
+
+      if (event.data?.type === "changePage") {
+        parent.postMessage({
+          type: "changePage",
+          url: event.data.url
+        }, "*");
+        return;
+      }
+
+      if (event.data?.type === "scrollTop") {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
+
+    });
+  </script>
+
+  <script src="../main-scroll.js"></script>
+
+</body>
+</html>
