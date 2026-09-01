@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>動物｜動物3</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      color: #4a3f45;
+      background: transparent;
+    }
+
+    /* 共通ロゴ */
+    .logo-frame {
+      width: 100%;
+      max-width: 600px;
+      height: 80px;
+
+      display: block;
+      margin: 20px auto 20px;
+
+      border: 0;
+      overflow: hidden;
+    }
+
+    /* クイズ全体 */
+    .quiz-container {
+      width: 100%;
+      max-width: 626px;
+      margin: 0 auto 35px;
+      padding: 18px;
+
+      background: #fff0eb;
+      border-radius: 14px;
+    }
+
+    /* ページタイトル */
+    .page-title {
+      width: 590px;
+      max-width: 100%;
+      margin: 0 auto 25px;
+      padding: 14px 20px;
+
+      text-align: center;
+      font-size: 26px;
+      font-weight: 800;
+
+      color: #ffffff;
+      background: #d9785f;
+
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 問題 */
+    .quiz-item {
+      width: 590px;
+      max-width: 100%;
+      margin: 0 auto 25px;
+      padding: 20px;
+
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.07);
+    }
+
+    .quiz-number {
+      margin-bottom: 12px;
+
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .quiz-question {
+      margin-bottom: 18px;
+
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    /* 答えを見るボタン */
+    .answer-button {
+      display: block;
+      margin: 0 auto;
+
+      padding: 10px 24px;
+
+      font-size: 16px;
+      font-weight: 700;
+
+      color: #ffffff;
+      background: #d9785f;
+
+      border: 0;
+      border-radius: 8px;
+
+      cursor: pointer;
+    }
+
+    .answer-button:hover {
+      opacity: 0.85;
+    }
+
+    /* 答え */
+    .answer {
+      display: none;
+
+      margin-top: 16px;
+      padding: 14px;
+
+      text-align: center;
+      font-size: 22px;
+      font-weight: 800;
+
+      background: #fff6f2;
+      border-top: 1px solid #ead8d2;
+    }
+
+    .answer.show {
+      display: block;
+    }
+
+    /* 解説・豆知識 */
+    .explanation {
+      display: none;
+
+      margin-top: 15px;
+      padding: 16px;
+
+      background: #fffaf8;
+      border-top: 1px solid #ead8d2;
+
+      font-size: 16px;
+      line-height: 1.8;
+      text-align: left;
+    }
+
+    .explanation.show {
+      display: block;
+    }
+
+    .explanation-title {
+      margin-bottom: 8px;
+
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    /* 前のページに戻る */
+    .back-button {
+      display: block;
+      width: fit-content;
+
+      margin: 30px auto 0;
+      padding: 10px 24px;
+
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 700;
+
+      color: #ffffff;
+      background: #d9785f;
+
+      border-radius: 8px;
+    }
+
+    .back-button:hover {
+      opacity: 0.85;
+    }
+
+    /* 共通フッター */
+    .footer-frame {
+      width: 100%;
+      height: 80px;
+      border: 0;
+      display: block;
+      margin-top: 20px;
+      overflow: hidden;
+    }
+
+    /* スマホ */
+    @media (max-width: 600px) {
+      .logo-frame {
+        width: 100%;
+        height: 65px;
+        margin: 20px auto 20px;
+      }
+
+      .quiz-container {
+        margin: 0 15px 30px;
+        padding: 15px;
+      }
+
+      .page-title {
+        width: 100%;
+        font-size: 23px;
+      }
+
+      .quiz-item {
+        width: 100%;
+        padding: 18px;
+      }
+
+      .quiz-number {
+        font-size: 19px;
+      }
+
+      .quiz-question {
+        font-size: 20px;
+      }
+
+      .answer-button {
+        font-size: 15px;
+      }
+
+      .answer {
+        font-size: 20px;
+      }
+
+      .explanation {
+        font-size: 15px;
+      }
+
+      .explanation-title {
+        font-size: 17px;
+      }
+
+      .back-button {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .logo-frame {
+        height: 55px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 共通ロゴ -->
+  <iframe
+    src="../logo.html"
+    class="logo-frame"
+    title="サイトロゴ"
+    scrolling="no">
+  </iframe>
+
+  <main class="quiz-container">
+
+    <!-- ページタイトル -->
+    <div class="page-title">
+      【動物】
+    </div>
+
+    <!-- 第1問 -->
+    <section class="quiz-item">
+
+      <div class="quiz-number">
+        第1問
+      </div>
+
+      <div class="quiz-question">
+        ジャイアントパンダの毛が白と黒の2色なのは、<br>
+        主に何のためだと考えられているでしょう？
+      </div>
+
+      <button class="answer-button" onclick="showAnswer(this)">
+        答えを見る
+      </button>
+
+      <div class="answer">
+        答え：雪や岩場で身を隠すためのカモフラージュ
+      </div>
+
+      <div class="explanation">
+        <div class="explanation-title">
+          解説・豆知識
+        </div>
+
+        ジャイアントパンダの白と黒の毛には、周囲の環境に身を隠すためのカモフラージュ効果があると考えられています。
+        白い部分は雪の中で、黒い部分は岩陰や暗い場所で目立ちにくくなるとされています。
+        また、耳や目の周りの黒い部分には、仲間とのコミュニケーションや威嚇に関係する可能性も考えられています。
+        <br><br>
+        パンダの白と黒の模様には、体温調節に関係する役割があるという説もあります。
+        パンダは冬眠をしないため、季節を通して活動しながら環境に適応しています。
+      </div>
+
+    </section>
+
+    <!-- 前のページに戻る -->
+    <a href="animal000.html" class="back-button">
+      前のページに戻る
+    </a>
+
+  </main>
+
+  <!-- 共通フッター -->
+  <iframe
+    src="../footer.html"
+    class="footer-frame"
+    title="共通フッター"
+    scrolling="no">
+  </iframe>
+
+  <script>
+    function showAnswer(button) {
+      const answer = button.nextElementSibling;
+      const explanation = answer.nextElementSibling;
+
+      answer.classList.toggle("show");
+      explanation.classList.toggle("show");
+
+      if (answer.classList.contains("show")) {
+        button.textContent = "答えを隠す";
+      } else {
+        button.textContent = "答えを見る";
+      }
+    }
+
+    window.addEventListener("message", event => {
+
+      if (event.data?.type === "changePage") {
+        parent.postMessage({
+          type: "changePage",
+          url: event.data.url
+        }, "*");
+        return;
+      }
+
+      if (event.data?.type === "scrollTop") {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
+
+    });
+  </script>
+
+  <script src="../main-scroll.js"></script>
+
+</body>
+</html>
