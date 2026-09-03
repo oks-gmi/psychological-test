@@ -187,7 +187,8 @@
       grid-template-columns: 260px minmax(620px, 900px) 260px;
       justify-content: center;
 
-      overflow: hidden;
+      overflow-x: auto;
+      overflow-y: hidden;
 
       background: transparent;
     }
@@ -300,8 +301,34 @@
       display: block;
     }
 
-    /* スマホ */
-    @media (max-width: 900px) {
+    /*
+     * 830px未満
+     *
+     * 左メニューを非表示。
+     * 左広告・中央メイン・右広告は維持。
+     */
+    @media (max-width: 829px) and (min-width: 621px) {
+
+      .menu-column {
+        display: none;
+      }
+
+      .content {
+        left: 0;
+        right: 0;
+
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+    }
+
+    /*
+     * 620px以下
+     *
+     * スマホ版。
+     * 左メニュー・左右広告を非表示。
+     */
+    @media (max-width: 620px) {
 
       html,
       body {
@@ -437,7 +464,7 @@
 
       mainFrame.contentWindow.postMessage({
         type: "screenMode",
-        mobile: window.innerWidth <= 900
+        mobile: window.innerWidth <= 620
       }, "*");
 
     }
@@ -453,7 +480,7 @@
      */
     window.addEventListener("wheel", event => {
 
-      if (window.innerWidth <= 900) {
+      if (window.innerWidth <= 620) {
         return;
       }
 
