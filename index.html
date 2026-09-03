@@ -184,7 +184,17 @@
       height: 100vh;
 
       display: grid;
-      grid-template-columns: 260px minmax(620px, 900px) 260px;
+
+      /*
+       * 左右広告は同じ幅で可変。
+       * 広告なしの初期幅は200px。
+       * 広告表示時は最大300pxまで使用。
+       */
+      grid-template-columns:
+        minmax(200px, 300px)
+        minmax(620px, 900px)
+        minmax(200px, 300px);
+
       justify-content: center;
 
       overflow-x: auto;
@@ -195,7 +205,12 @@
 
     /* 広告 */
     .ad-space {
+      width: 100%;
+      min-width: 200px;
+      max-width: 300px;
       min-height: 100vh;
+
+      margin: 0;
 
       background:
         radial-gradient(
@@ -222,6 +237,16 @@
         inset 0 0 35px rgba(100, 125, 160, 0.10);
 
       overflow: hidden;
+    }
+
+    /*
+     * 広告表示時の余白。
+     * 広告幅に対して左右5pxずつ余裕を持たせる。
+     */
+    .ad-space:has(iframe),
+    .ad-space:has(ins) {
+      padding-left: 5px;
+      padding-right: 5px;
     }
 
     /* 中央メイン */
