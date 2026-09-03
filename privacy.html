@@ -3,24 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>「プライバシーポリシー」 心理テスト&クイズ｜GMI</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
     body {
       margin: 0;
       padding: 0;
-      background: transparent;
-      font-family: sans-serif;
-      color: #4a3f45;
     }
 
+    body {
+      font-family: sans-serif;
+      color: #4a3f45;
+      background: transparent;
+    }
+
+    /* 共通ロゴ */
     .logo-frame {
-      width: 100%;
-      max-width: 600px;
+      width: 600px;
+      max-width: 100%;
       height: 80px;
+
       display: block;
       margin: 0 auto 25px;
+
       border: 0;
       overflow: hidden;
     }
@@ -30,45 +40,55 @@
       max-width: 900px;
       margin: 18px auto 30px;
       padding: 30px;
-      box-sizing: border-box;
+
       background: #ffffff;
       border: 1px solid #000000;
     }
 
     .privacy-title {
       margin: 0 0 30px;
+
       text-align: center;
       font-size: 28px;
       font-weight: 800;
-      color: #4a3f45;
     }
 
     .privacy-section {
       margin-bottom: 28px;
     }
 
+    .privacy-section:last-child {
+      margin-bottom: 0;
+    }
+
     .privacy-section h2 {
       margin: 0 0 12px;
+
       font-size: 21px;
       font-weight: 800;
-      color: #4a3f45;
     }
 
     .privacy-section p {
-      margin: 0 0 10px;
+      margin: 0 0 12px;
+
       font-size: 16px;
-      line-height: 1.9;
+      line-height: 1.8;
+    }
+
+    .privacy-section p:last-child {
+      margin-bottom: 0;
     }
 
     .privacy-section ul {
-      margin: 0 0 10px;
-      padding-left: 25px;
+      margin: 8px 0 0;
+      padding-left: 1.5em;
     }
 
     .privacy-section li {
-      margin-bottom: 6px;
+      margin-bottom: 5px;
+
       font-size: 16px;
-      line-height: 1.9;
+      line-height: 1.7;
     }
 
     .privacy-link {
@@ -79,47 +99,49 @@
 
     .privacy-date {
       margin-top: 35px;
+
       text-align: right;
-      font-size: 12px;
-      line-height: 1.7;
-      color: #777777;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    /* 共通フッター */
+    .footer-frame {
+      width: 100%;
+      height: 80px;
+      border: 0;
+      display: block;
+      margin-top: 20px;
     }
 
     @media (max-width: 600px) {
 
       .logo-frame {
+        width: 100%;
         height: 65px;
-        margin: 20px auto;
+        margin-bottom: 20px;
       }
 
       .privacy-container {
-        margin: 15px 15px 30px;
+        margin: 15px;
         padding: 18px;
       }
 
       .privacy-title {
-        margin-bottom: 25px;
         font-size: 24px;
       }
 
-      .privacy-section {
-        margin-bottom: 24px;
-      }
-
       .privacy-section h2 {
-        margin-bottom: 10px;
         font-size: 19px;
       }
 
       .privacy-section p,
       .privacy-section li {
         font-size: 15px;
-        line-height: 1.8;
       }
 
       .privacy-date {
-        margin-top: 30px;
-        font-size: 11px;
+        font-size: 13px;
       }
     }
   </style>
@@ -127,15 +149,18 @@
 
 <body>
 
+  <!-- 共通ロゴ -->
   <iframe
+    src="logo.html"
     class="logo-frame"
-    src="../logo.html"
-    scrolling="no">
+    title="サイトロゴ">
   </iframe>
 
   <main class="privacy-container">
 
-    <h1 class="privacy-title">「プライバシーポリシー」｜心理テスト&クイズ｜GMI</h1>
+    <h1 class="privacy-title">
+      「プライバシーポリシー」 心理テスト&クイズ｜GMI
+    </h1>
 
     <section class="privacy-section">
       <h2>1. 個人情報について</h2>
@@ -394,20 +419,26 @@
 
   </main>
 
+  <!-- 共通フッター -->
+  <iframe
+    src="footer.html"
+    class="footer-frame"
+    title="共通フッター">
+  </iframe>
+
   <script>
-    window.addEventListener("wheel", event => {
-
-      if (event.deltaY < 0 && window.scrollY <= 0) {
-        parent.postMessage({
-          type: "mainWheel",
-          deltaY: event.deltaY
-        }, "*");
-      }
-
-    }, { passive: true });
-
-
     window.addEventListener("message", event => {
+
+      if (event.data?.type === "mainWheel") {
+
+        window.scrollBy({
+          top: event.data.deltaY,
+          left: 0,
+          behavior: "auto"
+        });
+
+        return;
+      }
 
       if (event.data?.type === "changePage") {
         parent.postMessage({
@@ -426,6 +457,8 @@
 
     });
   </script>
+
+  <script src="main-scroll.js"></script>
 
 </body>
 </html>
