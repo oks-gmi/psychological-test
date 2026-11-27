@@ -409,7 +409,7 @@
       }
     }
   </style>
-  
+
 </head>
 
 <body>
@@ -495,6 +495,67 @@
     }
 
     /*
+     * 中央メインの幅をロゴへ通知
+     */
+    function sendLogoWidth() {
+
+      if (!mainFrame.contentWindow) {
+        return;
+      }
+
+      try {
+
+        const pageDocument =
+          mainFrame.contentDocument;
+
+        const logoFrame =
+          pageDocument.querySelector(".logo-frame");
+
+        if (!logoFrame) {
+          return;
+        }
+
+        /*
+         * スマホでは既存の文字サイズ設定に戻す
+         */
+        if (window.innerWidth <= 620) {
+
+          const logoText =
+            logoFrame.contentDocument?.querySelector(".logo-text");
+
+          if (logoText) {
+            logoText.style.removeProperty("font-size");
+          }
+
+          return;
+        }
+
+        /*
+         * 中央メインの幅を取得
+         */
+        const centralWidth =
+          document
+            .getElementById("main-area")
+            .getBoundingClientRect()
+            .width;
+
+        /*
+         * logo.htmlへ幅を送信
+         */
+        logoFrame.contentWindow.postMessage({
+          type: "logoWidth",
+          width: centralWidth
+        }, "*");
+
+      } catch (error) {
+
+        return;
+
+      }
+
+    }
+
+    /*
      * マウスホイール
      *
      * 左メニュー上
@@ -554,6 +615,17 @@
     mainFrame.addEventListener("load", () => {
 
       sendScreenMode();
+      sendLogoWidth();
+
+      /*
+       * ロゴiframeの読み込み完了時にも幅を通知
+       */
+      const logoFrame =
+        mainFrame.contentDocument.querySelector(".logo-frame");
+
+      if (logoFrame) {
+        logoFrame.addEventListener("load", sendLogoWidth);
+      }
 
     });
 
@@ -563,6 +635,7 @@
     window.addEventListener("resize", () => {
 
       sendScreenMode();
+      sendLogoWidth();
 
     });
 
