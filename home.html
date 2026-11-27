@@ -136,10 +136,16 @@
     /* フッター */
     .footer-frame {
       width: 100%;
-      height: 80px;
+      height: 96px;
       border: 0;
       display: block;
       margin-top: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .footer-frame {
+        height: 88px;
+      }
     }
   </style>
 </head>
@@ -213,7 +219,15 @@
   <iframe
     src="footer.html"
     class="footer-frame"
-    title="共通フッター">
+    title="共通フッター"
+    onload="
+      const doc = this.contentDocument;
+      doc.documentElement.style.height = '100%';
+      doc.body.style.height = '100%';
+      doc.body.style.display = 'flex';
+      doc.body.style.flexDirection = 'column';
+      doc.querySelector('.footer').style.marginTop = 'auto';
+    ">
   </iframe>
 
   <script>
