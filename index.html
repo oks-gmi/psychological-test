@@ -20,6 +20,8 @@
     body {
       font-family: sans-serif;
       color: #4a3f45;
+      overflow-x: hidden;
+      overflow-y: auto;
 
       background:
         radial-gradient(
@@ -92,7 +94,7 @@
           circle at 82% 91%,
           rgba(255, 188, 164, 0.38) 0,
           rgba(255, 188, 164, 0.14) 14%,
-          transparent 29%
+          transparent 30%
         ),
         linear-gradient(
           135deg,
@@ -103,7 +105,6 @@
           #fffaf5 100%
         );
 
-      overflow: hidden;
     }
 
     /* 背景の水玉模様 */
@@ -177,11 +178,11 @@
 
     /* 右側全体 */
     .content {
-      position: fixed;
-      top: 0;
-      left: 210px;
-      right: 0;
-      height: 100vh;
+      position: relative;
+      margin-left: 210px;
+      width: calc(100% - 210px);
+      min-height: 100vh;
+      height: auto;
 
       display: grid;
 
@@ -197,8 +198,7 @@
 
       justify-content: center;
 
-      overflow-x: auto;
-      overflow-y: hidden;
+      overflow: visible;
 
       background: transparent;
     }
@@ -314,7 +314,7 @@
       z-index: 1;
 
       width: 100%;
-      height: 100%;
+      height: 100vh;
       overflow: hidden;
     }
 
@@ -339,11 +339,8 @@
       }
 
       .content {
-        left: 0;
-        right: 0;
-
-        overflow-x: auto;
-        overflow-y: hidden;
+        margin-left: 0;
+        width: 100%;
       }
     }
 
@@ -556,58 +553,243 @@
     }
 
     /*
-     * マウスホイール
-     *
-     * 左メニュー上
-     * → 左メニュー側で独立してスクロール
-     *
-     * 左メニュー以外
-     * → 中央メインをスクロール
+     * 中央メインの高さを自動取得
+     * ロゴ・本文・フッターを含めて外側のスクロール範囲を調整
      */
-    window.addEventListener("wheel", event => {
+    let pageResizeObserver = null;
+    let pageMutationObserver = null;
+    const nestedFrameHandlers = new WeakSet();
+    const nestedFrameWheelHandlers = new WeakSet();
 
-      if (window.innerWidth <= 620) {
-        return;
+    function getDocumentHeight(pageDocument) {
+
+      const pageBody = pageDocument.body;
+      const pageRoot = pageDocument.documentElement;
+
+      if (!pageBody || !pageRoot) {
+        return 0;
       }
 
-      const menuColumn =
-        document.getElementById("menu-column");
+      return Math.max(
+        pageRoot.scrollHeight,
+        pageBody.scrollHeight,
+        pageRoot.offsetHeight,
+        pageBody.offsetHeight
+      );
 
-      const menuRect =
-        menuColumn.getBoundingClientRect();
+    }
 
-      const mouseOnMenu =
-        event.clientX >= menuRect.left &&
-        event.clientX <= menuRect.right &&
-        event.clientY >= menuRect.top &&
-        event.clientY <= menuRect.bottom;
+    /*
+     * 共通ロゴ・フッターiframeの高さを取得
+     * 広告iframeなど、その他のiframeには触れない
+     */
+    function adjustNestedFrame(frame) {
 
-      /*
-       * 左メニュー上では何もしない
-       */
-      if (mouseOnMenu) {
+      try {
+
+        const frameDocument = frame.contentDocument;
+
+        if (!frameDocument || !frameDocument.body || !frameDocument.documentElement) {
+          return;
+        }
+
+        frameDocument.documentElement.style.overflow = "hidden";
+        frameDocument.body.style.overflow = "hidden";
+
+        if (!nestedFrameWheelHandlers.has(frame)) {
+
+          frameDocument.addEventListener("wheel", event => {
+
+            if (window.innerWidth <= 620) {
+              return;
+            }
+
+            event.preventDefault();
+
+            window.scrollBy({
+              top: event.deltaY,
+              left: 0,
+              behavior: "auto"
+            });
+
+          }, { passive: false });
+
+          nestedFrameWheelHandlers.add(frame);
+
+        }
+
+        frame.style.height = "0px";
+
+        const frameHeight = getDocumentHeight(frameDocument);
+        const isLogo = (frame.getAttribute("src") || "").includes("logo.html");
+        const minimumHeight = isLogo ? 80 : 0;
+        const nextHeight = Math.max(frameHeight, minimumHeight);
+
+        frame.style.height = nextHeight + "px";
+
+      } catch (error) {
+
         return;
+
       }
 
-      /*
-       * 左メニュー以外では
-       * 中央メインのiframeを直接スクロール
-       */
-      if (!mainFrame.contentWindow) {
-        return;
-      }
+    }
 
-      mainFrame.contentWindow.scrollBy({
-        top: event.deltaY,
-        left: 0,
-        behavior: "auto"
+    function adjustNestedFrames(pageDocument) {
+
+      const nestedFrames = pageDocument.querySelectorAll(
+        'iframe[src*="logo.html"], iframe[src*="footer.html"]'
+      );
+
+      nestedFrames.forEach(frame => {
+
+        adjustNestedFrame(frame);
+
+        if (!nestedFrameHandlers.has(frame)) {
+
+          frame.addEventListener("load", () => {
+            adjustNestedFrame(frame);
+            updateMainHeight();
+            sendLogoWidth();
+          });
+
+          nestedFrameHandlers.add(frame);
+
+        }
+
       });
 
-      event.preventDefault();
+    }
 
-    }, {
-      passive: false
-    });
+    let isUpdatingMainHeight = false;
+
+    function updateMainHeight() {
+
+      if (window.innerWidth <= 620 || isUpdatingMainHeight) {
+        return;
+      }
+
+      isUpdatingMainHeight = true;
+
+      try {
+
+        if (pageResizeObserver) {
+          pageResizeObserver.disconnect();
+        }
+
+        const pageDocument = mainFrame.contentDocument;
+
+        if (!pageDocument || !pageDocument.body || !pageDocument.documentElement) {
+          return;
+        }
+
+        adjustNestedFrames(pageDocument);
+
+        pageDocument.documentElement.style.overflow = "hidden";
+        pageDocument.body.style.overflow = "hidden";
+
+        /*
+         * iframeの現在の高さに影響されず、内容本来の高さを測定
+         */
+        mainFrame.style.height = "0px";
+        document.querySelector(".main-frame-wrapper").style.height = "0px";
+
+        const contentHeight = getDocumentHeight(pageDocument);
+        const nextHeight = Math.max(window.innerHeight, contentHeight);
+
+        document.querySelector(".main-frame-wrapper").style.height = nextHeight + "px";
+        mainFrame.style.height = nextHeight + "px";
+
+        if (pageResizeObserver) {
+          pageResizeObserver.observe(pageDocument.documentElement);
+          pageResizeObserver.observe(pageDocument.body);
+        }
+
+      } catch (error) {
+
+        return;
+
+      } finally {
+
+        isUpdatingMainHeight = false;
+
+      }
+
+    }
+
+    /*
+     * 中央メイン内のスクロール操作を外側へ渡す
+     */
+    function forwardPageWheel(pageDocument) {
+
+      pageDocument.addEventListener("wheel", event => {
+
+        if (window.innerWidth <= 620) {
+          return;
+        }
+
+        event.preventDefault();
+
+        window.scrollBy({
+          top: event.deltaY,
+          left: 0,
+          behavior: "auto"
+        });
+
+      }, { passive: false });
+
+    }
+
+    function observeMainPage() {
+
+      if (pageResizeObserver) {
+        pageResizeObserver.disconnect();
+      }
+
+      if (pageMutationObserver) {
+        pageMutationObserver.disconnect();
+      }
+
+      try {
+
+        const pageDocument = mainFrame.contentDocument;
+
+        if (!pageDocument || !pageDocument.body || !pageDocument.documentElement) {
+          return;
+        }
+
+        pageDocument.documentElement.style.overflow = "hidden";
+        pageDocument.body.style.overflow = "hidden";
+
+        forwardPageWheel(pageDocument);
+
+        pageResizeObserver = new ResizeObserver(() => {
+          updateMainHeight();
+        });
+
+        pageResizeObserver.observe(pageDocument.documentElement);
+        pageResizeObserver.observe(pageDocument.body);
+
+        pageMutationObserver = new MutationObserver(() => {
+          updateMainHeight();
+        });
+
+        pageMutationObserver.observe(pageDocument.documentElement, {
+          childList: true,
+          subtree: true,
+          characterData: true
+        });
+
+        adjustNestedFrames(pageDocument);
+        updateMainHeight();
+
+      } catch (error) {
+
+        return;
+
+      }
+
+    }
 
     /*
      * 中央メイン読み込み完了
@@ -615,6 +797,7 @@
     mainFrame.addEventListener("load", () => {
 
       sendScreenMode();
+      observeMainPage();
       sendLogoWidth();
 
       /*
@@ -630,12 +813,27 @@
     });
 
     /*
+     * 外側ページ上部へ戻る
+     */
+    window.addEventListener("message", event => {
+
+      if (event.data?.type === "scrollTop") {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
+
+    });
+
+    /*
      * 画面サイズ変更
      */
     window.addEventListener("resize", () => {
 
       sendScreenMode();
       sendLogoWidth();
+      updateMainHeight();
 
     });
 
