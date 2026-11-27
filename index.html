@@ -1,3 +1,4 @@
+下が修正版の index.html 全文だよ。
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -454,10 +455,34 @@
     const mainFrame = document.getElementById("main-frame");
 
     /*
-     * ページ切り替え
+     * ページ切り替え・スクロール命令の受信
      */
     window.addEventListener("message", event => {
 
+      /*
+       * 中央メインからのスクロール命令
+       */
+      if (
+        event.source === mainFrame.contentWindow &&
+        event.data?.type === "mainWheel"
+      ) {
+
+        if (window.innerWidth > 900) {
+
+          window.scrollBy({
+            top: event.data.deltaY,
+            left: 0,
+            behavior: "auto"
+          });
+
+        }
+
+        return;
+      }
+
+      /*
+       * ページ切り替え
+       */
       if (event.data?.type === "changePage") {
 
         mainFrame.src = event.data.url;
@@ -618,14 +643,17 @@
 
         }
 
-        frame.style.height = "0px";
-
+        /*
+         * 高さを0pxにせず、そのまま内容の高さを取得
+         */
         const frameHeight = getDocumentHeight(frameDocument);
         const isLogo = (frame.getAttribute("src") || "").includes("logo.html");
         const minimumHeight = isLogo ? 80 : 0;
         const nextHeight = Math.max(frameHeight, minimumHeight);
 
-        frame.style.height = nextHeight + "px";
+        if (frame.style.height !== nextHeight + "px") {
+          frame.style.height = nextHeight + "px";
+        }
 
       } catch (error) {
 
@@ -689,16 +717,24 @@
         pageDocument.body.style.overflow = "hidden";
 
         /*
-         * iframeの現在の高さに影響されず、内容本来の高さを測定
+         * iframeを一度0pxにせず、内容本来の高さを測定
          */
-        mainFrame.style.height = "0px";
-        document.querySelector(".main-frame-wrapper").style.height = "0px";
-
         const contentHeight = getDocumentHeight(pageDocument);
         const nextHeight = Math.max(window.innerHeight, contentHeight);
 
-        document.querySelector(".main-frame-wrapper").style.height = nextHeight + "px";
-        mainFrame.style.height = nextHeight + "px";
+        const wrapper =
+          document.querySelector(".main-frame-wrapper");
+
+        /*
+         * 高さが変わった場合だけ更新
+         */
+        if (wrapper.style.height !== nextHeight + "px") {
+          wrapper.style.height = nextHeight + "px";
+        }
+
+        if (mainFrame.style.height !== nextHeight + "px") {
+          mainFrame.style.height = nextHeight + "px";
+        }
 
         if (pageResizeObserver) {
           pageResizeObserver.observe(pageDocument.documentElement);
@@ -725,6 +761,15 @@
       pageDocument.addEventListener("wheel", event => {
 
         if (window.innerWidth <= 620) {
+          return;
+        }
+
+        /*
+         * 900px以下ではこの処理でスクロール
+         * 900pxを超える場合はmain-scroll.jsから
+         * mainWheelメッセージを送る
+         */
+        if (window.innerWidth > 900) {
           return;
         }
 
