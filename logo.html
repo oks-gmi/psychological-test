@@ -101,6 +101,31 @@
         url: "home.html"
       }, "*");
     }
+
+    // 中央メインの幅を受け取って文字サイズを調整
+    window.addEventListener("message", event => {
+
+      if (event.data?.type === "logoWidth") {
+
+        const centralWidth = Number(event.data.width);
+
+        if (!Number.isFinite(centralWidth) || centralWidth <= 0) {
+          return;
+        }
+
+        const fontSize = Math.max(
+          39,
+          Math.min(
+            47,
+            39 + (centralWidth - 620) * (8 / 280)
+          )
+        );
+
+        document.querySelector(".logo-text").style.fontSize =
+          fontSize + "px";
+      }
+
+    });
   </script>
 
 </body>
