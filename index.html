@@ -454,6 +454,49 @@
     const mainFrame = document.getElementById("main-frame");
 
     /*
+     * ページ切り替え時のリセット
+     */
+    function resetMainPageForNavigation() {
+
+      /*
+       * スクロール位置を一番上に戻す
+       */
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "auto"
+      });
+
+      /*
+       * 前のページの監視を停止
+       */
+      if (pageResizeObserver) {
+        pageResizeObserver.disconnect();
+      }
+
+      if (pageMutationObserver) {
+        pageMutationObserver.disconnect();
+      }
+
+      /*
+       * 前のページの高さをリセット
+       * スマホでは既存の表示方法を維持
+       */
+      if (window.innerWidth > 620) {
+
+        const wrapper =
+          document.querySelector(".main-frame-wrapper");
+
+        const resetHeight = window.innerHeight + "px";
+
+        wrapper.style.height = resetHeight;
+        mainFrame.style.height = resetHeight;
+
+      }
+
+    }
+
+    /*
      * ページ切り替え・スクロール命令の受信
      */
     window.addEventListener("message", event => {
@@ -483,6 +526,11 @@
        * ページ切り替え
        */
       if (event.data?.type === "changePage") {
+
+        /*
+         * スクロール位置と前のページの高さをリセット
+         */
+        resetMainPageForNavigation();
 
         mainFrame.src = event.data.url;
 
@@ -839,6 +887,15 @@
      * 中央メイン読み込み完了
      */
     mainFrame.addEventListener("load", () => {
+
+      /*
+       * 読み込み完了時にもスクロール位置を一番上にする
+       */
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "auto"
+      });
 
       sendScreenMode();
       observeMainPage();
